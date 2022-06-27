@@ -4,7 +4,6 @@ import com.api.miniproject.dto.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -37,20 +36,19 @@ public class ItemRepositoryImpl implements ItemRepository{
         return item;
     }
 
-    // 아이템 이름 중복 문제 해결 필요
     @Override
     public Item findByName(String itemName) {
         List<Item> itemList = findAll();
 
-        return itemList.stream().
-                filter(item -> item.getItemName().equals(itemName))
+        return itemList.stream()
+                .filter(item -> (item.getItemName()).equals(itemName))
                 .findAny()
                 .orElse(null);
     }
 
     @Override
     public void updateItem(Long id, Item item) {
-        storage.get(id).update(item.getItemName(), item.getPrice(), item.getAmount());
+        storage.get(id).update(item.getItemName(), item.getPrice(), item.getQuantity(), item.getBuyUrl());
     }
 
     @Override
