@@ -2,11 +2,8 @@ package com.api.miniproject.controller;
 
 import com.api.miniproject.dto.Item;
 import com.api.miniproject.service.ItemService;
-import com.api.miniproject.util.StatusEnum;
-import com.api.miniproject.util.StatusMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,23 +20,54 @@ public class ItemController {
 
     private final ItemService service;
 
-    @PostMapping("/add")
-    public String saveItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
-        Item saveItem = service.saveItem(item);
-        redirectAttributes.addAttribute("item", saveItem);
-        return "redirect:item/item?search-item=" + saveItem.getId();
+    @GetMapping("add")
+    public String saveItemForm(){
+        return "item/addForm";
     }
 
-    @GetMapping("/items")
-    public String findAll() {
-        return "/";
+    @PostMapping("add")
+    public String saveItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
+        Item saveItem = service.saveItem(item);
+
+        // 검증하기: 다시 할 수 있는 방법으로 redirectAttributes 여기다가 넣어서, 기존에 입력한 것들은 유지
+        log.debug("item={}", saveItem);
+        redirectAttributes.addAttribute("search-item", saveItem.getId());
+        redirectAttributes.addAttribute("saveStatus", true);
+
+//        redirectAttributes.addAttribute("itemId", saveItem.getId()); // itemId 에 id 값을 저장해줌
+//        return "redirect:/item/item?search-item={itemId}"; // redirectAttributes 의 itemId 나머지는 파라미터로 넘어감
+        return "redirect:/item/item";
+    }
+
+    @GetMapping("items")
+    public String findAll(Model model) {
+        List<Item> items = service.findAll();
+
+        if(items.size() == 0){
+            model.addAttribute("nullStatus", true);
+        }
+        log.debug("Item List 개수: {}개", items.size());
+        model.addAttribute("items", items);
+        return "item/items";
     }
 
     /***
      * id, itemName 별도의 find 메서드 호출
      */
-    @GetMapping("/item")
-    public String selectFindItemMethod(@RequestParam(name = "search-item") String searchItem, Model model) {
+    @GetMapping("item")
+    public String selectFindItemMethod(@RequestParam(name = "search-item") String searchItem, Model model, @RequestHeader("host") String hostUrl ) {
+        Item findItem = getSearchItem(searchItem);
+
+        if(findItem == null){
+            log.debug("redirect hostUrl={}", hostUrl);
+            return "redirect:" + hostUrl;
+        }
+        model.addAttribute("item", findItem);
+
+        return "item/item";
+    }
+
+    private Item getSearchItem(String searchItem) {
         Item findItem;
         try {
             Long itemId = Long.parseLong(searchItem);
@@ -48,15 +76,7 @@ public class ItemController {
         } catch (NumberFormatException e) {
             findItem = findByName(searchItem);
         }
-
-
-        if(findItem == null){
-            return "redirect:/";
-        }
-
-        model.addAttribute("item", findItem);
-
-        return "item/item";
+        return findItem;
     }
 
     private Item findById(Long id) {

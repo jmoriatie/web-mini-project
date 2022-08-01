@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ItemRepositoryImpl implements ItemRepository{
 
     private static Long sequence = 0L;
-    private static Map<Long, Item> storage = new ConcurrentHashMap<>(); // local이라 딱히 동시접속 문제는 없지만 하하
+    private static Map<Long, Item> storage = new ConcurrentHashMap<>(); // 동시접속 문제 해결 hashMap(local이라 딱히 동시접속 문제는 없지만)
 
     @Override
     public Item saveItem(Item item) {
