@@ -48,7 +48,7 @@ public class ItemRepositoryImpl implements ItemRepository{
 
     @Override
     public void updateItem(Long id, Item item) {
-        storage.get(id).update(item.getItemName(), item.getPrice(), item.getQuantity(), item.getBuyUrl());
+        storage.get(id).update(item);
     }
 
     @Override

@@ -18,11 +18,11 @@ public class Item {
         this.buyUrl = buyUrl;
     }
 
-    public void update(String itemName, int price, int quantity, String buyUrl){
-        this.itemName = itemName;
-        this.price = price;
-        this.quantity = quantity;
-        this.buyUrl = buyUrl;
+    public void update(Item item){
+        this.itemName = item.getItemName();
+        this.price = item.getPrice();
+        this.quantity = item.getQuantity();
+        this.buyUrl = item.getBuyUrl();
     }
 
     @Override

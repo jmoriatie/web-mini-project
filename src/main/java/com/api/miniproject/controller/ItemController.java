@@ -30,7 +30,7 @@ public class ItemController {
         Item saveItem = service.saveItem(item);
 
         // 검증하기: 다시 할 수 있는 방법으로 redirectAttributes 여기다가 넣어서, 기존에 입력한 것들은 유지
-        log.debug("item={}", saveItem);
+        log.debug("저장된 item={}", saveItem);
         redirectAttributes.addAttribute("search-item", saveItem.getId());
         redirectAttributes.addAttribute("saveStatus", true);
 
@@ -86,7 +86,6 @@ public class ItemController {
         return findItem;
     }
 
-
     private Item findByName(String itemName) {
         Item findItem = service.findByName(itemName);
         log.debug("findByName={}", itemName);
@@ -94,12 +93,28 @@ public class ItemController {
         return findItem;
     }
 
-    public String updateItem(Long id, Item item) {
-        return "/";
+    @GetMapping("{itemId}/edit")
+    public String updateItemForm(@PathVariable Long itemId, Model model) {
+        Item findItem = findById(itemId);
+        model.addAttribute("item", findItem);
+
+        return "item/editForm";
+    }
+    @PostMapping("{itemId}/edit")
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute Item item, RedirectAttributes redirectAttributes) {
+        service.updateItem(itemId, item);
+        // 검증 필요
+        log.debug("업데이트된 item={}", item);
+        redirectAttributes.addAttribute("search-item", item.getId());
+        redirectAttributes.addAttribute("updateStatus", true);
+
+        return "redirect:/item/item";
     }
 
-    public String deleteItem(Long id) {
-        return "/";
+    @GetMapping("{itemId}/delete")
+    public String deleteItem(@PathVariable Long itemId) {
+        service.deleteItem(itemId);
+        return "redirect:/item/items";
     }
 
     @PostConstruct
