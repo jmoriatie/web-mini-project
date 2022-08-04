@@ -1,4 +1,4 @@
-package com.api.miniproject.dto;
+package com.api.miniproject.domain;
 
 import lombok.Getter;
 import lombok.Setter;

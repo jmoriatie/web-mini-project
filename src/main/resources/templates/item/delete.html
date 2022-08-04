@@ -18,7 +18,6 @@
         <h2>삭제</h2>
     </div>
 
-    <!-- param 은 thymeleaf 에서 파라미터를 꺼낼 수 있도록 지원하는 문법   -->
     <h2 th:if="${param.deleteStatus}" th:text="|상품 번호: [${param.deleteId}] 삭제되었습니다.|"></h2>
 
     <hr class="my-4">
@@ -26,12 +25,12 @@
 
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg" onclick="location.href='items.html'"
-                    th:onclick="|location.href='@{/basic/items}'|"
+                    th:onclick="|location.href='@{/item/items}'|"
                     type="button">목록으로
             </button>
         </div>
-
     </div>
-</div> <!-- /container -->
+</div>
+<!-- /container -->
 </body>
 </html>

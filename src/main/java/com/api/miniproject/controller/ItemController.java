@@ -1,6 +1,6 @@
 package com.api.miniproject.controller;
 
-import com.api.miniproject.dto.Item;
+import com.api.miniproject.domain.Item;
 import com.api.miniproject.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -112,9 +112,12 @@ public class ItemController {
     }
 
     @GetMapping("{itemId}/delete")
-    public String deleteItem(@PathVariable Long itemId) {
+    public String deleteItem(@PathVariable Long itemId, RedirectAttributes redirectAttributes) {
         service.deleteItem(itemId);
-        return "redirect:/item/items";
+        redirectAttributes.addAttribute("deleteStatus", true);
+        redirectAttributes.addAttribute("deleteId", itemId);
+
+        return "redirect:/item/delete";
     }
 
     @PostConstruct

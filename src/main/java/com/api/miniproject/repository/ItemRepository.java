@@ -1,6 +1,6 @@
 package com.api.miniproject.repository;
 
-import com.api.miniproject.dto.Item;
+import com.api.miniproject.domain.Item;
 
 import java.util.List;
 

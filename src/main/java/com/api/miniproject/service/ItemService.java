@@ -1,6 +1,7 @@
 package com.api.miniproject.service;
 
-import com.api.miniproject.dto.Item;
+import com.api.miniproject.domain.Item;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

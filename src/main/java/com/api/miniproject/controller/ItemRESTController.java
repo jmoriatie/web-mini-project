@@ -1,6 +1,6 @@
 package com.api.miniproject.controller;
 
-import com.api.miniproject.dto.Item;
+import com.api.miniproject.domain.Item;
 import com.api.miniproject.service.ItemService;
 import com.api.miniproject.util.StatusEnum;
 import com.api.miniproject.util.StatusMessage;

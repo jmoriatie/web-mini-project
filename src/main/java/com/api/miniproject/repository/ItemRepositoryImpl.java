@@ -1,6 +1,6 @@
 package com.api.miniproject.repository;
 
-import com.api.miniproject.dto.Item;
+import com.api.miniproject.domain.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 

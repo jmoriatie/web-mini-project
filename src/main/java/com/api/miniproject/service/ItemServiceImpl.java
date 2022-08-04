@@ -1,6 +1,6 @@
 package com.api.miniproject.service;
 
-import com.api.miniproject.dto.Item;
+import com.api.miniproject.domain.Item;
 import com.api.miniproject.repository.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

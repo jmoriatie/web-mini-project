@@ -1,7 +1,6 @@
 package com.api.miniproject.repository;
 
-import com.api.miniproject.dto.Item;
-import com.api.miniproject.dto.User;
+import com.api.miniproject.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +15,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserRepositoryImpl implements UserRepository{
 
     private static Long sequence = 0L;
-    private static Map<Long, User> storage = new ConcurrentHashMap<>();
+    private final static Map<Long, User> storage = new ConcurrentHashMap<>();
+
+    @Override
+    public User saveUser(User user) {
+        user.setId(sequence++);
+        storage.put(user.getId(), user);
+        return user;
+    }
 
     @Override
     public List<User> findAll() {
@@ -24,17 +30,14 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        return Optional.empty();
+    public User findById(Long id) {
+        return storage.get(id);
     }
 
     @Override
-    public Optional<User> findByUserInfo(String userId, String userPw) {
-        Optional<User> findUser = findAll().stream()
-                .filter(u -> u.getUserId().equals(userId)).findFirst();
-//        findUser = Optional.ofNullable(findUser).orElseGet()
-
-        return Optional.empty();
+    public Optional<User> findByUserId(String userId) {
+        return Optional.ofNullable(findAll().stream()
+                .filter(u -> u.getUserId().equals(userId)).findFirst().orElseGet(null));
     }
 
     @Override

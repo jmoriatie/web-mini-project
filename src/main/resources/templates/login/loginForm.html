@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 480px;
+        }
+    </style>
+
+    <title>로그인</title>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>로그인</h2>
+        <h3 th:if="${param.isLogin}" th:text="로그인">로그인이 필요합니다</h3>
+
+        <form action="item.html" th:action>
+        <div>
+            <label for="userId"></label>
+            <input type="text" id="userId" name="userId" class="form-control" placeholder="아이디">
+        </div>
+        <div>
+            <label for="userPw"></label>
+            <input type="text" id="userPw" name="userPw" class="form-control" placeholder="비밀번호">
+        </div>
+
+        <hr class="my-4">
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" onclick="location.href='loginForm.html'"
+                        type="submit">로그인
+                </button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
