@@ -13,5 +13,4 @@ public interface ItemService {
     Item findByName(String itemName);
     void updateItem(Long id, Item item);
     void deleteItem(Long id);
-
 }

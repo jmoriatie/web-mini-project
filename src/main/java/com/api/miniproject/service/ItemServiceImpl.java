@@ -13,8 +13,13 @@ import java.util.List;
 @Service
 public class ItemServiceImpl implements ItemService{
 
+
+    private final ItemRepository repo;
+
     @Autowired
-    private ItemRepository repo;
+    public ItemServiceImpl(ItemRepository repo) {
+        this.repo = repo;
+    }
 
     @Override
     public Item saveItem(Item item) {

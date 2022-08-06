@@ -14,9 +14,19 @@
 <body>
 <div class="container">
     <div class="py-5 text-center">
-        <h2>로그인</h2>
-        <div>
-            <button th:href="|location.href='@/item/items}'|">아이템 목록</button>
+        <h2>메인페이지</h2>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg"
+                        onclick="location.href='/login/loginFrom.html'"
+                        th:onclick="|location.href='@{/login}'|">로그인</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg"
+                        onclick="location.href='/item/items.html'"
+                        th:onclick="|location.href='@{/item/items}'|">아이템 목록</button>
+            </div>
         </div>
     </div>
 </div>

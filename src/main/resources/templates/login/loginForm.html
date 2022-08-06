@@ -9,6 +9,9 @@
         .container {
             max-width: 480px;
         }
+        .err-message{
+            color: red;
+        }
     </style>
 
     <title>로그인</title>
@@ -17,16 +20,17 @@
 <div class="container">
     <div class="py-5 text-center">
         <h2>로그인</h2>
-        <h3 th:if="${param.isLogin}" th:text="로그인">로그인이 필요합니다</h3>
 
-        <form action="item.html" th:action>
+        <form action="loginForm.html" method="post" th:action th:object="${loginDto}">
         <div>
             <label for="userId"></label>
-            <input type="text" id="userId" name="userId" class="form-control" placeholder="아이디">
+            <input type="text" id="userId" name="userId" th:field="*{userId}" class="form-control" placeholder="아이디">
+            <span class="err-message" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">id Error!</span>
         </div>
         <div>
             <label for="userPw"></label>
-            <input type="text" id="userPw" name="userPw" class="form-control" placeholder="비밀번호">
+            <input type="password" id="userPw" name="userPw" th:field="*{userPw}" class="form-control" placeholder="비밀번호">
+            <span class="err-message" th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}">pw Error!</span>
         </div>
 
         <hr class="my-4">

@@ -54,6 +54,7 @@
                     type="button">목록으로
             </button>
         </div>
+
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg" onclick="location.href='items.html'"
                     th:onclick="|location.href='@{/item/{itemId}/delete(itemId=${item.id})}'|"

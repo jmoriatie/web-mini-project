@@ -17,6 +17,7 @@ public class ItemRepositoryImpl implements ItemRepository{
     @Override
     public Item saveItem(Item item) {
         item.setId(sequence++);
+        log.info("saveItem={}", item.toString());
         storage.put(item.getId(), item);
         return item;
     }

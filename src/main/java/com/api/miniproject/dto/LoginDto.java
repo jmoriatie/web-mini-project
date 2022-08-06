@@ -9,8 +9,16 @@ import javax.validation.constraints.NotBlank;
 public class LoginDto {
 
     @NotBlank
-    String id;
+    String userId;
 
     @NotBlank
-    String password;
+    String userPw;
+
+    public LoginDto() {
+    }
+
+    public LoginDto(String userId, String userPw) {
+        this.userId = userId;
+        this.userPw = userPw;
+    }
 }

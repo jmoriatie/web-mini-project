@@ -21,6 +21,7 @@ public class UserRepositoryImpl implements UserRepository{
     public User saveUser(User user) {
         user.setId(sequence++);
         storage.put(user.getId(), user);
+        log.info("saveUser={}", user.toString());
         return user;
     }
 
@@ -36,8 +37,10 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public Optional<User> findByUserId(String userId) {
-        return Optional.ofNullable(findAll().stream()
-                .filter(u -> u.getUserId().equals(userId)).findFirst().orElseGet(null));
+        Optional<User> user = findAll().stream()
+                .filter(u -> u.getUserId().equals(userId)).findFirst();
+        log.info("is there user? ={}", user);
+        return user;
     }
 
     @Override

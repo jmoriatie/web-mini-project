@@ -104,7 +104,7 @@ public class ItemController {
     public String updateItem(@PathVariable Long itemId, @ModelAttribute Item item, RedirectAttributes redirectAttributes) {
         service.updateItem(itemId, item);
         // 검증 필요
-        log.debug("업데이트된 item={}", item);
+        log.info("업데이트된 item={}", item);
         redirectAttributes.addAttribute("search-item", item.getId());
         redirectAttributes.addAttribute("updateStatus", true);
 
@@ -128,9 +128,9 @@ public class ItemController {
         service.saveItem(item1);
         service.saveItem(item2);
         service.saveItem(item3);
-        log.debug("아이템 생성={}", item1.toString());
-        log.debug("아이템 생성={}", item2.toString());
-        log.debug("아이템 생성={}", item3.toString());
+        log.debug("테스트 아이템 생성={}", item1.toString());
+        log.debug("테스트 아이템 생성={}", item2.toString());
+        log.debug("테스트 아이템 생성={}", item3.toString());
     }
 
 }
