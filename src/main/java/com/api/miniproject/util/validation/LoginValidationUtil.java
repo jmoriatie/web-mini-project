@@ -1,4 +1,4 @@
-package com.api.miniproject.util;
+package com.api.miniproject.util.validation;
 
 import com.api.miniproject.dto.LoginDto;
 import lombok.extern.slf4j.Slf4j;

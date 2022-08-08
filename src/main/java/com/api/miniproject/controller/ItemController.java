@@ -2,6 +2,7 @@ package com.api.miniproject.controller;
 
 import com.api.miniproject.domain.Item;
 import com.api.miniproject.service.ItemService;
+import com.api.miniproject.util.loginCheck.LoginCheck;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService service;
+
 
     @GetMapping("add")
     public String saveItemForm(){
@@ -41,6 +43,7 @@ public class ItemController {
 
     @GetMapping("items")
     public String findAll(Model model) {
+
         List<Item> items = service.findAll();
 
         if(items.size() == 0){

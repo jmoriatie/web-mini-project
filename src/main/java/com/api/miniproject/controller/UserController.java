@@ -3,8 +3,8 @@ package com.api.miniproject.controller;
 import com.api.miniproject.domain.User;
 import com.api.miniproject.dto.LoginDto;
 import com.api.miniproject.service.UserService;
-import com.api.miniproject.util.LoginValidationUtil;
-import com.api.miniproject.util.SessionConst;
+import com.api.miniproject.util.validation.LoginValidationUtil;
+import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,9 +24,11 @@ public class UserController {
 
     private final UserService service;
 
+    // 아이템을 유저단위로 연결 (id 값을 index로)
+    // aop 적용 방법... >> getObj[]
 
     @GetMapping
-    public String loginForm(Model model){
+    public String loginForm(Model model) {
         model.addAttribute("loginDto", new LoginDto());
         return "login/loginForm";
     }
@@ -37,16 +39,12 @@ public class UserController {
             BindingResult bindingResult,
             HttpServletRequest request,
             @RequestParam(defaultValue = "/item/items") String requestURL
-            ){
-
-        log.debug("dto info = id:{} / pw:{}", loginDto.getUserId(), loginDto.getUserPw());
+    ) {
 
         User user = service.login(loginDto.getUserId(), loginDto.getUserPw());
 
         LoginValidationUtil loginValidationUtil = new LoginValidationUtil();
-
-        if(loginValidationUtil.validation(loginDto, bindingResult)){
-            log.debug("hasError={}", "에러에러");
+        if (loginValidationUtil.validation(loginDto, bindingResult)) {
             return "/login/loginForm";
         }
         log.info("login user = id:{} / pw:{}", user.getId(), user.getUserPw());
@@ -59,7 +57,7 @@ public class UserController {
     }
 
     @PostConstruct
-    void setTestId(){
+    void setTestId() {
         User user1 = new User("test", "test", "NaTest");
         User user2 = new User("a", "a", "김에이");
 
