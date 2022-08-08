@@ -1,12 +1,15 @@
 package com.api.miniproject.service;
 
 import com.api.miniproject.domain.Item;
+import com.api.miniproject.domain.User;
 import com.api.miniproject.repository.ItemRepository;
+import com.api.miniproject.util.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -29,6 +32,11 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public List<Item> findAll() {
         return repo.findAll();
+    }
+
+    @Override
+    public List<Item> findUserItems(Long userId) {
+        return repo.findUserItems(userId);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class ItemRepositoryImpl implements ItemRepository{
 
     @Override
     public Item saveItem(Item item) {
-        item.setId(sequence++);
+        item.setId(++sequence);
         log.info("saveItem={}", item.toString());
         storage.put(item.getId(), item);
         return item;
@@ -24,9 +24,21 @@ public class ItemRepositoryImpl implements ItemRepository{
 
     @Override
     public List<Item> findAll() {
-        List<Item> items = new ArrayList<>( storage.values() );
-        return items;
+        return new ArrayList<>( storage.values() );
     }
+
+    @Override
+    public List<Item> findUserItems(Long userId) {
+        List<Item> items = new ArrayList<>( storage.values() );
+        List<Item> findUserItems = new ArrayList<>();
+        for (Item item : items) {
+            if(item.getUserId().equals(userId)){
+                findUserItems.add(item);
+            }
+        }
+        return findUserItems;
+    }
+
 
     @Override
     public Item findById(Long id) {

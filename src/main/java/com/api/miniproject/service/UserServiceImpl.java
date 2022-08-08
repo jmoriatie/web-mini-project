@@ -2,10 +2,14 @@ package com.api.miniproject.service;
 
 import com.api.miniproject.domain.User;
 import com.api.miniproject.repository.UserRepository;
+import com.api.miniproject.util.session.SessionUtil;
+import com.api.miniproject.util.validation.LoginValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+
+// 로그아웃, 로그인 되어있을 때 검증 -> 로그인 검증하는 그거 LoginValidationUtil 로 만들기, 유저 삭제
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -26,5 +30,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public User saveUser(User user) {
         return repo.saveUser(user);
+    }
+
+    @Override
+    public void logout() {
+        SessionUtil.sessionInvalidate();
     }
 }

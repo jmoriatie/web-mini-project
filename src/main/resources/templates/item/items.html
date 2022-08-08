@@ -13,7 +13,6 @@
     </div>
 
     <h2 th:if="${nullStatus}" >저장된 아이템이 없습니다.</h2>
-    <h2 th:if="${loginUser}" th:text="${loginUserName}님 환영합니다.">저장된 아이템이 없습니다.</h2>
 
     <div class="row">
         <div class="col">
@@ -21,6 +20,10 @@
                     onclick="location.href='addForm.html'"
                     th:onclick="|location.href='@{/item/add}'|"
                     type="button">상품 등록</button>
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='/login/loginForm.html'"
+                    th:onclick="|location.href='@{/logout}'|"
+                    type="button">로그아웃</button>
         </div>
     </div>
 

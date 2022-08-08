@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/")
 public class HomeController {
 
-    // item 관련 메서드에 접근하기 전에 login 확인하는 aop 작성
+    // item 관련 메서드에 접근하기 전에 login 확인하는 aop 작성 -> interceptor로 바꿈..
 
     @GetMapping
     public String home(HttpServletRequest request, RedirectAttributes redirectAttributes){

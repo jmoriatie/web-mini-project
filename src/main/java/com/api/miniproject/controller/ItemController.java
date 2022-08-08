@@ -2,7 +2,8 @@ package com.api.miniproject.controller;
 
 import com.api.miniproject.domain.Item;
 import com.api.miniproject.service.ItemService;
-import com.api.miniproject.util.loginCheck.LoginCheck;
+import com.api.miniproject.util.session.SessionUtil;
+import com.api.miniproject.util.validation.LoginValidationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -20,8 +22,7 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService service;
-
-
+    
     @GetMapping("add")
     public String saveItemForm(){
         return "item/addForm";
@@ -29,6 +30,9 @@ public class ItemController {
 
     @PostMapping("add")
     public String saveItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
+        Long userId = SessionUtil.getUserSessionId();
+        item.setUserId(userId); // foreign key
+
         Item saveItem = service.saveItem(item);
 
         // 검증하기: 다시 할 수 있는 방법으로 redirectAttributes 여기다가 넣어서, 기존에 입력한 것들은 유지
@@ -36,15 +40,14 @@ public class ItemController {
         redirectAttributes.addAttribute("search-item", saveItem.getId());
         redirectAttributes.addAttribute("saveStatus", true);
 
-//        redirectAttributes.addAttribute("itemId", saveItem.getId()); // itemId 에 id 값을 저장해줌
-//        return "redirect:/item/item?search-item={itemId}"; // redirectAttributes 의 itemId 나머지는 파라미터로 넘어감
         return "redirect:/item/item";
     }
 
+
     @GetMapping("items")
     public String findAll(Model model) {
-
-        List<Item> items = service.findAll();
+        Long userId = SessionUtil.getUserSessionId();
+        List<Item> items = service.findUserItems(userId);
 
         if(items.size() == 0){
             model.addAttribute("nullStatus", true);
@@ -56,6 +59,7 @@ public class ItemController {
 
     /***
      * id, itemName 별도의 find 메서드 호출
+     * ??? : 아이템은 아무나 볼 수 있게 해놓는건가? 수정을 할 수가 있는데?
      */
     @GetMapping("item")
     public String selectFindItemMethod(@RequestParam(name = "search-item") String searchItem, Model model, @RequestHeader("host") String hostUrl ) {
@@ -125,9 +129,9 @@ public class ItemController {
 
     @PostConstruct
     public void setTestItem() {
-        Item item1 = new Item("itemA", 30000, 100, "www.test1.com");
-        Item item2 = new Item("itemB", 50000, 75, "www.test2.com");
-        Item item3 = new Item("itemC", 100000, 50, "www.test3.com");
+        Item item1 = new Item("itemA", 30000, 100, "www.test1.com", 1L);
+        Item item2 = new Item("itemB", 50000, 75, "www.test2.com", 1L);
+        Item item3 = new Item("itemC", 100000, 50, "www.test3.com", 1L);
         service.saveItem(item1);
         service.saveItem(item2);
         service.saveItem(item3);

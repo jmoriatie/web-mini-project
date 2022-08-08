@@ -3,6 +3,7 @@ package com.api.miniproject.controller;
 import com.api.miniproject.domain.User;
 import com.api.miniproject.dto.LoginDto;
 import com.api.miniproject.service.UserService;
+import com.api.miniproject.util.session.SessionUtil;
 import com.api.miniproject.util.validation.LoginValidationUtil;
 import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -18,33 +20,27 @@ import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
-@RequestMapping("/login")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService service;
 
-    // 아이템을 유저단위로 연결 (id 값을 index로)
-    // aop 적용 방법... >> getObj[]
-
-    @GetMapping
-    public String loginForm(Model model) {
+    @GetMapping("/login")
+    public String loginForm(Model model, HttpServletRequest request) {
         model.addAttribute("loginDto", new LoginDto());
         return "login/loginForm";
     }
 
-    @PostMapping
+    @PostMapping("/login")
     public String login(
             @ModelAttribute LoginDto loginDto,
             BindingResult bindingResult,
             HttpServletRequest request,
             @RequestParam(defaultValue = "/item/items") String requestURL
     ) {
-
         User user = service.login(loginDto.getUserId(), loginDto.getUserPw());
 
-        LoginValidationUtil loginValidationUtil = new LoginValidationUtil();
-        if (loginValidationUtil.validation(loginDto, bindingResult)) {
+        if (LoginValidationUtil.validation(loginDto, bindingResult)) {
             return "/login/loginForm";
         }
         log.info("login user = id:{} / pw:{}", user.getId(), user.getUserPw());
@@ -54,6 +50,12 @@ public class UserController {
         log.info("save in session={}", session.getAttribute(SessionConst.LOGIN_USER));
 
         return "redirect:" + requestURL;
+    }
+
+    @GetMapping("/logout")
+    public String logout(){
+        service.logout();
+        return "redirect:/login";
     }
 
     @PostConstruct

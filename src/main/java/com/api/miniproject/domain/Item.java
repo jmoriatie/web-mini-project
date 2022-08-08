@@ -11,11 +11,15 @@ public class Item {
     private int quantity;
     private String buyUrl;
 
-    public Item(String itemName, int price, int quantity, String buyUrl) {
+    // 유저아이디
+    private Long userId;
+
+    public Item(String itemName, int price, int quantity, String buyUrl, Long userId) {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
         this.buyUrl = buyUrl;
+        this.userId = userId; // 해당 유저 소유 아이템
     }
 
     public void update(Item item){

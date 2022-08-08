@@ -19,7 +19,7 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public User saveUser(User user) {
-        user.setId(sequence++);
+        user.setId(++sequence);
         storage.put(user.getId(), user);
         log.info("saveUser={}", user.toString());
         return user;
