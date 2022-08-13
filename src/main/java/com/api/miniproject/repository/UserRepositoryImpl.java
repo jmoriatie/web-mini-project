@@ -37,10 +37,8 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public Optional<User> findByUserId(String userId) {
-        Optional<User> user = findAll().stream()
+        return findAll().stream()
                 .filter(u -> u.getUserId().equals(userId)).findFirst();
-        log.info("is there user? ={}", user);
-        return user;
     }
 
     @Override

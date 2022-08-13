@@ -9,9 +9,14 @@
         .container {
             max-width: 480px;
         }
-        .err-message{
+
+        .err-message {
             color: red;
         }
+
+        /*.form-control{*/
+        /*    border-color: red;*/
+        /*}*/
     </style>
 
     <title>로그인</title>
@@ -20,27 +25,32 @@
 <div class="container">
     <div class="py-5 text-center">
         <h2>로그인</h2>
-
         <form action="loginForm.html" method="post" th:action th:object="${loginDto}">
-        <div>
-            <label for="userId"></label>
-            <input type="text" id="userId" name="userId" th:field="*{userId}" class="form-control" placeholder="아이디">
-            <span class="err-message" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">id Error!</span>
-        </div>
-        <div>
-            <label for="userPw"></label>
-            <input type="password" id="userPw" name="userPw" th:field="*{userPw}" class="form-control" placeholder="비밀번호">
-            <span class="err-message" th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}">pw Error!</span>
-        </div>
-
-        <hr class="my-4">
-        <div class="row">
-            <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" onclick="location.href='loginForm.html'"
-                        type="submit">로그인
-                </button>
+            <div>
+                <label for="userId"></label>
+                <input type="text" id="userId" name="userId" th:field="*{userId}" class="form-control"
+                       placeholder="아이디">
+                <span class="err-message" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">id Error!</span>
             </div>
-        </div>
+            <div>
+                <label for="userPw"></label>
+                <input type="password" id="userPw" name="userPw" th:field="*{userPw}" class="form-control"
+                       placeholder="비밀번호">
+                <span class="err-message" th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}">pw Error!</span>
+            </div>
+
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="err-message" th:each="err : ${#fields.hasGlobalErrors()}" th:text="${err}">user are not Exist!</p>
+            </div>
+
+            <hr class="my-4">
+            <div class="row">
+                <div class="col">
+                    <button class="w-100 btn btn-primary btn-lg" onclick="location.href='loginForm.html'"
+                            type="submit">로그인
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
