@@ -3,16 +3,24 @@ package com.api.miniproject.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Getter @Setter
 public class Item {
+    @NotNull
     private Long id;
-    private String itemName;
-    private int price;
-    private int quantity;
-    private String buyUrl;
 
+    private String itemName;
+    private Integer price;
+    private Integer quantity;
+    private String buyUrl;
     // 유저아이디
     private Long userId;
+
+    public Item(){
+
+    }
 
     public Item(String itemName, int price, int quantity, String buyUrl, Long userId) {
         this.itemName = itemName;

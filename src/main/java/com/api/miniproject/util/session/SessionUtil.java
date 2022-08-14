@@ -1,13 +1,9 @@
 package com.api.miniproject.util.session;
 
 import com.api.miniproject.domain.User;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.lang.Nullable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class SessionUtil {
@@ -41,7 +37,7 @@ public class SessionUtil {
         }
     }
 
-    public static Long getUserSessionId() {
+    public static Long getUserIdFromSession() {
         User user = (User) getSession().getAttribute(SessionConst.LOGIN_USER);
         return user.getId();
     }

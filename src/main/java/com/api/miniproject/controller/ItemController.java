@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,13 +27,18 @@ public class ItemController {
     private final ItemService service;
     
     @GetMapping("add")
-    public String saveItemForm(){
+    public String saveItemForm(Model model){
+        model.addAttribute("item", new Item());
         return "item/addForm";
     }
 
     @PostMapping("add")
-    public String saveItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
-        Long userId = SessionUtil.getUserSessionId();
+    public String saveItem(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        // TODO : 검증 별도 분리 필요, message 관련 고도화 필요
+        boolean validation = itemValidation(item, bindingResult);
+        if (!validation) return "item/addForm";
+
+        Long userId = SessionUtil.getUserIdFromSession();
         item.setUserId(userId); // foreign key
 
         Item saveItem = service.saveItem(item);
@@ -43,10 +51,29 @@ public class ItemController {
         return "redirect:/item/item";
     }
 
+    private boolean itemValidation(Item item, BindingResult bindingResult) {
+        // TODO : 타 클래스에서도 사용 가능하도록 고도화 필요
+        if(!StringUtils.hasText(item.getItemName())){
+            bindingResult.rejectValue("itemName", "itemName", "상품의 이름을 입력하세요");
+        }
+
+        if(item.getPrice() == null || item.getPrice() <= 10){
+            bindingResult.rejectValue("price", "price", "가격을 확인하세요");
+        }
+
+        if(item.getQuantity() == null || item.getQuantity() <= 0){
+            bindingResult.rejectValue("quantity", "quantity", "수량을 확인하세요");
+        }
+        if(bindingResult.hasErrors()){
+            return false;
+        }
+        return true;
+    }
+
 
     @GetMapping("items")
     public String findAll(Model model) {
-        Long userId = SessionUtil.getUserSessionId();
+        Long userId = SessionUtil.getUserIdFromSession();
         List<Item> items = service.findUserItems(userId);
 
         if(items.size() == 0){
@@ -59,7 +86,7 @@ public class ItemController {
 
     /***
      * id, itemName 별도의 find 메서드 호출
-     * ??? : 아이템은 아무나 볼 수 있게 해놓는건가? 수정을 할 수가 있는데?
+     * TODO : 개별 아이템에 대한 처리는 interceptor 에서 안하나?
      */
     @GetMapping("item")
     public String selectFindItemMethod(@RequestParam(name = "search-item") String searchItem, Model model, @RequestHeader("host") String hostUrl ) {
@@ -108,7 +135,10 @@ public class ItemController {
         return "item/editForm";
     }
     @PostMapping("{itemId}/edit")
-    public String updateItem(@PathVariable Long itemId, @ModelAttribute Item item, RedirectAttributes redirectAttributes) {
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        boolean validation = itemValidation(item, bindingResult);
+        if (!validation) return "item/editForm";
+
         service.updateItem(itemId, item);
         // 검증 필요
         log.info("업데이트된 item={}", item);
@@ -139,5 +169,4 @@ public class ItemController {
         log.debug("테스트 아이템 생성={}", item2.toString());
         log.debug("테스트 아이템 생성={}", item3.toString());
     }
-
 }

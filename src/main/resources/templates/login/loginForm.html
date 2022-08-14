@@ -40,7 +40,7 @@
             </div>
 
             <div th:if="${#fields.hasGlobalErrors()}">
-                <p class="err-message" th:each="err : ${#fields.hasGlobalErrors()}" th:text="${err}">user are not Exist!</p>
+                <p class="err-message" th:each="err : ${#fields.globalErrors()}" th:text="${err}">user are not Exist!</p>
             </div>
 
             <hr class="my-4">

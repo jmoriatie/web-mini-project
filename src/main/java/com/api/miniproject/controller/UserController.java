@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -50,9 +52,16 @@ public class UserController {
             bindingResult.addError(new FieldError("loginDto", "userPw", "비밀번호를 입력해주세요"));
         }
 
+        // field validation 이후
+        if(bindingResult.hasErrors()){
+            log.info("errors = {}", bindingResult);
+            return "/login/loginForm";
+        }
+
         User user = service.login(loginDto.getUserId(), loginDto.getUserPw());
         log.debug("user?! : {}", user);
 
+        // 아이디가 없는 경우
         if(user == null){
             bindingResult.addError(new ObjectError("loginDto", "아이디 또는 비밀번호를 확인하세요."));
         }
@@ -61,16 +70,17 @@ public class UserController {
             log.info("errors = {}", bindingResult);
             return "/login/loginForm";
         }
-
-        this.setSession(request, user);
-
+        this.setSession(user); // 세션 셋팅
 
         return "redirect:/";
     }
 
-    private void setSession(HttpServletRequest request, User user) {
-        HttpSession session = request.getSession();
+    private void setSession(User user) {
+        ServletRequestAttributes attribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attribute.getRequest().getSession();
+
         session.setAttribute(SessionConst.LOGIN_USER, user);
+
         log.info("save in session={}", session.getAttribute(SessionConst.LOGIN_USER));
         log.info("login user = id:{} / pw:{}", user.getId(), user.getUserPw());
     }
