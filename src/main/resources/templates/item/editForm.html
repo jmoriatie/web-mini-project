@@ -14,13 +14,16 @@
             border-color: #dc3545;
             color: #dc3545;
         }
+        .err-message{
+            color: red;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="py-5 text-center">
         <h2>상품 수정 폼</h2></div>
-    <form action="item.html" th:action th:object="${item}">
+    <form action="item.html" th:action th:object="${item}" method="post">
         <div>
             <label for="id">상품 ID</label>
             <input type="text" id="id" name="id" class="form-control" value="1" th:value="*{id}" readonly>
@@ -63,6 +66,5 @@
         </div>
     </form>
 </div>
-<!-- /container -->
 </body>
 </html>

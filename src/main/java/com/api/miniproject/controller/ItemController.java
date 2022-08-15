@@ -53,6 +53,7 @@ public class ItemController {
 
     private boolean itemValidation(Item item, BindingResult bindingResult) {
         // TODO : 타 클래스에서도 사용 가능하도록 고도화 필요
+
         if(!StringUtils.hasText(item.getItemName())){
             bindingResult.rejectValue("itemName", "itemName", "상품의 이름을 입력하세요");
         }
@@ -65,6 +66,7 @@ public class ItemController {
             bindingResult.rejectValue("quantity", "quantity", "수량을 확인하세요");
         }
         if(bindingResult.hasErrors()){
+            log.info("item validation has Error = {}", item);
             return false;
         }
         return true;
@@ -106,19 +108,14 @@ public class ItemController {
         try {
             Long itemId = Long.parseLong(searchItem);
             log.debug("itemId={}", itemId);
-            findItem = findById(itemId);
+            findItem = service.findById(itemId);
         } catch (NumberFormatException e) {
             findItem = findByName(searchItem);
         }
         return findItem;
     }
 
-    private Item findById(Long id) {
-        Item findItem = service.findById(id);
-        log.debug("findById={}", findItem);
 
-        return findItem;
-    }
 
     private Item findByName(String itemName) {
         Item findItem = service.findByName(itemName);
@@ -129,11 +126,12 @@ public class ItemController {
 
     @GetMapping("{itemId}/edit")
     public String updateItemForm(@PathVariable Long itemId, Model model) {
-        Item findItem = findById(itemId);
+        Item findItem = service.findById(itemId);
         model.addAttribute("item", findItem);
 
         return "item/editForm";
     }
+
     @PostMapping("{itemId}/edit")
     public String updateItem(@PathVariable Long itemId, @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         boolean validation = itemValidation(item, bindingResult);

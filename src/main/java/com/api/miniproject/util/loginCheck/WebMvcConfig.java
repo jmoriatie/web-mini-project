@@ -12,6 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/*")
                 .addPathPatterns("/item/*")
+                .addPathPatterns("/item/*/edit")
                 .excludePathPatterns("/login", "/logout"); // 제외시킬 경로
     }
 }
