@@ -3,7 +3,6 @@ package com.api.miniproject.controller;
 import com.api.miniproject.domain.User;
 import com.api.miniproject.dto.LoginDto;
 import com.api.miniproject.service.UserService;
-import com.api.miniproject.util.validation.LoginValidationUtil;
 import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +19,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Slf4j
 @Controller
@@ -45,11 +41,11 @@ public class UserController {
     ) {
         // TODO: 리펙토링 필요, 코드 지저분
         if (!StringUtils.hasText(loginDto.getUserId())){
-            bindingResult.addError(new FieldError("loginDto", "userId", "아이디를 입력해주세요"));
+            bindingResult.rejectValue("userId", "required");
         }
 
         if (!StringUtils.hasText(loginDto.getUserPw())){
-            bindingResult.addError(new FieldError("loginDto", "userPw", "비밀번호를 입력해주세요"));
+            bindingResult.rejectValue("userPw", "required");
         }
 
         // field validation 이후
@@ -63,7 +59,7 @@ public class UserController {
 
         // 아이디가 없는 경우
         if(user == null){
-            bindingResult.addError(new ObjectError("loginDto", "아이디 또는 비밀번호를 확인하세요."));
+            bindingResult.reject("notExistUser");
         }
 
         if(bindingResult.hasErrors()){

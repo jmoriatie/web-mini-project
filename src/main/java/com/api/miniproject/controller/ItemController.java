@@ -3,19 +3,18 @@ package com.api.miniproject.controller;
 import com.api.miniproject.domain.Item;
 import com.api.miniproject.service.ItemService;
 import com.api.miniproject.util.session.SessionUtil;
-import com.api.miniproject.util.validation.LoginValidationUtil;
+import com.api.miniproject.util.validation.ItemValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -25,7 +24,14 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService service;
-    
+    private final ItemValidator itemValidator;
+
+    // 이 controller 부를 때마다 WebDataBinder 만들어지고, 거기다가 Validator를 넣어놓음
+    @InitBinder
+    public void init(WebDataBinder dataBinder){
+        dataBinder.addValidators(itemValidator);
+    }
+
     @GetMapping("add")
     public String saveItemForm(Model model){
         model.addAttribute("item", new Item());
@@ -33,45 +39,31 @@ public class ItemController {
     }
 
     @PostMapping("add")
-    public String saveItem(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        // TODO : 검증 별도 분리 필요, message 관련 고도화 필요
-        boolean validation = itemValidation(item, bindingResult);
-        if (!validation) return "item/addForm";
+    public String saveItem(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        log.info("objectName={}", bindingResult.getObjectName());
+        log.info("target={}", bindingResult.getTarget());
+
+        // 상단의 @InitBinder 와 @Validated 어노테이션으로 대체 됨
+//        if(itemValidator.supports(item.getClass())){
+//            itemValidator.validate(item, bindingResult);
+//        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "item/addForm";
+        }
 
         Long userId = SessionUtil.getUserIdFromSession();
         item.setUserId(userId); // foreign key
 
         Item saveItem = service.saveItem(item);
-
-        // 검증하기: 다시 할 수 있는 방법으로 redirectAttributes 여기다가 넣어서, 기존에 입력한 것들은 유지
-        log.debug("저장된 item={}", saveItem);
         redirectAttributes.addAttribute("search-item", saveItem.getId());
         redirectAttributes.addAttribute("saveStatus", true);
+        log.info("저장된 item={}", saveItem);
 
         return "redirect:/item/item";
     }
-
-    private boolean itemValidation(Item item, BindingResult bindingResult) {
-        // TODO : 타 클래스에서도 사용 가능하도록 고도화 필요
-
-        if(!StringUtils.hasText(item.getItemName())){
-            bindingResult.rejectValue("itemName", "itemName", "상품의 이름을 입력하세요");
-        }
-
-        if(item.getPrice() == null || item.getPrice() <= 10){
-            bindingResult.rejectValue("price", "price", "가격을 확인하세요");
-        }
-
-        if(item.getQuantity() == null || item.getQuantity() <= 0){
-            bindingResult.rejectValue("quantity", "quantity", "수량을 확인하세요");
-        }
-        if(bindingResult.hasErrors()){
-            log.info("item validation has Error = {}", item);
-            return false;
-        }
-        return true;
-    }
-
 
     @GetMapping("items")
     public String findAll(Model model) {
@@ -133,9 +125,12 @@ public class ItemController {
     }
 
     @PostMapping("{itemId}/edit")
-    public String updateItem(@PathVariable Long itemId, @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        boolean validation = itemValidation(item, bindingResult);
-        if (!validation) return "item/editForm";
+    public String updateItem(@PathVariable Long itemId, @Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            return "item/editForm";
+        }
 
         service.updateItem(itemId, item);
         // 검증 필요

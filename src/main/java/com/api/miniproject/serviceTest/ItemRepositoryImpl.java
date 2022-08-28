@@ -1,4 +1,4 @@
-package com.api.miniproject.repository;
+package com.api.miniproject.serviceTest;
 
 import com.api.miniproject.domain.Item;
 import lombok.extern.slf4j.Slf4j;

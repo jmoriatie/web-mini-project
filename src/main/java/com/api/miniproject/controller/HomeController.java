@@ -2,7 +2,6 @@ package com.api.miniproject.controller;
 
 import com.api.miniproject.domain.User;
 import com.api.miniproject.util.session.SessionConst;
-import com.api.miniproject.util.loginCheck.LoginCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

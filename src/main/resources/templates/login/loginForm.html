@@ -30,13 +30,13 @@
                 <label for="userId"></label>
                 <input type="text" id="userId" name="userId" th:field="*{userId}" class="form-control"
                        placeholder="아이디">
-                <span class="err-message" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}">id Error!</span>
+                <span class="err-message" th:errors="*{userId}">id Error!</span>
             </div>
             <div>
                 <label for="userPw"></label>
                 <input type="password" id="userPw" name="userPw" th:field="*{userPw}" class="form-control"
                        placeholder="비밀번호">
-                <span class="err-message" th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}">pw Error!</span>
+                <span class="err-message" th:errors="*{userPw}">pw Error!</span>
             </div>
 
             <div th:if="${#fields.hasGlobalErrors()}">

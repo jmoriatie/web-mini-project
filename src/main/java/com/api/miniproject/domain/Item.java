@@ -36,4 +36,16 @@ public class Item {
         this.quantity = item.getQuantity();
         this.buyUrl = item.getBuyUrl();
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", itemName='" + itemName + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", buyUrl='" + buyUrl + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 }
