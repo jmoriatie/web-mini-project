@@ -1,5 +1,7 @@
 package com.api.miniproject.domain;
 
+import com.api.miniproject.dto.ItemSaveDto;
+import com.api.miniproject.dto.ItemUpdateDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,9 +20,8 @@ public class Item {
     // 유저아이디
     private Long userId;
 
-    public Item(){
 
-    }
+    public Item(){    }
 
     public Item(String itemName, int price, int quantity, String buyUrl, Long userId) {
         this.itemName = itemName;
@@ -28,6 +29,21 @@ public class Item {
         this.quantity = quantity;
         this.buyUrl = buyUrl;
         this.userId = userId; // 해당 유저 소유 아이템
+    }
+
+    public Item(ItemSaveDto itemSaveDto) {
+        this.itemName = itemSaveDto.getItemName();
+        this.price = itemSaveDto.getPrice();
+        this.quantity = itemSaveDto.getQuantity();
+        this.buyUrl = itemSaveDto.getBuyUrl();
+        this.userId = itemSaveDto.getUserId(); // 해당 유저 소유 아이템
+    }
+
+    public Item(ItemUpdateDto itemUpdateDto) {
+        this.itemName = itemUpdateDto.getItemName();
+        this.price = itemUpdateDto.getPrice();
+        this.quantity = itemUpdateDto.getQuantity();
+        this.buyUrl = itemUpdateDto.getBuyUrl();
     }
 
     public void update(Item item){

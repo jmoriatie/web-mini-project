@@ -1,6 +1,8 @@
 package com.api.miniproject.controller;
 
 import com.api.miniproject.domain.Item;
+import com.api.miniproject.dto.ItemSaveDto;
+import com.api.miniproject.dto.ItemUpdateDto;
 import com.api.miniproject.service.ItemService;
 import com.api.miniproject.util.session.SessionUtil;
 import com.api.miniproject.util.validation.ItemValidator;
@@ -24,13 +26,13 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService service;
-    private final ItemValidator itemValidator;
-
-    // 이 controller 부를 때마다 WebDataBinder 만들어지고, 거기다가 Validator를 넣어놓음
-    @InitBinder
-    public void init(WebDataBinder dataBinder){
-        dataBinder.addValidators(itemValidator);
-    }
+//    private final ItemValidator itemValidator;
+//
+//    // 이 controller 부를 때마다 WebDataBinder 만들어지고, 거기다가 Validator를 넣어놓음
+//    @InitBinder
+//    public void init(WebDataBinder dataBinder){
+//        dataBinder.addValidators(itemValidator);
+//    }
 
     @GetMapping("add")
     public String saveItemForm(Model model){
@@ -39,28 +41,26 @@ public class ItemController {
     }
 
     @PostMapping("add")
-    public String saveItem(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String saveItem(@Validated @ModelAttribute("item") ItemSaveDto itemSaveDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         log.info("objectName={}", bindingResult.getObjectName());
         log.info("target={}", bindingResult.getTarget());
-
-        // 상단의 @InitBinder 와 @Validated 어노테이션으로 대체 됨
-//        if(itemValidator.supports(item.getClass())){
-//            itemValidator.validate(item, bindingResult);
-//        }
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "item/addForm";
         }
 
+        // 정상 로직
         Long userId = SessionUtil.getUserIdFromSession();
-        item.setUserId(userId); // foreign key
+        itemSaveDto.setUserId(userId); // foreign key
 
-        Item saveItem = service.saveItem(item);
-        redirectAttributes.addAttribute("search-item", saveItem.getId());
+        Item saveItem = new Item(itemSaveDto);
+        Item savedItem = service.saveItem(saveItem);
+
+        redirectAttributes.addAttribute("search-item", savedItem.getId());
         redirectAttributes.addAttribute("saveStatus", true);
-        log.info("저장된 item={}", saveItem);
+        log.info("저장된 item={}", savedItem);
 
         return "redirect:/item/item";
     }
@@ -120,22 +120,23 @@ public class ItemController {
     public String updateItemForm(@PathVariable Long itemId, Model model) {
         Item findItem = service.findById(itemId);
         model.addAttribute("item", findItem);
-
         return "item/editForm";
     }
 
     @PostMapping("{itemId}/edit")
-    public String updateItem(@PathVariable Long itemId, @Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String updateItem(@PathVariable Long itemId, @Validated @ModelAttribute("item")ItemUpdateDto updateDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "item/editForm";
         }
 
-        service.updateItem(itemId, item);
+        Item updateItem = new Item(updateDto);
+
+        service.updateItem(itemId, updateItem);
         // 검증 필요
-        log.info("업데이트된 item={}", item);
-        redirectAttributes.addAttribute("search-item", item.getId());
+        log.info("업데이트된 item={}", updateItem);
+        redirectAttributes.addAttribute("search-item", updateItem.getId());
         redirectAttributes.addAttribute("updateStatus", true);
 
         return "redirect:/item/item";
@@ -154,7 +155,7 @@ public class ItemController {
     public void setTestItem() {
         Item item1 = new Item("itemA", 30000, 100, "www.test1.com", 1L);
         Item item2 = new Item("itemB", 50000, 75, "www.test2.com", 1L);
-        Item item3 = new Item("itemC", 100000, 50, "www.test3.com", 1L);
+        Item item3 = new Item("itemC", 100000, 50, "www.test3.com", 2L);
         service.saveItem(item1);
         service.saveItem(item2);
         service.saveItem(item3);
