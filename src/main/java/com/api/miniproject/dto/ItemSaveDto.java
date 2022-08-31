@@ -27,11 +27,24 @@ public class ItemSaveDto{
 
     private Long userId;
 
+    public ItemSaveDto(){}
+
     public ItemSaveDto(String itemName, Integer price, Integer quantity, String buyUrl, Long userId) {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
         this.buyUrl = buyUrl;
         this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemSaveDto{" +
+                "itemName='" + itemName + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", buyUrl='" + buyUrl + '\'' +
+                ", userId=" + userId +
+                '}';
     }
 }

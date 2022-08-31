@@ -21,7 +21,7 @@ public class Item {
     private Long userId;
 
 
-    public Item(){    }
+    public Item(){}
 
     public Item(String itemName, int price, int quantity, String buyUrl, Long userId) {
         this.itemName = itemName;
@@ -37,13 +37,6 @@ public class Item {
         this.quantity = itemSaveDto.getQuantity();
         this.buyUrl = itemSaveDto.getBuyUrl();
         this.userId = itemSaveDto.getUserId(); // 해당 유저 소유 아이템
-    }
-
-    public Item(ItemUpdateDto itemUpdateDto) {
-        this.itemName = itemUpdateDto.getItemName();
-        this.price = itemUpdateDto.getPrice();
-        this.quantity = itemUpdateDto.getQuantity();
-        this.buyUrl = itemUpdateDto.getBuyUrl();
     }
 
     public void update(Item item){

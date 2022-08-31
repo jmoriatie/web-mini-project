@@ -131,12 +131,19 @@ public class ItemController {
             return "item/editForm";
         }
 
-        Item updateItem = new Item(updateDto);
+        // 아이템 셋팅
+        Item updatedItem = service.findById(itemId);
+        updatedItem.setItemName(updateDto.getItemName());
+        updatedItem.setPrice(updateDto.getPrice());
+        updatedItem.setQuantity(updateDto.getQuantity());
+        updatedItem.setBuyUrl(updateDto.getBuyUrl());
 
-        service.updateItem(itemId, updateItem);
+        //업데이트
+        service.updateItem(itemId, updatedItem);
+
         // 검증 필요
-        log.info("업데이트된 item={}", updateItem);
-        redirectAttributes.addAttribute("search-item", updateItem.getId());
+        log.info("업데이트된 item={}", updatedItem);
+        redirectAttributes.addAttribute("search-item", itemId);
         redirectAttributes.addAttribute("updateStatus", true);
 
         return "redirect:/item/item";
