@@ -11,7 +11,8 @@
         }
 
         .err-message {
-            color: red;
+            border-color: #dc3545;
+            color: #dc3545;
         }
 
         /*.form-control{*/
@@ -28,18 +29,18 @@
         <form action="loginForm.html" method="post" th:action th:object="${loginDto}">
             <div>
                 <label for="userId"></label>
-                <input type="text" id="userId" name="userId" th:field="*{userId}" class="form-control"
+                <input type="text" id="userId" name="userId" th:field="*{userId}" th:errorclass="err-message" class="form-control"
                        placeholder="아이디">
                 <span class="err-message" th:errors="*{userId}">id Error!</span>
             </div>
             <div>
                 <label for="userPw"></label>
-                <input type="password" id="userPw" name="userPw" th:field="*{userPw}" class="form-control"
+                <input type="password" id="userPw" name="userPw" th:field="*{userPw}" th:errorclass="err-message"  class="form-control"
                        placeholder="비밀번호">
                 <span class="err-message" th:errors="*{userPw}">pw Error!</span>
             </div>
 
-            <div th:if="${#fields.hasGlobalErrors()}">
+            <div th:if="${#fields.hasGlobalErrors()}" >
                 <p class="err-message" th:each="err : ${#fields.globalErrors()}" th:text="${err}">user are not Exist!</p>
             </div>
 

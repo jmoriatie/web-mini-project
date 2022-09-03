@@ -43,7 +43,7 @@
         <div>
             <label for="quantity">수량</label>
             <input type="text" id="quantity" name="quantity" class="form-control" value="10" th:value="*{quantity}"
-                   th:field="*{quantity}" th:errorclass="field-error" >
+                   th:field="*{quantity}" th:errorclass="field-error">
             <span class="err-message" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">수량입력 에러</span>
         </div>
         <div>

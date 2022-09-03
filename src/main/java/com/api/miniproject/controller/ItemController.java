@@ -51,11 +51,19 @@ public class ItemController {
             return "item/addForm";
         }
 
-        // 정상 로직
-        Long userId = SessionUtil.getUserIdFromSession();
-        itemSaveDto.setUserId(userId); // foreign key
+        // 정상 로직 start
+        // 컨버팅
+        Item saveItem = new Item();
+        saveItem.setItemName(itemSaveDto.getItemName());
+        saveItem.setPrice(itemSaveDto.getPrice());
+        saveItem.setQuantity(itemSaveDto.getQuantity());
+        saveItem.setBuyUrl(itemSaveDto.getBuyUrl());
 
-        Item saveItem = new Item(itemSaveDto);
+        // 유저아이디 꺼내서 저장
+        Long userId = SessionUtil.getUserIdFromSession();
+        saveItem.setUserId(userId); // foreign key
+
+        // service 저장
         Item savedItem = service.saveItem(saveItem);
 
         redirectAttributes.addAttribute("search-item", savedItem.getId());
@@ -150,12 +158,17 @@ public class ItemController {
     }
 
     @GetMapping("{itemId}/delete")
-    public String deleteItem(@PathVariable Long itemId, RedirectAttributes redirectAttributes) {
+    public String deleteItem(@PathVariable Long itemId, Model model) {
         service.deleteItem(itemId);
-        redirectAttributes.addAttribute("deleteStatus", true);
-        redirectAttributes.addAttribute("deleteId", itemId);
 
-        return "redirect:/item/delete";
+        // TODO : 삭제하시겠습니까? 확인 화면 출력
+        // TODO : 있는 아이템인지 확인 검증 필요
+        model.addAttribute("deleteId", itemId);
+
+//        redirectAttributes.addAttribute("deleteStatus", true);
+//        redirectAttributes.addAttribute("deleteId", itemId);
+
+        return "item/delete";
     }
 
     @PostConstruct

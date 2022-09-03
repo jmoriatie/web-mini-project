@@ -31,13 +31,15 @@ public class Item {
         this.userId = userId; // 해당 유저 소유 아이템
     }
 
-    public Item(ItemSaveDto itemSaveDto) {
-        this.itemName = itemSaveDto.getItemName();
-        this.price = itemSaveDto.getPrice();
-        this.quantity = itemSaveDto.getQuantity();
-        this.buyUrl = itemSaveDto.getBuyUrl();
-        this.userId = itemSaveDto.getUserId(); // 해당 유저 소유 아이템
+    public Item(Item item) {
+        this.itemName = item.getItemName();
+        this.price = item.getPrice();
+        this.quantity = item.getQuantity();
+        this.buyUrl = item.getBuyUrl();
+        this.userId = item.getUserId();
     }
+
+
 
     public void update(Item item){
         this.itemName = item.getItemName();
