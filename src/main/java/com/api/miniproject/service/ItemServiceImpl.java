@@ -55,11 +55,4 @@ public class ItemServiceImpl implements ItemService{
     public void deleteItem(Long id) {
         repo.deleteItem(id);
     }
-
-    @PostConstruct
-    private void successMessage(){
-        log.debug("ServiceImpl 생성={}", ItemServiceImpl.class);
-    }
-
-
 }

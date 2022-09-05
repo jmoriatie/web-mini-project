@@ -68,7 +68,7 @@ public class ItemController {
 
         redirectAttributes.addAttribute("search-item", savedItem.getId());
         redirectAttributes.addAttribute("saveStatus", true);
-        log.info("저장된 item={}", savedItem);
+        log.info("아이템 저장 item={}", savedItem);
 
         return "redirect:/item/item";
     }
@@ -171,16 +171,5 @@ public class ItemController {
         return "item/delete";
     }
 
-    @PostConstruct
-    public void setTestItem() {
-        Item item1 = new Item("itemA", 30000, 100, "www.test1.com", 1L);
-        Item item2 = new Item("itemB", 50000, 75, "www.test2.com", 1L);
-        Item item3 = new Item("itemC", 100000, 50, "www.test3.com", 2L);
-        service.saveItem(item1);
-        service.saveItem(item2);
-        service.saveItem(item3);
-        log.debug("테스트 아이템 생성={}", item1.toString());
-        log.debug("테스트 아이템 생성={}", item2.toString());
-        log.debug("테스트 아이템 생성={}", item3.toString());
-    }
+
 }

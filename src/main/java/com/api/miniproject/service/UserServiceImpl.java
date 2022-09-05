@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-// 로그아웃, 로그인 되어있을 때 검증 -> 로그인 검증하는 그거 LoginValidationUtil 로 만들기, 유저 삭제
+
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository repo;
 
@@ -20,18 +20,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User login(String userId, String userPw){
-        return repo.findByUserId(userId)
-                .filter(u -> u.getUserPw().equals(userPw)).orElseGet(() -> null);
-    }
-
-    @Override
     public User saveUser(User user) {
         return repo.saveUser(user);
     }
-
-    @Override
-    public void logout() {
-        SessionUtil.sessionInvalidate();
-    }
 }
+
+

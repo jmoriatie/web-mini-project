@@ -1,16 +1,11 @@
 package com.api.miniproject.domain;
 
-import com.api.miniproject.dto.ItemSaveDto;
-import com.api.miniproject.dto.ItemUpdateDto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 @Getter @Setter
 public class Item {
-    @NotNull
+
     private Long id;
 
     private String itemName;
@@ -38,8 +33,6 @@ public class Item {
         this.buyUrl = item.getBuyUrl();
         this.userId = item.getUserId();
     }
-
-
 
     public void update(Item item){
         this.itemName = item.getItemName();
