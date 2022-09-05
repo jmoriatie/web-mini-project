@@ -1,19 +1,18 @@
 package com.api.miniproject.controller;
 
 import com.api.miniproject.domain.User;
-import com.api.miniproject.dto.LoginDto;
-import com.api.miniproject.service.LoginService;
+import com.api.miniproject.dto.login.LoginDto;
+import com.api.miniproject.service.login.LoginService;
 import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -35,38 +34,24 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(
-            @ModelAttribute LoginDto loginDto,
+            @Validated @ModelAttribute LoginDto loginDto,
             BindingResult bindingResult,
             HttpServletRequest request
     ) {
-        // TODO: 리펙토링 필요, 코드 지저분
-        if (!StringUtils.hasText(loginDto.getUserId())){
-            bindingResult.rejectValue("userId", "required");
-        }
-
-        if (!StringUtils.hasText(loginDto.getUserPw())){
-            bindingResult.rejectValue("userPw", "required");
-        }
-
-        // field validation 이후
         if(bindingResult.hasErrors()){
             log.info("errors = {}", bindingResult);
             return "/login/loginForm";
         }
 
-        User user = service.login(loginDto.getUserId(), loginDto.getUserPw());
-        log.debug("user?! : {}", user);
+        User findUser = service.findByUserId(loginDto.getUserId(), loginDto.getUserPw());
 
-        // 아이디가 없는 경우
-        if(user == null){
+        // 유저 없을 시 global error 반환
+        if(findUser == null){
             bindingResult.reject("notExistUser");
-        }
-
-        if(bindingResult.hasErrors()){
-            log.info("errors = {}", bindingResult);
             return "/login/loginForm";
         }
-        this.setSession(user); // 세션 셋팅
+
+        setSession(findUser); // 세션 셋팅
 
         return "redirect:/";
     }

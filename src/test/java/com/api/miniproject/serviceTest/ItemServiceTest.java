@@ -2,8 +2,8 @@ package com.api.miniproject.serviceTest;
 
 import com.api.miniproject.domain.Item;
 import com.api.miniproject.domain.User;
-import com.api.miniproject.service.ItemService;
-import com.api.miniproject.service.ItemServiceImpl;
+import com.api.miniproject.service.item.ItemService;
+import com.api.miniproject.service.item.ItemServiceImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

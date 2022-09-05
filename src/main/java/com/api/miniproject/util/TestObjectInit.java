@@ -2,8 +2,8 @@ package com.api.miniproject.util;
 
 import com.api.miniproject.domain.Item;
 import com.api.miniproject.domain.User;
-import com.api.miniproject.service.ItemService;
-import com.api.miniproject.service.UserService;
+import com.api.miniproject.service.item.ItemService;
+import com.api.miniproject.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

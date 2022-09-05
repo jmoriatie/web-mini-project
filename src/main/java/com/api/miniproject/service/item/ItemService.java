@@ -1,4 +1,4 @@
-package com.api.miniproject.service;
+package com.api.miniproject.service.item;
 
 import com.api.miniproject.domain.Item;
 

@@ -1,17 +1,15 @@
-package com.api.miniproject.dto;
+package com.api.miniproject.dto.item;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter @Setter
-public class ItemUpdateDto{
-
-    @NotNull
-    private Long id;
+public class ItemSaveDto{
 
     @NotBlank
     private String itemName;
@@ -24,27 +22,29 @@ public class ItemUpdateDto{
     @Range(min = 0)
     private Integer quantity;
 
+    @URL // 알아보기
     private String buyUrl;
 
-    // typeMismatch 일 때는 spring 에서 오류 메세지를 넣어주는데 그 떄, 빈객체를 가지고 뭔가를 만드나봐!!!
-    public ItemUpdateDto(){}
+    private Long userId;
 
-    public ItemUpdateDto(Long id, String itemName, Integer price, Integer quantity, String buyUrl) {
-        this.id = id;
+    public ItemSaveDto(){}
+
+    public ItemSaveDto(String itemName, Integer price, Integer quantity, String buyUrl, Long userId) {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
         this.buyUrl = buyUrl;
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
-        return "ItemUpdateDto{" +
-                "id=" + id +
-                ", itemName='" + itemName + '\'' +
+        return "ItemSaveDto{" +
+                "itemName='" + itemName + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", buyUrl='" + buyUrl + '\'' +
+                ", userId=" + userId +
                 '}';
     }
 }

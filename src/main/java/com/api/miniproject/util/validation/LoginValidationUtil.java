@@ -1,15 +1,10 @@
 package com.api.miniproject.util.validation;
 
 import com.api.miniproject.domain.User;
-import com.api.miniproject.dto.LoginDto;
-import com.api.miniproject.util.session.SessionConst;
+import com.api.miniproject.dto.login.LoginDto;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 @Slf4j
 public class LoginValidationUtil {

@@ -1,6 +1,6 @@
 package com.api.miniproject.controller;
 
-import com.api.miniproject.service.UserService;
+import com.api.miniproject.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

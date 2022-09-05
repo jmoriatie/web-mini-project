@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 public class SessionUtil {
 
     /**
-     *
      * @return session(default == fasle)
      */
     public static HttpSession getSession(){
@@ -18,7 +17,6 @@ public class SessionUtil {
     }
 
     /**
-     *
      * @param create(default == false)
      * @return session
      */

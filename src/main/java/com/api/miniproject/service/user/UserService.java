@@ -1,4 +1,4 @@
-package com.api.miniproject.service;
+package com.api.miniproject.service.user;
 
 import com.api.miniproject.domain.User;
 import org.springframework.stereotype.Service;

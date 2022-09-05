@@ -1,22 +1,20 @@
 package com.api.miniproject.controller;
 
 import com.api.miniproject.domain.Item;
-import com.api.miniproject.dto.ItemSaveDto;
-import com.api.miniproject.dto.ItemUpdateDto;
-import com.api.miniproject.service.ItemService;
+import com.api.miniproject.domain.User;
+import com.api.miniproject.dto.item.ItemSaveDto;
+import com.api.miniproject.dto.item.ItemUpdateDto;
+import com.api.miniproject.service.item.ItemService;
 import com.api.miniproject.util.session.SessionUtil;
-import com.api.miniproject.util.validation.ItemValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Slf4j
@@ -159,14 +157,19 @@ public class ItemController {
 
     @GetMapping("{itemId}/delete")
     public String deleteItem(@PathVariable Long itemId, Model model) {
+
+        User userSession = (User) SessionUtil.getSession(false);
+        Item findItem = service.findById(itemId);
+
+        // 아이템 없거나 || 세션의 아이디와 아이템 주인이 다를 때
+        if(findItem == null || userSession.getId() != findItem.getUserId()){
+            return "redirect:/items";
+        }
+
         service.deleteItem(itemId);
 
         // TODO : 삭제하시겠습니까? 확인 화면 출력
-        // TODO : 있는 아이템인지 확인 검증 필요
         model.addAttribute("deleteId", itemId);
-
-//        redirectAttributes.addAttribute("deleteStatus", true);
-//        redirectAttributes.addAttribute("deleteId", itemId);
 
         return "item/delete";
     }

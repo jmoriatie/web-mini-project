@@ -1,7 +1,7 @@
 package com.api.miniproject.controller;
 
 import com.api.miniproject.domain.Item;
-import com.api.miniproject.service.ItemService;
+import com.api.miniproject.service.item.ItemService;
 import com.api.miniproject.util.StatusEnum;
 import com.api.miniproject.util.StatusMessage;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/item-api")
 public class ItemRESTController {
+
+    //TODO: 추후 리펙토링 필요 1) 검증
 
     private final ItemService service;
 
