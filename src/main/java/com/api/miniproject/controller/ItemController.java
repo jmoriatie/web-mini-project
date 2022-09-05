@@ -5,6 +5,7 @@ import com.api.miniproject.domain.User;
 import com.api.miniproject.dto.item.ItemSaveDto;
 import com.api.miniproject.dto.item.ItemUpdateDto;
 import com.api.miniproject.service.item.ItemService;
+import com.api.miniproject.util.session.SessionConst;
 import com.api.miniproject.util.session.SessionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.net.http.HttpRequest;
 import java.util.List;
 
 @Slf4j
@@ -24,13 +28,6 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService service;
-//    private final ItemValidator itemValidator;
-//
-//    // 이 controller 부를 때마다 WebDataBinder 만들어지고, 거기다가 Validator를 넣어놓음
-//    @InitBinder
-//    public void init(WebDataBinder dataBinder){
-//        dataBinder.addValidators(itemValidator);
-//    }
 
     @GetMapping("add")
     public String saveItemForm(Model model){
@@ -156,17 +153,20 @@ public class ItemController {
     }
 
     @GetMapping("{itemId}/delete")
-    public String deleteItem(@PathVariable Long itemId, Model model) {
+    public String deleteItem(@PathVariable Long itemId, Model model, HttpServletRequest request) {
 
-        User userSession = (User) SessionUtil.getSession(false);
+        HttpSession session = request.getSession(false);
+        User userSession = (User) session.getAttribute(SessionConst.LOGIN_USER);
+
         Item findItem = service.findById(itemId);
 
         // 아이템 없거나 || 세션의 아이디와 아이템 주인이 다를 때
         if(findItem == null || userSession.getId() != findItem.getUserId()){
-            return "redirect:/items";
+            return "redirect:/item/items";
         }
 
         service.deleteItem(itemId);
+        log.info("delete item={}", findItem);
 
         // TODO : 삭제하시겠습니까? 확인 화면 출력
         model.addAttribute("deleteId", itemId);
