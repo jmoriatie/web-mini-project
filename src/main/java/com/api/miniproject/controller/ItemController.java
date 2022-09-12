@@ -18,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.http.HttpRequest;
 import java.util.List;
 
 @Slf4j
@@ -83,7 +82,6 @@ public class ItemController {
 
     /***
      * id, itemName 별도의 find 메서드 호출
-     * TODO : 개별 아이템에 대한 처리는 interceptor 에서 안하나?
      */
     @GetMapping("item")
     public String selectFindItemMethod(@RequestParam(name = "search-item") String searchItem, Model model, @RequestHeader("host") String hostUrl ) {

@@ -13,8 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,7 +36,7 @@ public class LoginController {
             BindingResult bindingResult,
             HttpServletRequest request
     ) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "/login/loginForm";
         }
@@ -46,19 +44,21 @@ public class LoginController {
         User findUser = service.findByUserId(loginDto.getUserId(), loginDto.getUserPw());
 
         // 유저 없을 시 global error 반환
-        if(findUser == null){
+        if (findUser == null) {
             bindingResult.reject("notExistUser");
             return "/login/loginForm";
         }
 
-        setSession(findUser); // 세션 셋팅
+        // TODO session 에는 필요한 정보만 저장하도록 세팅
+        setSession(request, findUser); // 세션 셋팅
 
         return "redirect:/";
     }
 
-    private void setSession(User user) {
-        ServletRequestAttributes attribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attribute.getRequest().getSession();
+    private void setSession(HttpServletRequest request, User user) {
+//        ServletRequestAttributes attribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+//        HttpSession session = attribute.getRequest().getSession();
+        HttpSession session = request.getSession();
 
         session.setAttribute(SessionConst.LOGIN_USER, user);
 
@@ -67,8 +67,13 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout() {
-        service.logout();
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if(session != null){
+            session.invalidate();
+        }
+
         return "redirect:/login";
     }
 }

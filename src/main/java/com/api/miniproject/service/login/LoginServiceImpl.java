@@ -25,9 +25,5 @@ public class LoginServiceImpl implements LoginService{
                 .filter(u -> u.getUserPw().equals(userPw)).orElseGet(() -> null);
     }
 
-    @Override
-    public void logout() {
-        SessionUtil.sessionInvalidate();
-    }
 
 }

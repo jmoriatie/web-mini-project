@@ -6,6 +6,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * 사용 X
+ */
 public class SessionUtil {
 
     /**
@@ -28,6 +31,9 @@ public class SessionUtil {
         return servletRequestAttributes.getRequest().getSession(false);
     }
 
+    /**
+     * 사용X
+     */
     public static void sessionInvalidate(){
         HttpSession session = getSession();
         if(session != null){
