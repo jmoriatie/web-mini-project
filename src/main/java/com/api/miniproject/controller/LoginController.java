@@ -36,6 +36,7 @@ public class LoginController {
             BindingResult bindingResult,
             HttpServletRequest request
     ) {
+        // TODO Request 경로가 있다면 거길롭 보내주고, 아니면 /
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "/login/loginForm";
@@ -63,7 +64,6 @@ public class LoginController {
         session.setAttribute(SessionConst.LOGIN_USER, user);
 
         log.info("save in session={}", session.getAttribute(SessionConst.LOGIN_USER));
-        log.info("login user = id:{} / pw:{}", user.getId(), user.getUserPw());
     }
 
     @GetMapping("/logout")
