@@ -15,14 +15,16 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        HttpSession session = request.getSession(false);
+        String requestURI = request.getRequestURI();
 
-        if(session == null){
-            log.info("=== [preHandler] 세션 없음 ===");
-            response.sendRedirect("/login");
+        HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute(SessionConst.LOGIN_USER) == null){
+            log.info("=== SESSION 없음 ===");
+            response.sendRedirect("/login?requestURI=" + requestURI);
             return false;
         }
-        log.info("=== [preHandler] SESSION " +  session.getId() + " ===");
+
+        log.info("=== SESSION [{}] ===", session.getId());
         return true;
     }
 }

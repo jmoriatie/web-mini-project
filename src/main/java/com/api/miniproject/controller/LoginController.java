@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,8 +33,8 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(
-            @Validated @ModelAttribute LoginDto loginDto,
-            BindingResult bindingResult,
+            @Validated @ModelAttribute LoginDto loginDto, BindingResult bindingResult,
+            @RequestParam(defaultValue = "/") String requestURI,
             HttpServletRequest request
     ) {
         // TODO Request 경로가 있다면 거길롭 보내주고, 아니면 /
@@ -53,7 +54,7 @@ public class LoginController {
         // TODO session 에는 필요한 정보만 저장하도록 세팅
         setSession(request, findUser); // 세션 셋팅
 
-        return "redirect:/";
+        return "redirect:" + requestURI;
     }
 
     private void setSession(HttpServletRequest request, User user) {

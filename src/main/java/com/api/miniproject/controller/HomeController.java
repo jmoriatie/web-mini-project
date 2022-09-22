@@ -24,14 +24,16 @@ public class HomeController {
     // item 관련 메서드에 접근하기 전에 login 확인하는 aop 작성 -> interceptor로 바꿈..
     @GetMapping
     public String home(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
-                       Model model,
-                       RedirectAttributes redirectAttributes) {
+                       Model model) {
+
+        // 오래 접속해 있던 페이지, 세션이 유지되지 않고 만료됐다면
+        if(loginUser == null){
+            return "/login/loginForm";
+        }
+
         log.info("loginUser id:{}, pw:{}, name:{}", loginUser.getUserId(), loginUser.getUserPw(), loginUser.getUserName());
 
         model.addAttribute("userName", loginUser.getUserName());
-
-        redirectAttributes.addAttribute("loginUser", true);
-        redirectAttributes.addAttribute("loginUserName", loginUser.getUserName());
 
         return "index";
     }
