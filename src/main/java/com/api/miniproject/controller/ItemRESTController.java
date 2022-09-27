@@ -27,7 +27,7 @@ public class ItemRESTController {
         return checkNullAndCreateResponseEntity(saveItem);
     }
 
-    @GetMapping("/items")
+    @GetMapping( "/items")
     ResponseEntity<StatusMessage> findAll(){
         return createResponseEntity(StatusEnum.OK, "전체 아이템 출력", service.findAll());
     }
