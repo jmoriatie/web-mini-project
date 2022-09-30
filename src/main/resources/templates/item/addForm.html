@@ -36,12 +36,12 @@
         <div>
             <label for="price">가격</label>
             <input type="text" id="price" name="price" class="form-control" th:field="*{price}" th:errorclass="field-error" placeholder="가격을 입력하세요">
-            <span class="err-message" th:errors="*{price}">가격 입력 에러</span>
+            <span class="err-message" th:errors="*{{price}}">가격 입력 에러</span>
         </div>
         <div>
             <label for="quantity">수량</label>
             <input type="text" id="quantity" name="quantity" class="form-control" th:field="*{quantity}" th:errorclass="field-error" placeholder="수량을 입력하세요">
-            <span class="err-message" th:errors="*{quantity}">수량입력 에러</span>
+            <span class="err-message" th:errors="*{{quantity}}">수량입력 에러</span>
         </div>
         <div>
             <label for="buyUrl">주소</label>

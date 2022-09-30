@@ -3,6 +3,7 @@ package com.api.miniproject.dto.item;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -16,10 +17,12 @@ public class ItemUpdateDto{
     @NotBlank
     private String itemName;
 
+    @NumberFormat(pattern = "###,###")
     @NotNull
     @Range(min = 10)
     private Integer price;
 
+    @NumberFormat(pattern = "###,###")
     @NotNull
     @Range(min = 0)
     private Integer quantity;

@@ -30,15 +30,13 @@
         </div>
         <div>
             <label for="itemName">상품명</label>
-            <input type="text" id="itemName" name="itemName" class="form-control" value="상품A" th:value="*{itemName}"
-                   th:field="*{itemName}" th:errorclass="field-error" >
+            <input type="text" id="itemName" name="itemName" class="form-control" value="상품A" th:field="*{itemName}" th:errorclass="field-error" >
             <span class="err-message" th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}">아이템 이름 입력 에러</span>
         </div>
         <div>
             <label for="price">가격</label>
-            <input type="text" id="price" name="price" class="form-control" value="10000" th:value="*{price}"
-                   th:field="*{price}" th:errorclass="field-error" >
-            <span class="err-message" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">가격 입력 에러</span>
+            <input type="text" id="price" name="price" class="form-control" value="10000" th:field="*{price}" th:errorclass="field-error" >
+            <span class="err-message" th:if="${#fields.hasErrors('price')}" th:errors="*{{price}}">가격 입력 에러</span>
         </div>
         <div>
             <label for="quantity">수량</label>

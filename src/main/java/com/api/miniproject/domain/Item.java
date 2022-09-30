@@ -2,6 +2,7 @@ package com.api.miniproject.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.NumberFormat;
 
 @Getter @Setter
 public class Item {
@@ -9,7 +10,11 @@ public class Item {
     private Long id;
 
     private String itemName;
+
+    @NumberFormat(pattern = "###,###")
     private Integer price;
+
+    @NumberFormat(pattern = "###,###")
     private Integer quantity;
     private String buyUrl;
     // 유저아이디
