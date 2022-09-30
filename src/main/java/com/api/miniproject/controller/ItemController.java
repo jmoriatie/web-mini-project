@@ -9,6 +9,8 @@ import com.api.miniproject.util.session.SessionConst;
 import com.api.miniproject.util.session.SessionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,14 +29,15 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService service;
+    private final ConversionService conversionService;
 
-    @GetMapping("add")
+    @GetMapping("/add")
     public String saveItemForm(Model model){
         model.addAttribute("item", new Item());
         return "item/addForm";
     }
 
-    @PostMapping("add")
+    @PostMapping("/add")
     public String saveItem(@Validated @ModelAttribute("item") ItemSaveDto itemSaveDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         log.info("objectName={}", bindingResult.getObjectName());
@@ -47,11 +50,7 @@ public class ItemController {
 
         // 정상 로직 start
         // 컨버팅
-        Item saveItem = new Item();
-        saveItem.setItemName(itemSaveDto.getItemName());
-        saveItem.setPrice(itemSaveDto.getPrice());
-        saveItem.setQuantity(itemSaveDto.getQuantity());
-        saveItem.setBuyUrl(itemSaveDto.getBuyUrl());
+        Item saveItem = conversionService.convert(itemSaveDto, Item.class);
 
         // 유저아이디 꺼내서 저장
         Long userId = SessionUtil.getUserIdFromSession();
@@ -67,10 +66,10 @@ public class ItemController {
         return "redirect:/item/item";
     }
 
-    @GetMapping("items")
-    public String findAll(Model model) {
-        Long userId = SessionUtil.getUserIdFromSession();
-        List<Item> items = service.findUserItems(userId);
+    @GetMapping("/items")
+    public String findAll(Model model, HttpServletRequest request) {
+        Long id = ((User) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
+        List<Item> items = service.findUserItems(id);
 
         if(items.size() == 0){
             model.addAttribute("nullStatus", true);
@@ -83,9 +82,9 @@ public class ItemController {
     /***
      * id, itemName 별도의 find 메서드 호출
      */
-    @GetMapping("item")
+    @GetMapping("/item")
     public String selectFindItemMethod(@RequestParam(name = "search-item") String searchItem, Model model, @RequestHeader("host") String hostUrl ) {
-        Item findItem = getSearchItem(searchItem);
+         Item findItem = getSearchItem(searchItem);
 
         if(findItem == null){
             log.debug("redirect hostUrl={}", hostUrl);
@@ -117,14 +116,14 @@ public class ItemController {
         return findItem;
     }
 
-    @GetMapping("{itemId}/edit")
+    @GetMapping("/{itemId}/edit")
     public String updateItemForm(@PathVariable Long itemId, Model model) {
         Item findItem = service.findById(itemId);
         model.addAttribute("item", findItem);
         return "item/editForm";
     }
 
-    @PostMapping("{itemId}/edit")
+    @PostMapping("/{itemId}/edit")
     public String updateItem(@PathVariable Long itemId, @Validated @ModelAttribute("item")ItemUpdateDto updateDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
@@ -134,6 +133,7 @@ public class ItemController {
 
         // 아이템 셋팅
         Item updatedItem = service.findById(itemId);
+
         updatedItem.setItemName(updateDto.getItemName());
         updatedItem.setPrice(updateDto.getPrice());
         updatedItem.setQuantity(updateDto.getQuantity());
@@ -150,7 +150,7 @@ public class ItemController {
         return "redirect:/item/item";
     }
 
-    @GetMapping("{itemId}/delete")
+    @GetMapping("/{itemId}/delete")
     public String deleteItem(@PathVariable Long itemId, Model model, HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);
@@ -171,6 +171,4 @@ public class ItemController {
 
         return "item/delete";
     }
-
-
 }

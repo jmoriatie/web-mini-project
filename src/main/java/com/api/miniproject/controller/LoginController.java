@@ -54,12 +54,13 @@ public class LoginController {
         // TODO session 에는 필요한 정보만 저장하도록 세팅
         setSession(request, findUser); // 세션 셋팅
 
+        if(requestURI.equals("/item/item")){
+            requestURI = "/item/items";
+        }
         return "redirect:" + requestURI;
     }
 
     private void setSession(HttpServletRequest request, User user) {
-//        ServletRequestAttributes attribute = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-//        HttpSession session = attribute.getRequest().getSession();
         HttpSession session = request.getSession();
 
         session.setAttribute(SessionConst.LOGIN_USER, user);
