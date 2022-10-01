@@ -1,4 +1,4 @@
-package com.api.miniproject.converter.item;
+package com.api.miniproject.util.converter.item;
 
 import com.api.miniproject.domain.Item;
 import com.api.miniproject.dto.item.ItemUpdateDto;

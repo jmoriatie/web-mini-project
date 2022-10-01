@@ -12,14 +12,14 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private final String ITEM_DETAIL_URI =  "/item/item";
+    private final String ITEM_DETAIL_URI =  "\"search-item\"";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String requestURI = request.getRequestURI();
 
-        String itemParam = request.getParameter("search-item");
+        String itemParam = request.getParameter(ITEM_DETAIL_URI);
         if(itemParam != null){
             requestURI += "?search-item="+itemParam;
         }

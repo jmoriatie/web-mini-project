@@ -25,10 +25,20 @@ public class ItemSaveDto{
     @Range(min = 0)
     private Integer quantity;
 
-    @URL // 알아보기
+//    @URL // 알아보기
     private String buyUrl;
 
+    private Long userId;
+
     public ItemSaveDto(){}
+
+    public ItemSaveDto(String itemName, Integer price, Integer quantity, String buyUrl, Long userId) {
+        this.itemName = itemName;
+        this.price = price;
+        this.quantity = quantity;
+        this.buyUrl = buyUrl;
+        this.userId = userId;
+    }
 
     public ItemSaveDto(String itemName, Integer price, Integer quantity, String buyUrl) {
         this.itemName = itemName;
@@ -44,6 +54,7 @@ public class ItemSaveDto{
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", buyUrl='" + buyUrl + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 }

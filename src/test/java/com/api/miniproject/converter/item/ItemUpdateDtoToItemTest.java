@@ -2,11 +2,11 @@ package com.api.miniproject.converter.item;
 
 import com.api.miniproject.domain.Item;
 import com.api.miniproject.dto.item.ItemUpdateDto;
+import com.api.miniproject.util.converter.item.ItemUpdateDtoToItemConverter;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.convert.support.DefaultConversionService;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ItemUpdateDtoToItemTest {
 
