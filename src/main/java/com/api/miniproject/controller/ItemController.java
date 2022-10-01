@@ -6,11 +6,9 @@ import com.api.miniproject.dto.item.ItemSaveDto;
 import com.api.miniproject.dto.item.ItemUpdateDto;
 import com.api.miniproject.service.item.ItemService;
 import com.api.miniproject.util.session.SessionConst;
-import com.api.miniproject.util.session.SessionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,7 +36,7 @@ public class ItemController {
     }
 
     @PostMapping("/add")
-    public String saveItem(@Validated @ModelAttribute("item") ItemSaveDto itemSaveDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String saveItem(@Validated @ModelAttribute("item") ItemSaveDto itemSaveDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
         log.info("objectName={}", bindingResult.getObjectName());
         log.info("target={}", bindingResult.getTarget());
@@ -53,7 +51,7 @@ public class ItemController {
         Item saveItem = conversionService.convert(itemSaveDto, Item.class);
 
         // 유저아이디 꺼내서 저장
-        Long userId = SessionUtil.getUserIdFromSession();
+        Long userId = ((User) request.getSession(false).getAttribute(SessionConst.LOGIN_USER)).getId();
         saveItem.setUserId(userId); // foreign key
 
         // service 저장
@@ -132,12 +130,7 @@ public class ItemController {
         }
 
         // 아이템 셋팅
-        Item updatedItem = service.findById(itemId);
-
-        updatedItem.setItemName(updateDto.getItemName());
-        updatedItem.setPrice(updateDto.getPrice());
-        updatedItem.setQuantity(updateDto.getQuantity());
-        updatedItem.setBuyUrl(updateDto.getBuyUrl());
+        Item updatedItem = conversionService.convert(updateDto, Item.class);
 
         //업데이트
         service.updateItem(itemId, updatedItem);

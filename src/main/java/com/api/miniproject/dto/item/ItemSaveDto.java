@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,11 +15,12 @@ public class ItemSaveDto{
     @NotBlank
     private String itemName;
 
+    @NumberFormat(pattern = "###,###")
     @NotNull
     @Range(min = 10)
     private Integer price;
 
-
+    @NumberFormat(pattern = "###,###")
     @NotNull
     @Range(min = 0)
     private Integer quantity;
@@ -26,16 +28,13 @@ public class ItemSaveDto{
     @URL // 알아보기
     private String buyUrl;
 
-    private Long userId;
-
     public ItemSaveDto(){}
 
-    public ItemSaveDto(String itemName, Integer price, Integer quantity, String buyUrl, Long userId) {
+    public ItemSaveDto(String itemName, Integer price, Integer quantity, String buyUrl) {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
         this.buyUrl = buyUrl;
-        this.userId = userId;
     }
 
     @Override
@@ -45,7 +44,6 @@ public class ItemSaveDto{
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", buyUrl='" + buyUrl + '\'' +
-                ", userId=" + userId +
                 '}';
     }
 }

@@ -6,8 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 
 @Slf4j
-public class ItemToItemSaveDto implements Converter<Item, ItemSaveDto> {
-
+public class ItemToItemSaveDtoConverter implements Converter<Item, ItemSaveDto> {
     @Override
     public ItemSaveDto convert(Item source) {
         log.info("convert to source={} ", source);
