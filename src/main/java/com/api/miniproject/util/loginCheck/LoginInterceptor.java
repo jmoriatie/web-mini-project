@@ -12,14 +12,26 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
+    private final String ITEM_DETAIL_URI =  "/item/item";
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String requestURI = request.getRequestURI();
 
+        String itemParam = request.getParameter("search-item");
+        if(itemParam != null){
+            requestURI += "?search-item="+itemParam;
+        }
+
         HttpSession session = request.getSession(false);
         if(session == null || session.getAttribute(SessionConst.LOGIN_USER) == null){
             log.info("=== SESSION 없음 ===");
+
+            if(requestURI.equals("/item/item")){
+                requestURI = "/item/items";
+            }
+
             response.sendRedirect("/login?requestURI=" + requestURI);
             return false;
         }
