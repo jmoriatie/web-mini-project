@@ -1,63 +1,52 @@
-package com.api.miniproject.domain;
+package com.api.miniproject.dto.item;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Getter @Setter
-public class Item {
-
+@Getter
+@Setter
+public class ItemUpdateAPIDto {
     private Long id;
+
     @NotBlank
     private String itemName;
+
     @NumberFormat(pattern = "###,###")
+    @NotNull
+    @Min(value = 10)
     private Integer price;
+
     @NumberFormat(pattern = "###,###")
+    @NotNull
+    @Min(value = 0)
     private Integer quantity;
-    // 구입한 URL
+
     private String buyUrl;
-    // 유저아이디
-    private Long userId;
 
+    public ItemUpdateAPIDto() {}
 
-    public Item(){}
-
-    public Item(String itemName, int price, int quantity, String buyUrl, Long userId) {
+    public ItemUpdateAPIDto(String itemName, Integer price, Integer quantity, String buyUrl) {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
         this.buyUrl = buyUrl;
-        this.userId = userId; // 해당 유저 소유 아이템
-    }
-
-    public Item(Item item) {
-        this.itemName = item.getItemName();
-        this.price = item.getPrice();
-        this.quantity = item.getQuantity();
-        this.buyUrl = item.getBuyUrl();
-        this.userId = item.getUserId();
-    }
-
-    public void update(Item item){
-        this.itemName = item.getItemName();
-        this.price = item.getPrice();
-        this.quantity = item.getQuantity();
-        this.buyUrl = item.getBuyUrl();
     }
 
     @Override
     public String toString() {
-        return "Item{" +
+        return "ItemUpdateAPIDto{" +
                 "id=" + id +
                 ", itemName='" + itemName + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", buyUrl='" + buyUrl + '\'' +
-                ", userId=" + userId +
                 '}';
     }
 }

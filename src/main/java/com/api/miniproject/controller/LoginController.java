@@ -37,7 +37,7 @@ public class LoginController {
             @RequestParam(defaultValue = "/") String requestURI,
             HttpServletRequest request
     ) {
-        // TODO Request 경로가 있다면 거길롭 보내주고, 아니면 /
+
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "/login/loginForm";
