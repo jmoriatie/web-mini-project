@@ -1,4 +1,4 @@
-package com.api.miniproject.serviceTest;
+package com.api.miniproject.repository;
 
 import com.api.miniproject.domain.Item;
 

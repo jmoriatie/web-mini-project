@@ -8,6 +8,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Getter @Setter
 public class ItemSaveDto{
@@ -27,7 +28,6 @@ public class ItemSaveDto{
 
 //    @URL // 알아보기
     private String buyUrl;
-
     private Long userId;
 
     public ItemSaveDto(){}

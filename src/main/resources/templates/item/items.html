@@ -39,6 +39,7 @@
                 <th>가격</th>
                 <th>수량</th>
                 <th>URL</th>
+                <th>변경일</th>
             </tr>
             </thead>
 
@@ -51,6 +52,7 @@
                 <td th:text="${{item.price}}">99999</td>
                 <td th:text="${{item.quantity}}">99</td>
                 <td th:text="${item.buyUrl}">test@test.com</td>
+                <td th:text="${{item.localDateTime}}">2022/10/02 10:18</td>
             </tr>
             </tbody>
         </table>

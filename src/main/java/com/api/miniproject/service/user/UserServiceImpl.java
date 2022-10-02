@@ -1,7 +1,7 @@
 package com.api.miniproject.service.user;
 
 import com.api.miniproject.domain.User;
-import com.api.miniproject.serviceTest.UserRepository;
+import com.api.miniproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

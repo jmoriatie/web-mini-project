@@ -3,7 +3,7 @@ package com.api.miniproject.service;
 import com.api.miniproject.domain.User;
 import com.api.miniproject.service.user.UserService;
 import com.api.miniproject.service.user.UserServiceImpl;
-import com.api.miniproject.serviceTest.UserRepositoryImpl;
+import com.api.miniproject.repository.UserRepositoryImpl;
 import org.junit.jupiter.api.Test;
 
 class UserServiceTest {
