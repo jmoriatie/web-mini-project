@@ -4,6 +4,7 @@ import com.api.miniproject.domain.Item;
 import com.api.miniproject.dto.item.ItemSaveDto;
 import com.api.miniproject.dto.item.ItemUpdateAPIDto;
 import com.api.miniproject.service.item.ItemService;
+import com.api.miniproject.util.exceptionhandler.exception.ItemAPIBindException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -27,17 +28,15 @@ public class ItemRESTController {
     private final ConversionService conversionService;
 
     @PostMapping("/save")
-    ResponseEntity<Object> saveItem(@Validated @RequestBody ItemSaveDto itemSaveDto, BindingResult bindingResult){
+    ResponseEntity<Object> saveItem(@Validated @RequestBody ItemSaveDto itemSaveDto, BindingResult bindingResult) throws ItemAPIBindException {
 
         if(bindingResult.hasErrors()){
             log.error("bindingResult error={}", bindingResult);
-            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+            throw new ItemAPIBindException(bindingResult);
         }
 
+        // TODO 뭘 검증할건지 명확하게 추가
         if(itemSaveDto.getUserId() == null){
-            //error 리턴하도록
-            throw new IllegalArgumentException();
-//            return new ResponseEntity<>(new , HttpStatus.BAD_REQUEST);
         }
 
         Item item = conversionService.convert(itemSaveDto, Item.class);
@@ -59,11 +58,11 @@ public class ItemRESTController {
     }
 
     @PatchMapping("/update")
-    ResponseEntity<Object> updateItem(@RequestParam Long id, @Validated @RequestBody ItemUpdateAPIDto itemUpdateAPIDto, BindingResult bindingResult){
+    ResponseEntity<Object> updateItem(@RequestParam Long id, @Validated @RequestBody ItemUpdateAPIDto itemUpdateAPIDto, BindingResult bindingResult) throws ItemAPIBindException {
 
         if(bindingResult.hasErrors()){
             log.error("bindingResult error={}", bindingResult);
-            return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+            throw new ItemAPIBindException(bindingResult);
         }
 
         Item item = conversionService.convert(itemUpdateAPIDto, Item.class);
@@ -82,7 +81,7 @@ public class ItemRESTController {
             service.deleteItem(id);
             return new ResponseEntity<>(findItem, HttpStatus.OK);
         }else{
-            throw new IllegalArgumentException("잘못된 요청");
+           throw new IllegalArgumentException("잘못된 요청");
         }
     }
 }
