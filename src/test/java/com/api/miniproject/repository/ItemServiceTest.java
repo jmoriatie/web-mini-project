@@ -17,9 +17,7 @@ class ItemServiceTest {
     @Test
     void saveItemTest() {
         Item item = new Item("test",9999,100,"www.xxx.com", 8L);
-
         Item savedItem = service.saveItem(item);
-
         assertThat(savedItem.getItemName()).isEqualTo("test");
     }
 

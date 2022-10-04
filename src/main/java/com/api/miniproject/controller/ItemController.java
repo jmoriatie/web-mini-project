@@ -9,6 +9,7 @@ import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -36,7 +38,8 @@ public class ItemController {
     }
 
     @PostMapping("/add")
-    public String saveItem(@Validated @ModelAttribute("item") ItemSaveDto itemSaveDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+    public String saveItem(@Validated @ModelAttribute("item") ItemSaveDto itemSaveDto, BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
         log.info("objectName={}", bindingResult.getObjectName());
         log.info("target={}", bindingResult.getTarget());
@@ -65,17 +68,42 @@ public class ItemController {
     }
 
     @GetMapping("/items")
-    public String findAll(Model model, HttpServletRequest request) {
+    public String findAll(Model model, HttpServletRequest request,
+                          @RequestParam(defaultValue = "") String search) {
         Long id = ((User) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
-        List<Item> items = service.findUserItems(id);
 
-        if(items.size() == 0){
+        // 검색한게 있을 시 -> 검색값 반환
+        List<Item> items = searchListByItemName(search, service.findUserItems(id));
+
+        int itemCount = items.size();
+        if(itemCount == 0){
             model.addAttribute("nullStatus", true);
         }
-        log.debug("Item List 개수: {}개", items.size());
+
+        // item 10개씩 출력
+
+
+        log.info("Item List 개수: {}개", itemCount);
         model.addAttribute("items", items);
+
         return "item/items";
     }
+
+    // 검색기능
+    private List<Item> searchListByItemName(String keyword, List<Item> userItems) {
+        List<Item> searchItems = new ArrayList<>();
+        if(keyword.isEmpty()){
+            searchItems = userItems;
+        }else{
+            for(Item item : userItems){
+                if(item.getItemName().contains(keyword)){
+                    searchItems.add(item);
+                }
+            }
+        }
+        return searchItems;
+    }
+
 
     /***
      * id, itemName 별도의 find 메서드 호출
@@ -164,4 +192,5 @@ public class ItemController {
 
         return "item/delete";
     }
+
 }

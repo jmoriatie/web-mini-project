@@ -29,6 +29,16 @@
         </div>
     </div>
 
+    <form action="item.html" th:action="@{/item/items}" method="get">
+    <hr class="my-4">
+    <div class="row">
+        <div class="table">
+            <input type="text" id="search" name="search" class="text-black-50" placeholder="상품명 입력">
+            <button class="btn-dark" type="submit">검색</button>
+        </div>
+    </div>
+    </form>
+
     <hr class="my-4">
     <div>
         <table class="table">
