@@ -69,7 +69,8 @@ public class ItemController {
 
     @GetMapping("/items")
     public String findAll(Model model, HttpServletRequest request,
-                          @RequestParam(defaultValue = "") String search) {
+                          @RequestParam(defaultValue = "") String search,
+                          @RequestParam(defaultValue = "1") Integer page) {
         Long id = ((User) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
 
         // 검색한게 있을 시 -> 검색값 반환
@@ -81,10 +82,27 @@ public class ItemController {
         }
 
         // item 10개씩 출력
+        // 클릭하면 이동하는거니까
 
+        List<Item> tempList = new ArrayList<>();
+
+
+        for(int i=page; i<page*10; i++){
+            if(i < itemCount) {
+                tempList.add(items.get(i - 1));
+            }else break;
+        }
+        items = tempList;
+
+        int pageCount = itemCount/10+1;
+        int[] pages = new int[pageCount];
+        for(int i=0; i<pageCount; i++){
+            pages[i] = i+1;
+        }
 
         log.info("Item List 개수: {}개", itemCount);
         model.addAttribute("items", items);
+        model.addAttribute("pages", pages);
 
         return "item/items";
     }

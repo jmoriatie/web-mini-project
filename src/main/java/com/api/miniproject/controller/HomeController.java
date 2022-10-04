@@ -24,6 +24,7 @@ public class HomeController {
         }
         log.info("loginUser id:{}, pw:{}, name:{}", loginUser.getUserId(), loginUser.getUserPw(), loginUser.getUserName());
         model.addAttribute("userName", loginUser.getUserName());
+
         return "index";
     }
 }
