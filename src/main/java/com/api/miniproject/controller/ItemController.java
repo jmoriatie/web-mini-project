@@ -9,7 +9,6 @@ import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -73,38 +72,51 @@ public class ItemController {
                           @RequestParam(defaultValue = "1") Integer page) {
         Long id = ((User) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
 
-        // 검색한게 있을 시 -> 검색값 반환
+        // 검색했을 시 검색한 List 반환
         List<Item> items = searchListByItemName(search, service.findUserItems(id));
 
-        int itemCount = items.size();
-        if(itemCount == 0){
+        int itemsCount = items.size(); // 전체 item size
+
+        items = getRealItemList(page, items, itemsCount); // 검색+페이지 조건 만족한 List -> 10개씩 출력
+        int[] pages = getPageCount(itemsCount); // item PageCount 가져오기
+
+        if(items.isEmpty()){
             model.addAttribute("nullStatus", true);
+        }else{
+            model.addAttribute("normalStatus", true);
         }
 
-        // item 10개씩 출력
-        // 클릭하면 이동하는거니까
+        log.info("Item List 개수: {}개", itemsCount);
+        model.addAttribute("items", items);
+        model.addAttribute("pages", pages);
+        model.addAttribute("search", search); // 검색값도 담아서, 검색 리스트도 출력
+        model.addAttribute("itemsLength", itemsCount);
 
-        List<Item> tempList = new ArrayList<>();
+        return "item/items";
+    }
 
-
-        for(int i=page; i<page*10; i++){
-            if(i < itemCount) {
-                tempList.add(items.get(i - 1));
-            }else break;
-        }
-        items = tempList;
-
-        int pageCount = itemCount/10+1;
+    private int[] getPageCount(int itemsCount){
+        int pageCount = itemsCount % 10 == 0? itemsCount/10 : itemsCount/10+1; // 10단위일때 한페이지 더생김
         int[] pages = new int[pageCount];
         for(int i=0; i<pageCount; i++){
             pages[i] = i+1;
         }
+        return pages;
+    }
 
-        log.info("Item List 개수: {}개", itemCount);
-        model.addAttribute("items", items);
-        model.addAttribute("pages", pages);
+    private List<Item> getRealItemList(Integer page, List<Item> items, int itemsCount) {
 
-        return "item/items";
+        int maxCnt = page * 10; // 마지막
+        int minCnt = maxCnt - 10;
+
+        List<Item> itemListInPage = new ArrayList<>();
+
+        for(int i=minCnt; i<maxCnt; i++){
+            if(i < itemsCount) {
+                itemListInPage.add(items.get(i));
+            }else break;
+        }
+        return itemListInPage;
     }
 
     // 검색기능

@@ -46,14 +46,14 @@ public class TestObjectInit {
 //        Item item13 = new Item("itemC", 100000, 50, "www.test3.com", 2L);
 //        Item item14 = new Item("itemD", 1000, 80, "www.test4.com", 2L);
 
-        for(int i=1; i<=15; i++){
+        for(int i=1; i<=70; i++){
             int price = random.nextInt(100000) + 10;
             int quantity = random.nextInt(1500) + 1;
             String type = ITEM_TYPE[random.nextInt(ITEM_TYPE.length)];
             String category = ITEM_CATEGORY[random.nextInt(ITEM_TYPE.length)];
 
             Item item;
-            if(i <= 12){
+            if(i <= 60){
                 item = new Item(type+"-"+category, price, quantity, "www.test"+i+".com", 1L);
             }
             else{
