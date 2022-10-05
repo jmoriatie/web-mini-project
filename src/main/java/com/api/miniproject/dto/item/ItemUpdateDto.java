@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -19,12 +21,13 @@ public class ItemUpdateDto{
 
     @NumberFormat(pattern = "###,###")
     @NotNull
-    @Range(min = 10)
+    @Min(value = 10)
+    @Max(value = 100000000)
     private Integer price;
 
     @NumberFormat(pattern = "###,###")
     @NotNull
-    @Range(min = 0)
+    @Min(value = 0)
     private Integer quantity;
 
     private String buyUrl;

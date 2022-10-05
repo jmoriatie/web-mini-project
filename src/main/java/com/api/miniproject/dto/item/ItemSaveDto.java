@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -18,12 +20,13 @@ public class ItemSaveDto{
 
     @NumberFormat(pattern = "###,###")
     @NotNull
-    @Range(min = 10)
+    @Min(value = 10)
+    @Max(value = 100000000)
     private Integer price;
 
     @NumberFormat(pattern = "###,###")
     @NotNull
-    @Range(min = 0)
+    @Min(value = 10)
     private Integer quantity;
 
 //    @URL // 알아보기

@@ -72,6 +72,7 @@ public class ItemController {
                           @RequestParam(defaultValue = "1") Integer page) {
         Long id = ((User) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
 
+        // TODO : page item list 관련 클래스를 따로 빼야할지 고민
         // 검색했을 시 검색한 List 반환
         List<Item> items = searchListByItemName(search, service.findUserItems(id));
 

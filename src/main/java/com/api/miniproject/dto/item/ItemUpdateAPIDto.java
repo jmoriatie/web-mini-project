@@ -22,11 +22,12 @@ public class ItemUpdateAPIDto {
     @NumberFormat(pattern = "###,###")
     @NotNull
     @Min(value = 10)
+    @Max(value = 100000000)
     private Integer price;
 
     @NumberFormat(pattern = "###,###")
     @NotNull
-    @Min(value = 0)
+    @Min(value = 10)
     private Integer quantity;
     private String buyUrl;
 
