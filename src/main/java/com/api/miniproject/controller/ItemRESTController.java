@@ -8,14 +8,12 @@ import com.api.miniproject.util.exceptionhandler.exception.ItemAPIBindException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -30,7 +28,7 @@ public class ItemRESTController {
     private final ConversionService conversionService;
 
     @PostMapping(value = "/save")
-    ResponseEntity<Object> saveItem(@Validated @RequestBody ItemSaveDto itemSaveDto, BindingResult bindingResult, HttpServletRequest request) throws ItemAPIBindException {
+    ResponseEntity<Object> saveItem(@Validated @RequestBody ItemSaveDto itemSaveDto, BindingResult bindingResult) throws ItemAPIBindException {
 
         if(bindingResult.hasErrors()){
             log.error("bindingResult error={}", bindingResult);

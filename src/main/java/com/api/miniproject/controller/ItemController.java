@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Controller
@@ -32,7 +33,7 @@ public class ItemController {
     private final ConversionService conversionService;
 
     @GetMapping("/add")
-    public String saveItemForm(Model model){
+    public String saveItemForm(Model model) {
         model.addAttribute("item", new Item());
         return "item/addForm";
     }
@@ -69,28 +70,24 @@ public class ItemController {
 
     @GetMapping("/items")
     public String findAll(Model model, HttpServletRequest request,
-                          @RequestParam(defaultValue = "") String search,
+                          @RequestParam(defaultValue = "") String keyword,
                           @RequestParam(defaultValue = "1") Integer page) {
         Long id = ((User) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
 
-        // TODO : page item list 관련 클래스를 따로 빼야할지 고민
         // 검색했을 시 검색한 List 반환
-        List<Item> items = searchListByItemName(search, service.findUserItems(id));
+        List<Item> items = searchListByItemName(keyword, service.findUserItems(id));
 
         int itemsCount = items.size(); // 전체 item size
         items = PageResolver.setSinglePageItemList(page, items); // 검색+페이지 조건 만족한 List -> 10개씩 출력
         int[] pages = PageResolver.getPageNumberingArray(itemsCount); // item PageCount 가져오기
 
-        if(items.isEmpty()){
-            model.addAttribute("nullStatus", true);
-        }else{
-            model.addAttribute("normalStatus", true);
-        }
+        model.addAttribute("nullStatus", items.isEmpty()); // 아이템 없음
+        model.addAttribute("normalStatus", !items.isEmpty()); // 아이템 있음
 
         log.info("Item List 개수: {}개", itemsCount);
         model.addAttribute("items", items);
         model.addAttribute("pages", pages);
-        model.addAttribute("search", search); // 검색값도 담아서, 검색 리스트도 출력
+        model.addAttribute("keyword", keyword); // 검색값도 담아서, 검색 리스트도 출력
         model.addAttribute("itemsLength", itemsCount);
 
         return "item/items";
@@ -99,11 +96,11 @@ public class ItemController {
     // 검색기능
     private List<Item> searchListByItemName(String keyword, List<Item> userItems) {
         List<Item> searchItems = new ArrayList<>();
-        if(keyword.isEmpty()){
+        if (keyword.isEmpty()) {
             searchItems = userItems;
-        }else{
-            for(Item item : userItems){
-                if(item.getItemName().contains(keyword)){
+        } else {
+            for (Item item : userItems) {
+                if (item.getItemName().contains(keyword)) {
                     searchItems.add(item);
                 }
             }
@@ -113,26 +110,36 @@ public class ItemController {
 
 
     // TEST!!!!!!
-    @PostMapping("/item-test")
-    public String sendItemTest(@RequestParam String keyword, Model model){
+    @GetMapping("/item-test")
+    public String sendItemTest(@RequestParam(defaultValue = "") String keyword,
+                               @RequestParam(defaultValue = "1") Integer page,
+                               Model model) {
         List<Item> items = service.findAll();
         items = searchListByItemName(keyword, items);
 
         log.info("keyword={}", keyword);
         log.info("items size={}", items.size());
 
+        int itemsCount = items.size(); // 전체 item size
+        items = PageResolver.setSinglePageItemList(page, items); // 검색+페이지 조건 만족한 List -> 10개씩 출력
+        int[] pages = PageResolver.getPageNumberingArray(itemsCount); // item PageCount 가져오기
+
         model.addAttribute("items", items);
-        return "itemList";
+        model.addAttribute("items", items);
+        model.addAttribute("pages", pages);
+        model.addAttribute("keyword", keyword); // 검색값도 담아서, 검색 리스트도 출력
+        model.addAttribute("itemsLength", itemsCount);
+        return "/item/itemList";
     }
 
     /***
      * id, itemName 별도의 find 메서드 호출
      */
     @GetMapping("/item")
-    public String selectFindItemMethod(@RequestParam(name = "search-item") String searchItem, Model model, @RequestHeader("host") String hostUrl ) {
-         Item findItem = getSearchItem(searchItem);
+    public String selectFindItemMethod(@RequestParam(name = "search-item") String searchItem, Model model, @RequestHeader("host") String hostUrl) {
+        Item findItem = getSearchItem(searchItem);
 
-        if(findItem == null){
+        if (findItem == null) {
             log.debug("redirect hostUrl={}", hostUrl);
             return "redirect:" + hostUrl;
         }
@@ -154,7 +161,6 @@ public class ItemController {
     }
 
 
-
     private Item findByName(String itemName) {
         Item findItem = service.findByName(itemName);
         log.debug("findByName={}", itemName);
@@ -170,7 +176,7 @@ public class ItemController {
     }
 
     @PostMapping("/{itemId}/edit")
-    public String updateItem(@PathVariable Long itemId, @Validated @ModelAttribute("item")ItemUpdateDto updateDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String updateItem(@PathVariable Long itemId, @Validated @ModelAttribute("item") ItemUpdateDto updateDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
@@ -200,7 +206,7 @@ public class ItemController {
         Item findItem = service.findById(itemId);
 
         // 아이템 없거나 || 세션의 아이디와 아이템 주인이 다를 때
-        if(findItem == null || userSession.getId() != findItem.getUserId()){
+        if (findItem == null || !Objects.equals(userSession.getId(), findItem.getUserId())) {
             return "redirect:/item/items";
         }
 

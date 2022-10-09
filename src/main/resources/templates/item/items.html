@@ -30,18 +30,27 @@
         </div>
     </div>
 
-    <form action="item.html" th:action="@{/item/items}" method="get">
-        <hr class="my-4">
-        <div class="row">
-            <div class="table">
-                <input type="text" id="search" name="search" class="text-black-50" placeholder="상품명 입력">
-                <button class="btn-dark" type="submit">검색</button>
-            </div>
+    <hr class="my-4">
+    <div class="row">
+        <div class="table">
+            <input type="text" id="keyword" name="keyword" class="text-black-50" placeholder="상품명 입력">
+            <button class="btn-dark" th:onclick="getItems()">검색</button>
         </div>
-    </form>
+    </div>
+
+
+    <!--    <form action="item.html" th:action="@{/item/items}" method="get">-->
+<!--        <hr class="my-4">-->
+<!--        <div class="row">-->
+<!--            <div class="table">-->
+<!--                <input type="text" id="search" name="search" class="text-black-50" placeholder="상품명 입력">-->
+<!--                <button class="btn-dark" type="submit">검색</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
 
     <hr class="my-4">
-    <div>
+    <div id="itemList">
         <table class="table">
             <thead>
             <tr>
@@ -55,23 +64,23 @@
             </thead>
 
             <tbody>
-            <tr th:each="item : ${items}">
-                <td><a href="item.html" th:href="@{/item/item?search-item={itemId}(itemId=${item.id})}"
-                       th:text="${item.id}">아이템id</a></td>
-                <td><a href="item.html" th:href="@{/item/item?search-item={itemId}(itemId=${item.id})}"
-                       th:text="${item.itemName}">상품명</a></td>
-                <td th:text="${{item.price}}">99999</td>
-                <td th:text="${{item.quantity}}">99</td>
-                <td th:text="${item.buyUrl}">test@test.com</td>
-                <td th:text="${{item.localDateTime}}">2022/10/02 10:18</td>
-            </tr>
+                <tr th:each="item : ${items}">
+                    <td><a href="item.html" th:href="@{/item/item?search-item={itemId}(itemId=${item.id})}"
+                           th:text="${item.id}">아이템id</a></td>
+                    <td><a href="item.html" th:href="@{/item/item?search-item={itemId}(itemId=${item.id})}"
+                           th:text="${item.itemName}">상품명</a></td>
+                    <td th:text="${{item.price}}">99999</td>
+                    <td th:text="${{item.quantity}}">99</td>
+                    <td th:text="${item.buyUrl}">test@test.com</td>
+                    <td th:text="${{item.localDateTime}}">2022/10/02 10:18</td>
+                </tr>
             </tbody>
         </table>
 
         <div class="page-item">
             <span th:each="page : ${pages}">
                 <a th:text="${page}"
-                   th:href="@{/item/items(page=${page}, search=(${search}))}">
+                   th:href="@{/item/items(page=${page}, keyword=(${keyword}))}">
                 </a>
             </span>
         </div>
@@ -88,5 +97,8 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" th:src="@{/js/jquery-3.6.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/item.js}"></script>
 </body>
 </html>
