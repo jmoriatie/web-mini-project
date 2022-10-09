@@ -37,8 +37,8 @@
         <input type="text" id="quantity" class="form-control" value="10" th:field="*{quantity}" readonly>
     </div>
     <div>
-        <label for="buyUrl">주소</label>
-        <a id="buyUrl" class="form-control" th:text="*{buyUrl}" th:href="@{|https://*{buyUrl}|}"></a>
+        <label for="buyUrl">주소</label> <a th:href="@{|https://*{buyUrl}|}" target="_blank"><button class="text-black-50">연결</button></a>
+        <input type="text" id="buyUrl" class="form-control" th:field="*{buyUrl}" readonly/>
     </div>
     <div>
         <label for="localDateTime">변경일</label>
