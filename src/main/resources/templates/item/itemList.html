@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <div id="itemList">
-    <h2 th:if="${nullStatus}">저장된 아이템이 없습니다.</h2>
-    <h2 th:if="${normalStatus}" th:text="|검색된 물품 개수는 ${itemsLength}개 입니다|"></h2>
+    <h2 th:if="${nullStatus}" th:text="#{nullStatus}"></h2>
+    <h2 th:if="${normalStatus}" th:text="#{normalStatus( ${itemsLength} )}"></h2>
 
     <table class="table">
         <thead>
