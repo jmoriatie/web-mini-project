@@ -38,7 +38,7 @@
     </div>
     <div>
         <label for="buyUrl">주소</label>
-        <input type="text" id="buyUrl" class="form-control" value="없음" th:field="*{buyUrl}" readonly>
+        <a id="buyUrl" class="form-control" th:text="*{buyUrl}" th:href="@{|https://*{buyUrl}|}"></a>
     </div>
     <div>
         <label for="localDateTime">변경일</label>
