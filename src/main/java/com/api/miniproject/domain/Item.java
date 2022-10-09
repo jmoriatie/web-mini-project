@@ -52,6 +52,8 @@ public class Item {
         this.localDateTime = LocalDateTime.now();
     }
 
+    // TODO 연관관계 메서드
+
     public void update(Item item){
         this.itemName = item.getItemName();
         this.price = item.getPrice();

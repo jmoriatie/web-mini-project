@@ -27,4 +27,11 @@ public class HomeController {
 
         return "index";
     }
+
+    @GetMapping("/test")
+    public String callTestPage(){
+        return "testView";
+    }
+
+
 }

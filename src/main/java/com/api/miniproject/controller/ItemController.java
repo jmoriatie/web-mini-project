@@ -5,6 +5,7 @@ import com.api.miniproject.domain.User;
 import com.api.miniproject.dto.item.ItemSaveDto;
 import com.api.miniproject.dto.item.ItemUpdateDto;
 import com.api.miniproject.service.item.ItemService;
+import com.api.miniproject.util.page.PageResolver;
 import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -77,9 +78,8 @@ public class ItemController {
         List<Item> items = searchListByItemName(search, service.findUserItems(id));
 
         int itemsCount = items.size(); // 전체 item size
-
-        items = getRealItemList(page, items, itemsCount); // 검색+페이지 조건 만족한 List -> 10개씩 출력
-        int[] pages = getPageCount(itemsCount); // item PageCount 가져오기
+        items = PageResolver.setSinglePageItemList(page, items); // 검색+페이지 조건 만족한 List -> 10개씩 출력
+        int[] pages = PageResolver.getPageNumberingArray(itemsCount); // item PageCount 가져오기
 
         if(items.isEmpty()){
             model.addAttribute("nullStatus", true);
@@ -94,30 +94,6 @@ public class ItemController {
         model.addAttribute("itemsLength", itemsCount);
 
         return "item/items";
-    }
-
-    private int[] getPageCount(int itemsCount){
-        int pageCount = itemsCount % 10 == 0? itemsCount/10 : itemsCount/10+1; // 10단위일때 한페이지 더생김
-        int[] pages = new int[pageCount];
-        for(int i=0; i<pageCount; i++){
-            pages[i] = i+1;
-        }
-        return pages;
-    }
-
-    private List<Item> getRealItemList(Integer page, List<Item> items, int itemsCount) {
-
-        int maxCnt = page * 10; // 마지막
-        int minCnt = maxCnt - 10;
-
-        List<Item> itemListInPage = new ArrayList<>();
-
-        for(int i=minCnt; i<maxCnt; i++){
-            if(i < itemsCount) {
-                itemListInPage.add(items.get(i));
-            }else break;
-        }
-        return itemListInPage;
     }
 
     // 검색기능
@@ -135,6 +111,19 @@ public class ItemController {
         return searchItems;
     }
 
+
+    // TEST!!!!!!
+    @PostMapping("/item-test")
+    public String sendItemTest(@RequestParam String keyword, Model model){
+        List<Item> items = service.findAll();
+        items = searchListByItemName(keyword, items);
+
+        log.info("keyword={}", keyword);
+        log.info("items size={}", items.size());
+
+        model.addAttribute("items", items);
+        return "itemList";
+    }
 
     /***
      * id, itemName 별도의 find 메서드 호출

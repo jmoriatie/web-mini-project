@@ -1,0 +1,29 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Document</title>
+</head>
+<body>
+
+<button type="button" th:onclick="showAlert()">Show Alert</button>
+<button type="button" th:onclick="test('랄라')">test Click</button>
+<button type="button" th:onclick="getItems()">JSON 시작</button>
+<br>
+<label for="input-text"></label><input type="text" id="input-text">
+<button type="button" th:onclick="getItemsModel()">Model 시작</button>
+
+<div id="t_view">
+</div>
+
+<div id="t_view-model">
+</div>
+
+<script type="text/javascript" th:src="@{/js/jquery-3.6.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/item.js}"></script>
+</body>
+</html>

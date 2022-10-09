@@ -29,7 +29,7 @@ public class ItemRESTController {
     private final ItemService service;
     private final ConversionService conversionService;
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save")
     ResponseEntity<Object> saveItem(@Validated @RequestBody ItemSaveDto itemSaveDto, BindingResult bindingResult, HttpServletRequest request) throws ItemAPIBindException {
 
         if(bindingResult.hasErrors()){
