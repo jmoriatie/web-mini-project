@@ -69,13 +69,26 @@ public class ItemController {
     }
 
     @GetMapping("/items")
-    public String findAll(Model model, HttpServletRequest request,
-                          @RequestParam(defaultValue = "") String keyword,
-                          @RequestParam(defaultValue = "1") Integer page) {
+    public String findAll() {
+        return "item/items";
+    }
+
+    // ajax ITEM LIST 반환 controller
+    @GetMapping("/itemList")
+    public String sendItemTest(@RequestParam(defaultValue = "") String keyword,
+                               @RequestParam(defaultValue = "1") Integer page,
+                               HttpServletRequest request,
+                               Model model) {
+        // TODO 1: 검색시 아이템 수량
+        // TODO 2: 페이지 누를 떄 controller를 호출하지 않도록
         Long id = ((User) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
 
         // 검색했을 시 검색한 List 반환
         List<Item> items = searchListByItemName(keyword, service.findUserItems(id));
+        items = searchListByItemName(keyword, items);
+
+        log.info("keyword={}", keyword);
+        log.info("items size={}", items.size());
 
         int itemsCount = items.size(); // 전체 item size
         items = PageResolver.setSinglePageItemList(page, items); // 검색+페이지 조건 만족한 List -> 10개씩 출력
@@ -84,17 +97,16 @@ public class ItemController {
         model.addAttribute("nullStatus", items.isEmpty()); // 아이템 없음
         model.addAttribute("normalStatus", !items.isEmpty()); // 아이템 있음
 
-        log.info("Item List 개수: {}개", itemsCount);
         model.addAttribute("items", items);
         model.addAttribute("pages", pages);
         model.addAttribute("keyword", keyword); // 검색값도 담아서, 검색 리스트도 출력
         model.addAttribute("itemsLength", itemsCount);
-
-        return "item/items";
+        return "/item/itemList";
     }
 
     // 검색기능
     private List<Item> searchListByItemName(String keyword, List<Item> userItems) {
+
         List<Item> searchItems = new ArrayList<>();
         if (keyword.isEmpty()) {
             searchItems = userItems;
@@ -109,28 +121,7 @@ public class ItemController {
     }
 
 
-    // TEST!!!!!!
-    @GetMapping("/item-test")
-    public String sendItemTest(@RequestParam(defaultValue = "") String keyword,
-                               @RequestParam(defaultValue = "1") Integer page,
-                               Model model) {
-        List<Item> items = service.findAll();
-        items = searchListByItemName(keyword, items);
 
-        log.info("keyword={}", keyword);
-        log.info("items size={}", items.size());
-
-        int itemsCount = items.size(); // 전체 item size
-        items = PageResolver.setSinglePageItemList(page, items); // 검색+페이지 조건 만족한 List -> 10개씩 출력
-        int[] pages = PageResolver.getPageNumberingArray(itemsCount); // item PageCount 가져오기
-
-        model.addAttribute("items", items);
-        model.addAttribute("items", items);
-        model.addAttribute("pages", pages);
-        model.addAttribute("keyword", keyword); // 검색값도 담아서, 검색 리스트도 출력
-        model.addAttribute("itemsLength", itemsCount);
-        return "/item/itemList";
-    }
 
     /***
      * id, itemName 별도의 find 메서드 호출
