@@ -1,16 +1,20 @@
 package com.api.miniproject.repository;
 
 import com.api.miniproject.domain.Item;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ItemRepository {
+@Repository
+public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositoryJPA{
 
-    Item saveItem(Item item);
+    // TODO: 내장된 findAll 왜 안되는 걸까
+    @Query(value = "SELECT * FROM ITEM_TB", nativeQuery = true)
     List<Item> findAll();
-    List<Item> findUserItems(Long userId);
-    Item findById(Long id);
-    Item findByName(String itemName);
-    void updateItem(Long id, Item item);
-    void deleteItem(Long id);
+
+    @Query(value = "SELECT * FROM ITEM_TB WHERE USER_ID = :userId", nativeQuery = true)
+    List<Item> findUserItems(@Param("userId") Long userId);
 }

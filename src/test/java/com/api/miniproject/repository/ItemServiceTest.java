@@ -2,29 +2,41 @@ package com.api.miniproject.repository;
 
 import com.api.miniproject.domain.Item;
 import com.api.miniproject.domain.User;
-import com.api.miniproject.service.item.ItemService;
 import com.api.miniproject.service.item.ItemServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class ItemServiceTest {
 
-    ItemService service = new ItemServiceImpl(new ItemRepositoryImpl());
+//    private ItemService service = new ItemServiceImpl();
+
+    @Mock
+    private ItemRepository repo;
+
+    @InjectMocks // jpa 테스트 하기 위해 mock 생성
+    private ItemServiceImpl service;
+
 
     @Test
     void saveItemTest() {
-        Item item = new Item("test",9999,100,"www.xxx.com", 8L);
+        Item item = new Item("test", 9999, 100, "www.xxx.com", 8L);
         Item savedItem = service.saveItem(item);
         assertThat(savedItem.getItemName()).isEqualTo("test");
     }
 
     @Test
     void findAllTest() {
-        Item itemA = new Item("testItemA",9999,100,"www.xxx.com", 10L);
-        Item itemB = new Item("testItemB",9999,100,"www.yyy.com", 20L);
+        Item itemA = new Item("testItemA", 9999, 100, "www.xxx.com", 10L);
+        Item itemB = new Item("testItemB", 9999, 100, "www.yyy.com", 20L);
 
         service.saveItem(itemA);
         service.saveItem(itemB);
@@ -37,8 +49,8 @@ class ItemServiceTest {
 
     @Test
     void findUserItemsTest() {
-        Item itemA = new Item("testItemA",9999,100,"www.xxx.com", 1L);
-        Item itemB = new Item("testItemB",3333,33,"www.yyy.com", 2L);
+        Item itemA = new Item("testItemA", 9999, 100, "www.xxx.com", 1L);
+        Item itemB = new Item("testItemB", 3333, 33, "www.yyy.com", 2L);
 
         service.saveItem(itemA);
         service.saveItem(itemB);
@@ -58,7 +70,7 @@ class ItemServiceTest {
 
     @Test
     void findByNameTest() {
-        Item itemA = new Item("testItemA",9999,100,"www.xxx.com", 1L);
+        Item itemA = new Item("testItemA", 9999, 100, "www.xxx.com", 1L);
 
         service.saveItem(itemA);
 
@@ -68,7 +80,7 @@ class ItemServiceTest {
 
     @Test
     void updateItemTest() {
-        Item itemA = new Item("testItemA",9999,100,"www.xxx.com", 1L);
+        Item itemA = new Item("testItemA", 9999, 100, "www.xxx.com", 1L);
 
         service.saveItem(itemA);
 
@@ -88,8 +100,8 @@ class ItemServiceTest {
 
     @Test
     void deleteItemTest() {
-        Item itemA = new Item("testItemA",9999,100,"www.xxx.com", 1L);
-        Item itemB = new Item("testItemB",3333,33,"www.yyy.com", 2L);
+        Item itemA = new Item("testItemA", 9999, 100, "www.xxx.com", 1L);
+        Item itemB = new Item("testItemB", 3333, 33, "www.yyy.com", 2L);
 
         service.saveItem(itemA);
         service.saveItem(itemB);
@@ -100,5 +112,27 @@ class ItemServiceTest {
 
         assertThat(items.size()).isEqualTo(1);
         assertThat(items).doesNotContain(itemA);
+    }
+
+    @Test
+    void findAllJPATest() {
+        Item itemA = new Item("testItemA", 9999, 100, "www.xxx.com", 1L);
+        Item itemB = new Item("testItemB", 3333, 33, "www.yyy.com", 2L);
+
+//        service.saveItem(itemA);
+//        service.saveItem(itemB);
+//
+//        BDDMockito.given(repo.saveItem(itemA)).willReturn(itemA);
+//        BDDMockito.given(repo.saveItem(itemB)).willReturn(itemB);
+
+        List<Item> all = repo.findAll();
+        System.out.println("all = " + all);
+
+        Item findById = service.findById(1L);
+        System.out.println("findById = " + findById);
+
+        List<Item> list = service.findAll();
+        System.out.println("list = " + list);
+        assertThat(list.size()).isNotNull();
     }
 }

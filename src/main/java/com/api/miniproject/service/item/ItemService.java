@@ -3,8 +3,8 @@ package com.api.miniproject.service.item;
 import com.api.miniproject.domain.Item;
 
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 public interface ItemService {
 

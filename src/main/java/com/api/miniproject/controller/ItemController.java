@@ -9,6 +9,7 @@ import com.api.miniproject.util.page.PageResolver;
 import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ItemController {
 
+    @Autowired
     private final ItemService service;
     private final ConversionService conversionService;
 
@@ -69,7 +71,7 @@ public class ItemController {
     }
 
     @GetMapping("/items")
-    public String findAll() {
+    public String findAllItems() {
         return "item/items";
     }
 
@@ -79,11 +81,11 @@ public class ItemController {
                                @RequestParam(defaultValue = "1") Integer page,
                                HttpServletRequest request,
                                Model model) {
-        // TODO 1: 검색시 아이템 수량
-        // TODO 2: 페이지 누를 떄 controller를 호출하지 않도록
+
         Long id = ((User) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
 
         // 검색했을 시 검색한 List 반환
+        log.info("userId!!={}", id);
         List<Item> items = searchListByItemName(keyword, service.findUserItems(id));
         items = searchListByItemName(keyword, items);
 

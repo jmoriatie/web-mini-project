@@ -8,13 +8,12 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
-@Repository
-public class ItemRepositoryImpl implements ItemRepository{
+//@Repository
+public class ItemRepositoryImpl{
 
     private static Long sequence = 0L;
     private static Map<Long, Item> storage = new ConcurrentHashMap<>(); // 동시접속 문제 해결 hashMap(local이라 딱히 동시접속 문제는 없지만)
 
-    @Override
     public Item saveItem(Item item) {
         item.setId(++sequence);
         log.info("saveItem={}", item.toString());
@@ -22,12 +21,10 @@ public class ItemRepositoryImpl implements ItemRepository{
         return item;
     }
 
-    @Override
     public List<Item> findAll() {
         return new ArrayList<>( storage.values() );
     }
 
-    @Override
     public List<Item> findUserItems(Long userId) {
         List<Item> items = new ArrayList<>( storage.values() );
         List<Item> findUserItems = new ArrayList<>();
@@ -39,8 +36,6 @@ public class ItemRepositoryImpl implements ItemRepository{
         return findUserItems;
     }
 
-
-    @Override
     public Item findById(Long id) {
         Item item = null;
         if(storage.containsKey(id)){
@@ -49,7 +44,6 @@ public class ItemRepositoryImpl implements ItemRepository{
         return item;
     }
 
-    @Override
     public Item findByName(String itemName) {
         List<Item> itemList = findAll();
 
@@ -59,12 +53,10 @@ public class ItemRepositoryImpl implements ItemRepository{
                 .orElse(null);
     }
 
-    @Override
     public void updateItem(Long id, Item item) {
         storage.get(id).update(item);
     }
 
-    @Override
     public void deleteItem(Long id) {
         storage.remove(id);
     }

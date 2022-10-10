@@ -12,6 +12,11 @@ import java.util.List;
 @Service
 public class ItemServiceImpl implements ItemService{
 
+//    private final ItemRepository repo;
+//    @Autowired
+//    public ItemServiceImpl(ItemRepository repo) {
+//        this.repo = repo;
+//    }
 
     private final ItemRepository repo;
 
@@ -37,7 +42,7 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public Item findById(Long id) {
-        return repo.findById(id);
+        return repo.findById(id).orElse(null);
     }
 
     @Override
@@ -52,6 +57,6 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public void deleteItem(Long id) {
-        repo.deleteItem(id);
+        repo.deleteById(id);
     }
 }
