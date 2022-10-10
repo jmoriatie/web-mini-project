@@ -1,5 +1,11 @@
 $(document).ready( getItems(1) );
 
+$(document).keydown(function (event){
+    if($('#keyword').is(':focus') && event.key === 'Enter'){
+        getItems(1);
+    }
+})
+
 function getItems(page) {
     $('#itemList').empty();
     const inputData = $('#keyword').val();
