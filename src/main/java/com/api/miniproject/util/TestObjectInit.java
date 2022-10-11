@@ -20,7 +20,7 @@ public class TestObjectInit {
     private final String[] ITEM_TYPE = {"프린팅", "해골", "다이나믹", "골져스", "프리티","디스트로이", "빈티지", "다크", "오버핏", "트레이닝"};
     private final String[] ITEM_CATEGORY ={"티셔츠", "팬츠", "조끼", "후드", "와이트팬츠", "반바지", "셔츠", "카라티", "청바지", "긴팔티셔츠"};
 
-    @PostConstruct
+//    @PostConstruct
     void testUserInit(){
         Random random = new Random();
 
@@ -32,14 +32,8 @@ public class TestObjectInit {
     }
 
 //    @PostConstruct
-    void testObjectInit(){
+    void testItemInit(){
         Random random = new Random();
-
-        User user1 = new User("test", "test", "나테스트");
-        User user2 = new User("a", "a", "김에이");
-
-        userService.saveUser(user1);
-        userService.saveUser(user2);
 
         for(int i=1; i<=70; i++){
             int price = random.nextInt(100000) + 10;

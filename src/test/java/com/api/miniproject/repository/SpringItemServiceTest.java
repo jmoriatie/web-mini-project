@@ -20,7 +20,7 @@ public class SpringItemServiceTest {
 
     @Test
     void findAllJPATest() {
-        List<Item> all = repository.findAll();
+        List<Item> all = repository.findAll();  
         System.out.println("all = " + all);
 
         List<Item> list = service.findAll();
