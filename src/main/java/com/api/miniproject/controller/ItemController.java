@@ -36,7 +36,7 @@ public class ItemController {
 
     @GetMapping("/add")
     public String saveItemForm(Model model) {
-        model.addAttribute("item", new Item());
+        model.addAttribute("item", new ItemSaveDto());
         return "item/addForm";
     }
 
@@ -84,8 +84,7 @@ public class ItemController {
 
         Long id = ((User) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
 
-        // 검색했을 시 검색한 List 반환
-        log.info("userId!!={}", id);
+        log.info("userId!!={}", id); // 검색했을 시 검색한 List 반환
         List<Item> items = searchListByItemName(keyword, service.findUserItems(id));
         items = searchListByItemName(keyword, items);
 
@@ -103,6 +102,7 @@ public class ItemController {
         model.addAttribute("pages", pages);
         model.addAttribute("keyword", keyword); // 검색값도 담아서, 검색 리스트도 출력
         model.addAttribute("itemsLength", itemsCount);
+
         return "/item/itemList";
     }
 
@@ -169,21 +169,20 @@ public class ItemController {
     }
 
     @PostMapping("/{itemId}/edit")
-    public String updateItem(@PathVariable Long itemId, @Validated @ModelAttribute("item") ItemUpdateDto updateDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String updateItem(@PathVariable Long itemId,
+                             @Validated @ModelAttribute("item") ItemUpdateDto updateDto, BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "item/editForm";
         }
 
-        // 아이템 셋팅
-        Item updatedItem = conversionService.convert(updateDto, Item.class);
+        Item updatedItem = conversionService.convert(updateDto, Item.class); // 아이템 셋팅
 
-        //업데이트
-        service.updateItem(itemId, updatedItem);
+        service.updateItem(itemId, updatedItem); //업데이트
 
-        // 검증 필요
-        log.info("업데이트된 item={}", updatedItem);
+        log.info("업데이트된 item={}", updatedItem); // 검증 필요
         redirectAttributes.addAttribute("search-item", itemId);
         redirectAttributes.addAttribute("updateStatus", true);
 

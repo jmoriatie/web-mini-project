@@ -28,7 +28,7 @@ import java.io.IOException;
 @Component
 public class LoginCheckAspect {
 
-    // 다음에 더 연구 ㅋㅋㅋㅋ intercepor 로 대체
+    // intercepor 로 대체
     @Pointcut("@annotation(com.api.miniproject.util.loginCheck.LoginCheck)")
     public void LoginCheck(){
     }

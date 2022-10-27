@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ItemUpdateAPIDto {
+
     private Long id;
 
     @NotBlank
@@ -38,16 +40,5 @@ public class ItemUpdateAPIDto {
         this.price = price;
         this.quantity = quantity;
         this.buyUrl = buyUrl;
-    }
-
-    @Override
-    public String toString() {
-        return "ItemUpdateAPIDto{" +
-                "id=" + id +
-                ", itemName='" + itemName + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", buyUrl='" + buyUrl + '\'' +
-                '}';
     }
 }

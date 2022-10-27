@@ -11,13 +11,14 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
+//@Repository
 public class UserRepositoryImpl {
 
     private static Long sequence = 0L;
     private final static Map<Long, User> storage = new ConcurrentHashMap<>();
 
     public User saveUser(User user) {
-        user.setId(++sequence);
+//        user.setId(++sequence);
         storage.put(user.getId(), user);
         log.info("saveUser={}", user.toString());
         return user;

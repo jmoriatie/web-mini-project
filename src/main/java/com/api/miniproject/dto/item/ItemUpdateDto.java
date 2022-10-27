@@ -42,15 +42,4 @@ public class ItemUpdateDto{
         this.quantity = quantity;
         this.buyUrl = buyUrl;
     }
-
-    @Override
-    public String toString() {
-        return "ItemUpdateDto{" +
-                "id=" + id +
-                ", itemName='" + itemName + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", buyUrl='" + buyUrl + '\'' +
-                '}';
-    }
 }

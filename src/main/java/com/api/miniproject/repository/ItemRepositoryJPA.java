@@ -12,4 +12,5 @@ public interface ItemRepositoryJPA{
     Item findByName(String itemName);
     Item saveItem(Item item);
     void updateItem(Long id, Item item);
+
 }

@@ -7,14 +7,12 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Repository
 public class ItemRepositoryJPAImpl implements ItemRepositoryJPA {
 
-    private static Long sequence = 0L;
     private final ItemRepository repo;
 
     @Autowired
@@ -24,9 +22,16 @@ public class ItemRepositoryJPAImpl implements ItemRepositoryJPA {
     }
 
     public Item saveItem(Item item) {
-        item.setId(++sequence);
         log.info("saveItem={}", item);
-        return repo.save(item);
+        return repo.save(
+                Item.builder()
+                        .itemName(item.getItemName())
+                        .price(item.getPrice())
+                        .quantity(item.getQuantity())
+                        .buyUrl(item.getBuyUrl())
+                        .userId(item.getUserId())
+                        .build()
+                );
     }
 
     public Item findByName(String itemName) {
@@ -40,6 +45,14 @@ public class ItemRepositoryJPAImpl implements ItemRepositoryJPA {
 
     @Transactional
     public void updateItem(Long id, Item item) {
-        repo.findById(id).ifPresent(realItem -> realItem.update(item));
+        repo.findById(id).ifPresent(realItem -> realItem.update(
+                Item.builder()
+                        .itemName(item.getItemName())
+                        .userId(item.getUserId())
+                        .price(item.getPrice())
+                        .quantity(item.getQuantity())
+                        .buyUrl(item.getBuyUrl())
+                        .build()
+        ));
     }
 }

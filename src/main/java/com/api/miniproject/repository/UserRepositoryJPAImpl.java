@@ -12,7 +12,6 @@ import java.util.Optional;
 @Repository
 public class UserRepositoryJPAImpl implements UserRepositoryJPA{
 
-    private static Long sequence = 0L;
     private final UserRepository userRepository;
 
     @Autowired
@@ -22,7 +21,6 @@ public class UserRepositoryJPAImpl implements UserRepositoryJPA{
     }
 
     public User saveUser(User user){
-        user.setId(++sequence);
         User savedUser = userRepository.save(user);
         log.info("savedUser={}", savedUser);
         return savedUser;

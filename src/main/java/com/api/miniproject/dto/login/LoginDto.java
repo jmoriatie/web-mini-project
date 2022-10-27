@@ -22,12 +22,4 @@ public class LoginDto {
         this.userId = userId;
         this.userPw = userPw;
     }
-
-    @Override
-    public String toString() {
-        return "LoginDto{" +
-                "userId='" + userId + '\'' +
-                ", userPw='" + userPw + '\'' +
-                '}';
-    }
 }

@@ -5,7 +5,6 @@ import com.api.miniproject.domain.User;
 import com.api.miniproject.service.item.ItemServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,7 +23,6 @@ class ItemServiceTest {
 
     @InjectMocks // jpa 테스트 하기 위해 mock 생성
     private ItemServiceImpl service;
-
 
     @Test
     void saveItemTest() {
@@ -56,7 +54,7 @@ class ItemServiceTest {
         service.saveItem(itemB);
 
         User userA = new User("userA", "xxx", "nameA");
-        userA.setId(1L); // 로직에서 자동 설정되는 값이기에 수동 설정
+//        userA.setId(1L); // 로직에서 자동 설정되는 값이기에 수동 설정 => JPA 변경
 
         List<Item> userItems = service.findUserItems(userA.getId());
 
@@ -84,11 +82,11 @@ class ItemServiceTest {
 
         service.saveItem(itemA);
 
-        itemA.setItemName("UpdatedItemA");
-        itemA.setPrice(500);
-        itemA.setQuantity(10);
+        Item.builder()
+                .itemName("UpdatedItemA")
+                .price(500)
+                .quantity(10).build();
 
-        itemA.setId(1L); // 로직에서 자동 설정되는 값이기에 수동 설정
 
         service.updateItem(itemA.getId(), itemA);
 
@@ -116,7 +114,7 @@ class ItemServiceTest {
 
     @Test
     void findAllJPATest() {
-        Item itemA = new Item("testItemA", 9999, 100, "www.xxx.com", 1L);
+            Item itemA = new Item("testItemA", 9999, 100, "www.xxx.com", 1L);
         Item itemB = new Item("testItemB", 3333, 33, "www.yyy.com", 2L);
 
 //        service.saveItem(itemA);

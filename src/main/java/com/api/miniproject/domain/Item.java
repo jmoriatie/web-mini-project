@@ -1,8 +1,7 @@
 package com.api.miniproject.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.api.miniproject.controller.ItemController;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -11,11 +10,14 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @Table(name = "ITEM_TB")
-@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Item {
 
     @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "ITEM_NAME")
@@ -44,10 +46,7 @@ public class Item {
     @Column(name = "USER_ID")
     private Long userId;
 
-    public Item(){
-        this.localDateTime = LocalDateTime.now();
-    }
-
+    @Builder
     public Item(String itemName, int price, int quantity, String buyUrl, Long userId) {
         this.itemName = itemName;
         this.price = price;
@@ -57,16 +56,19 @@ public class Item {
         this.localDateTime = LocalDateTime.now();
     }
 
-    public Item(Item item) {
-        this.itemName = item.getItemName();
-        this.price = item.getPrice();
-        this.quantity = item.getQuantity();
-        this.buyUrl = item.getBuyUrl();
-        this.userId = item.getUserId();
-        this.localDateTime = LocalDateTime.now();
-    }
+//    @Builder
+//    public Item(Item item) {
+//        this.itemName = item.getItemName();
+//        this.price = item.getPrice();
+//        this.quantity = item.getQuantity();
+//        this.buyUrl = item.getBuyUrl();
+//        this.userId = item.getUserId();
+//        this.localDateTime = LocalDateTime.now();
+//    }
 
-    // TODO 연관관계 메서드
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public void update(Item item){
         this.itemName = item.getItemName();
@@ -76,16 +78,5 @@ public class Item {
         this.localDateTime = LocalDateTime.now();
     }
 
-    @Override
-    public String toString() {
-        return "Item{" +
-                "id=" + id +
-                ", itemName='" + itemName + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", buyUrl='" + buyUrl + '\'' +
-                ", localDateTime=" + localDateTime +
-                ", userId=" + userId +
-                '}';
-    }
+    // TODO 연관관계 메서드
 }

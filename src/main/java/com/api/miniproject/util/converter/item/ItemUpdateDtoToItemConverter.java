@@ -12,13 +12,10 @@ public class ItemUpdateDtoToItemConverter implements Converter<ItemUpdateDto, It
     public Item convert(ItemUpdateDto source) {
         log.info("convert to source={} ", source);
 
-        Item item = new Item();
-
-        item.setItemName(source.getItemName());
-        item.setPrice(source.getPrice());
-        item.setQuantity(source.getQuantity());
-        item.setBuyUrl(source.getBuyUrl());
-
-        return item;
+        return Item.builder()
+                .itemName(source.getItemName())
+                .price(source.getPrice())
+                .quantity(source.getQuantity())
+                .buyUrl(source.getBuyUrl()).build();
     }
 }

@@ -15,10 +15,16 @@ public class ItemRepositoryImpl{
     private static Map<Long, Item> storage = new ConcurrentHashMap<>(); // 동시접속 문제 해결 hashMap(local이라 딱히 동시접속 문제는 없지만)
 
     public Item saveItem(Item item) {
-        item.setId(++sequence);
+//        item.setId(++sequence);
         log.info("saveItem={}", item.toString());
         storage.put(item.getId(), item);
-        return item;
+        return Item.builder()
+                .itemName(item.getItemName())
+                .userId(item.getUserId())
+                .price(item.getPrice())
+                .quantity(item.getQuantity())
+                .buyUrl(item.getBuyUrl())
+                .build();
     }
 
     public List<Item> findAll() {
@@ -54,7 +60,15 @@ public class ItemRepositoryImpl{
     }
 
     public void updateItem(Long id, Item item) {
-        storage.get(id).update(item);
+        storage.get(id).update(
+                Item.builder()
+                        .itemName(item.getItemName())
+                        .userId(item.getUserId())
+                        .price(item.getPrice())
+                        .quantity(item.getQuantity())
+                        .buyUrl(item.getBuyUrl())
+                        .build()
+        );
     }
 
     public void deleteItem(Long id) {
