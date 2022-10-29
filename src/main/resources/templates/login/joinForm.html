@@ -40,7 +40,7 @@
             </div>
             <div>
                 <label for="userPw"></label>
-                <input type="password" id="userName" name="userName" th:field="*{userName}" th:errorclass="err-message"
+                <input type="text" id="userName" name="userName" th:field="*{userName}" th:errorclass="err-message"
                        class="form-control"
                        placeholder="이름">
                 <span class="err-message" th:errors="*{userName}">name Error!</span>
@@ -48,7 +48,7 @@
 
 <!--            있는 아이디일 경우 체크하기-->
             <div th:if="${#fields.hasGlobalErrors()}">
-                <p class="err-message" th:each="err : ${#fields.globalErrors()}" th:text="${err}">user are not
+                <p class="err-message" th:each="err : ${#fields.globalErrors()}" th:text="${err}">user is already
                     Exist!</p>
             </div>
 

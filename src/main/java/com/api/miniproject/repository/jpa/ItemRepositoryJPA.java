@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemRepositoryJPA{
-//    List<Item> findUserItems(Long userId);
     Item findByName(String itemName);
     Item saveItem(Item item);
     void updateItem(Long id, Item item);

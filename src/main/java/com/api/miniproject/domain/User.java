@@ -20,8 +20,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "USER_ID")
     @NotBlank
+    @Column(name = "USER_ID", unique = true)
     String userId;
 
     @NotBlank
@@ -29,8 +29,8 @@ public class User {
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
     String userPw;
 
-    @Column(name = "USER_NAME")
     @NotEmpty
+    @Column(name = "USER_NAME")
     String userName;
 
     @Column(name = "CREATE_TIME")

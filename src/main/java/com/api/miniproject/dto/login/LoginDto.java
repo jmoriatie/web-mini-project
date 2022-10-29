@@ -14,7 +14,7 @@ public class LoginDto {
     String userId;
 
     @NotBlank
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
+//    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}") // FIXME: TEST 이후 해제
     String userPw;
 
     public LoginDto() {

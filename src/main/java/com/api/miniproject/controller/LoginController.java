@@ -45,8 +45,7 @@ public class LoginController {
 
         User findUser = service.findByUserId(loginDto.getUserId(), loginDto.getUserPw());
 
-        // 유저 없을 시 global error 반환
-        if (findUser == null) {
+        if (findUser == null) { // 유저 없을 시 global error 반환
             bindingResult.reject("notExistUser");
             return "/login/loginForm";
         }

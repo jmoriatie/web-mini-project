@@ -21,7 +21,6 @@ public class LoginValidationUtil {
         return masterCheck;
     }
 
-
     static boolean emptyBoxCheck(LoginDto loginDto, BindingResult bindingResult){
         boolean check = false;
         if(!StringUtils.hasText(loginDto.getUserId())){

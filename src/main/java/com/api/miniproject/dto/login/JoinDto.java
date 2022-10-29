@@ -15,16 +15,13 @@ import javax.validation.constraints.Pattern;
 public class JoinDto {
 
     @NotBlank
-    @Column(name = "USER_ID")
     String userId;
 
     @NotBlank
-    @Column(name = "USER_PW")
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
     String userPw;
 
     @NotEmpty
-    @Column(name = "USER_NAME")
     String userName;
 
     @Builder

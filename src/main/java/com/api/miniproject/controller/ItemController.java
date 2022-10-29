@@ -43,24 +43,17 @@ public class ItemController {
     public String saveItem(@Validated @ModelAttribute("item") ItemSaveDto itemSaveDto, BindingResult bindingResult,
                            RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
-        log.info("objectName={}", bindingResult.getObjectName());
-        log.info("target={}", bindingResult.getTarget());
-
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "item/addForm";
         }
 
-        // 정상 로직 start
-        // 컨버팅
-        Item saveItem = conversionService.convert(itemSaveDto, Item.class);
+        Item saveItem = conversionService.convert(itemSaveDto, Item.class); // 정상 로직 start, 컨버팅
 
-        // 유저아이디 꺼내서 저장
-        Long userId = ((User) request.getSession(false).getAttribute(SessionConst.LOGIN_USER)).getId();
+        Long userId = ((User) request.getSession(false).getAttribute(SessionConst.LOGIN_USER)).getId(); // 유저아이디 꺼내서 저장
         saveItem.setUserId(userId); // foreign key
 
-        // service 저장
-        Item savedItem = service.saveItem(saveItem);
+        Item savedItem = service.saveItem(saveItem);// service 저장
 
         redirectAttributes.addAttribute("search-item", savedItem.getId());
         redirectAttributes.addAttribute("saveStatus", true);
@@ -86,9 +79,6 @@ public class ItemController {
         log.info("userId!!={}", id); // 검색했을 시 검색한 List 반환
         List<Item> items = searchListByItemName(keyword, service.findUserItems(id));
         items = searchListByItemName(keyword, items);
-
-        log.info("keyword={}", keyword);
-        log.info("items size={}", items.size());
 
         int itemsCount = items.size(); // 전체 item size
         items = PageResolver.setSinglePageItemList(page, items); // 검색+페이지 조건 만족한 List -> 10개씩 출력
@@ -120,8 +110,6 @@ public class ItemController {
         }
         return searchItems;
     }
-
-
 
 
     /***

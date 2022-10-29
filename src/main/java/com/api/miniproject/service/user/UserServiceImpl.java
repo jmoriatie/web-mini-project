@@ -16,6 +16,10 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user) {
         return repo.saveUser(user);
     }
+
+    public User findByUserId(String userId){
+        return repo.findByUserId(userId).orElse(null);
+    }
 }
 
 
