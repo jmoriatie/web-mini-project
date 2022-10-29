@@ -1,4 +1,4 @@
-package com.api.miniproject.repository;
+package com.api.miniproject.repository.jpa;
 
 import com.api.miniproject.domain.Item;
 import org.springframework.data.jpa.repository.JpaRepository;

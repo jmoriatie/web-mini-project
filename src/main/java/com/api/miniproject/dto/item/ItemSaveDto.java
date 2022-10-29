@@ -1,6 +1,7 @@
 package com.api.miniproject.dto.item;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter @Setter
+@NoArgsConstructor
 public class ItemSaveDto{
 
     @NotBlank
@@ -26,14 +28,12 @@ public class ItemSaveDto{
 
     @NumberFormat(pattern = "###,###")
     @NotNull
-    @Min(value = 10)
+    @Min(value = 0)
     private Integer quantity;
 
 //    @URL // 알아보기
     private String buyUrl;
     private Long userId;
-
-    public ItemSaveDto(){}
 
     public ItemSaveDto(String itemName, Integer price, Integer quantity, String buyUrl, Long userId) {
         this.itemName = itemName;

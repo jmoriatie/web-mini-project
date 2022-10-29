@@ -27,13 +27,13 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm(Model model) {
-        model.addAttribute("loginDto", new LoginDto());
+        model.addAttribute("user", new LoginDto());
         return "login/loginForm";
     }
 
     @PostMapping("/login")
     public String login(
-            @Validated @ModelAttribute LoginDto loginDto, BindingResult bindingResult,
+            @Validated @ModelAttribute(name = "user") LoginDto loginDto, BindingResult bindingResult,
             @RequestParam(defaultValue = "/") String requestURI,
             HttpServletRequest request
     ) {

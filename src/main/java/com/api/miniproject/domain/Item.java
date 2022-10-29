@@ -1,11 +1,12 @@
 package com.api.miniproject.domain;
 
-import com.api.miniproject.controller.ItemController;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
@@ -26,10 +27,13 @@ public class Item {
 
     @Column(name = "PRICE")
     @NumberFormat(pattern = "###,###")
+    @Min(value = 10)
+    @Max(value = 100000000)
     private Integer price;
 
     @Column(name = "QUANTITY")
     @NumberFormat(pattern = "###,###")
+    @Min(value = 0)
     private Integer quantity;
 
     // 구입한 URL
@@ -55,16 +59,6 @@ public class Item {
         this.userId = userId; // 해당 유저 소유 아이템
         this.localDateTime = LocalDateTime.now();
     }
-
-//    @Builder
-//    public Item(Item item) {
-//        this.itemName = item.getItemName();
-//        this.price = item.getPrice();
-//        this.quantity = item.getQuantity();
-//        this.buyUrl = item.getBuyUrl();
-//        this.userId = item.getUserId();
-//        this.localDateTime = LocalDateTime.now();
-//    }
 
     public void setUserId(Long userId) {
         this.userId = userId;

@@ -1,4 +1,4 @@
-package com.api.miniproject.repository;
+package com.api.miniproject.repository.jpa;
 
 import com.api.miniproject.domain.User;
 import org.springframework.stereotype.Repository;

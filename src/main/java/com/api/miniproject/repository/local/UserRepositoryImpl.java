@@ -1,4 +1,4 @@
-package com.api.miniproject.repository;
+package com.api.miniproject.repository.local;
 
 import com.api.miniproject.domain.User;
 import lombok.extern.slf4j.Slf4j;

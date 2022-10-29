@@ -1,6 +1,7 @@
 package com.api.miniproject.dto.item;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.NumberFormat;
@@ -12,8 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
 public class ItemUpdateAPIDto {
 
     private Long id;
@@ -32,8 +33,6 @@ public class ItemUpdateAPIDto {
     @Min(value = 10)
     private Integer quantity;
     private String buyUrl;
-
-    public ItemUpdateAPIDto() {}
 
     public ItemUpdateAPIDto(String itemName, Integer price, Integer quantity, String buyUrl) {
         this.itemName = itemName;

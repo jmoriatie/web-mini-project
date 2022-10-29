@@ -17,28 +17,38 @@
 
     </style>
 
-    <title>로그인</title>
+    <title>회원가입</title>
 </head>
 <body>
 <div class="container">
     <div class="py-5 text-center">
-        <h2>로그인</h2>
+        <h2>회원가입</h2>
         <form action="loginForm.html" method="post" th:action th:object="${user}">
             <div>
                 <label for="userId"></label>
-                <input type="text" id="userId" name="userId" th:field="*{userId}" th:errorclass="err-message" class="form-control"
+                <input type="text" id="userId" name="userId" th:field="*{userId}" th:errorclass="err-message"
+                       class="form-control"
                        placeholder="아이디">
                 <span class="err-message" th:errors="*{userId}">id Error!</span>
             </div>
             <div>
                 <label for="userPw"></label>
-                <input type="password" id="userPw" name="userPw" th:field="*{userPw}" th:errorclass="err-message"  class="form-control"
+                <input type="password" id="userPw" name="userPw" th:field="*{userPw}" th:errorclass="err-message"
+                       class="form-control"
                        placeholder="비밀번호">
                 <span class="err-message" th:errors="*{userPw}">pw Error!</span>
             </div>
+            <div>
+                <label for="userPw"></label>
+                <input type="password" id="userName" name="userName" th:field="*{userName}" th:errorclass="err-message"
+                       class="form-control"
+                       placeholder="이름">
+                <span class="err-message" th:errors="*{userName}">name Error!</span>
+            </div>
 
-            <div th:if="${#fields.hasGlobalErrors()}" >
-                <p class="err-message" th:each="err : ${#fields.globalErrors()}" th:text="${err}">user are not Exist!</p>
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <p class="err-message" th:each="err : ${#fields.globalErrors()}" th:text="${err}">user are not
+                    Exist!</p>
             </div>
 
             <hr class="my-4">

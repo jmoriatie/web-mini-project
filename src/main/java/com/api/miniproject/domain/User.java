@@ -4,6 +4,9 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,12 +21,16 @@ public class User {
     Long id;
 
     @Column(name = "USER_ID")
+    @NotBlank
     String userId;
 
+    @NotBlank
     @Column(name = "USER_PW")
+    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
     String userPw;
 
     @Column(name = "USER_NAME")
+    @NotEmpty
     String userName;
 
     @Column(name = "CREATE_TIME")

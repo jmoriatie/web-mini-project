@@ -1,6 +1,7 @@
-package com.api.miniproject.repository;
+package com.api.miniproject.repository.jpa;
 
 import com.api.miniproject.domain.User;
+import com.api.miniproject.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 @Slf4j
 @Repository
-public class UserRepositoryJPAImpl implements UserRepositoryJPA{
+public class UserRepositoryJPAImpl implements UserRepositoryJPA {
 
     private final UserRepository userRepository;
 
