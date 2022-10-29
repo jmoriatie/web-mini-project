@@ -30,7 +30,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ItemController {
 
-    @Autowired
     private final ItemService service;
     private final ConversionService conversionService;
 

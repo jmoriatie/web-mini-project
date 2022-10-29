@@ -23,7 +23,7 @@
 <div class="container">
     <div class="py-5 text-center">
         <h2>회원가입</h2>
-        <form action="loginForm.html" method="post" th:action th:object="${user}">
+        <form action="joinForm.html" method="post" th:action="@{/join}" th:object="${user}">
             <div>
                 <label for="userId"></label>
                 <input type="text" id="userId" name="userId" th:field="*{userId}" th:errorclass="err-message"
@@ -46,6 +46,7 @@
                 <span class="err-message" th:errors="*{userName}">name Error!</span>
             </div>
 
+<!--            있는 아이디일 경우 체크하기-->
             <div th:if="${#fields.hasGlobalErrors()}">
                 <p class="err-message" th:each="err : ${#fields.globalErrors()}" th:text="${err}">user are not
                     Exist!</p>
@@ -54,18 +55,12 @@
             <hr class="my-4">
             <div class="row">
                 <div class="col">
-                    <button class="w-100 btn btn-primary btn-lg" onclick="location.href='loginForm.html'"
-                            type="submit">로그인
+                    <button class="w-100 btn btn-primary btn-lg" onclick="location.href='joinForm.html'"
+                            type="submit">가입
                     </button>
                 </div>
             </div>
         </form>
-        <hr class="my-4">
-        <div class="col">
-            <button class="w-100 btn btn-primary btn-lg" onclick="location.href='loginForm.html'">
-                회원가입
-            </button>
-        </div>
     </div>
 </div>
 </body>

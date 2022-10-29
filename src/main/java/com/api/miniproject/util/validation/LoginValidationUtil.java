@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 
+/**
+ * 사용 X
+ */
 @Slf4j
 public class LoginValidationUtil {
     // 로그인 validation 해주는 유틸

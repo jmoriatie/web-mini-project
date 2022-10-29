@@ -7,7 +7,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-
+/**
+ * 사용 X
+ */
 // 그래들 통해 전역 Validator 를 추가해줬기 때문에 더이상 스캔될 필요가 없음
 @Slf4j
 //@Component

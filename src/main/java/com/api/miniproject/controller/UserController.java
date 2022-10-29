@@ -28,8 +28,16 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public String join(@Validated @ModelAttribute JoinDto joinDto, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-//        joinDto
+    public String join(@Validated @ModelAttribute("user") JoinDto joinDto, BindingResult bindingResult,
+                       RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {}", bindingResult);
+            return "login/joinForm";
+        }
+
+        // 있는 id check
+
         return "redirect:/";
     }
 }
