@@ -1,4 +1,4 @@
-package com.api.miniproject.controller;
+package com.api.miniproject.controller.item;
 
 import com.api.miniproject.domain.Item;
 import com.api.miniproject.domain.User;

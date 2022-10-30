@@ -1,8 +1,7 @@
-package com.api.miniproject.util.converter.item;
+package com.api.miniproject.util.converter.user;
 
 import com.api.miniproject.domain.User;
-import com.api.miniproject.dto.login.JoinDto;
-import com.api.miniproject.util.StatusEnum;
+import com.api.miniproject.dto.user.JoinDto;
 import org.springframework.core.convert.converter.Converter;
 
 public class UserToJoinDtoConverter implements Converter<User, JoinDto> {

@@ -1,7 +1,7 @@
-package com.api.miniproject.controller;
+package com.api.miniproject.controller.user;
 
 import com.api.miniproject.domain.User;
-import com.api.miniproject.dto.login.JoinDto;
+import com.api.miniproject.dto.user.JoinDto;
 import com.api.miniproject.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Slf4j

@@ -26,6 +26,7 @@ public class UserRepositoryJPAImpl implements UserRepositoryJPA {
         log.info("savedUser={}", savedUser);
         return savedUser;
     }
+
     public Optional<User> findByUserId(String userId){
         return userRepository.findAll().stream()
                 .filter(u -> u.getUserId().equals(userId)).findFirst();

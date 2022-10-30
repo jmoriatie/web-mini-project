@@ -1,4 +1,4 @@
-package com.api.miniproject.controller;
+package com.api.miniproject.controller.user;
 
 import com.api.miniproject.domain.User;
 import com.api.miniproject.dto.login.LoginDto;
