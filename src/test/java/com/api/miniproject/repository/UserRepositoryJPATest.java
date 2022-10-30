@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // inMemory database를 연결하는 것이 아닌 사용중인 실제 DB 매칭하도록 변경
-public class JPATest {
+public class UserRepositoryJPATest {
 
     @Autowired
     private UserRepository userRepository;

@@ -1,9 +1,8 @@
-package com.api.miniproject.repository;
+package com.api.miniproject.service;
 
 import com.api.miniproject.domain.User;
 import com.api.miniproject.dto.user.JoinDto;
-import com.api.miniproject.repository.jpa.UserRepositoryJPAImpl;
-import com.api.miniproject.service.user.UserService;
+import com.api.miniproject.repository.UserRepository;
 import com.api.miniproject.service.user.UserServiceImpl;
 import com.api.miniproject.util.converter.user.JoinDtoToUserConverter;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("User service 관련 테스트")
 public class UserServiceTest {
 
     @Mock

@@ -3,6 +3,7 @@ package com.api.miniproject.converter.item;
 import com.api.miniproject.domain.Item;
 import com.api.miniproject.dto.item.ItemUpdateDto;
 import com.api.miniproject.util.converter.item.ItemUpdateDtoToItemConverter;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.convert.support.DefaultConversionService;
 
@@ -15,6 +16,7 @@ class ItemUpdateDtoToItemTest {
     DefaultConversionService conversionService = new DefaultConversionService();
 
     @Test
+    @DisplayName("ItemUpdateDtoToItemConverter 테스트")
     void convert() {
         conversionService.addConverter(new ItemUpdateDtoToItemConverter());
 
