@@ -22,8 +22,6 @@ import java.util.List;
 @RequestMapping("/v1/item-api")
 public class ItemRESTController {
 
-    //TODO: 추후 리펙토링 필요 1) 검증
-
     private final ItemService service;
     private final ConversionService conversionService;
 
@@ -58,7 +56,8 @@ public class ItemRESTController {
     }
 
     @PatchMapping("/update")
-    ResponseEntity<Object> updateItem(@RequestParam Long id, @Validated @RequestBody ItemUpdateAPIDto itemUpdateAPIDto, BindingResult bindingResult) throws ItemAPIBindException {
+    ResponseEntity<Object> updateItem(@RequestParam Long id,
+                                      @Validated @RequestBody ItemUpdateAPIDto itemUpdateAPIDto, BindingResult bindingResult) throws ItemAPIBindException {
 
         if(bindingResult.hasErrors()){
             log.error("bindingResult error={}", bindingResult);

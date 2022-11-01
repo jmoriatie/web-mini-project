@@ -33,9 +33,20 @@ public class User {
     @Column(name = "USER_NAME")
     String userName;
 
+    @Column(name = "AUTH")
+    String auth;
+
+    @Column(name = "LAST_ACCESS_DATE")
+    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
+    private LocalDateTime lastAccessDate;
+
     @Column(name = "CREATE_TIME")
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     LocalDateTime createDate;
+
+    @Column(name = "LAST_UPDATE_TIME")
+    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
+    LocalDateTime lastUpdateDate;
 
     @Builder
     public User(String userId, String userPw, String userName) {
@@ -43,6 +54,7 @@ public class User {
         this.userPw = userPw;
         this.userName = userName;
         this.createDate = LocalDateTime.now();
+        this.lastUpdateDate = LocalDateTime.now();
     }
 
     public void update(User user) {

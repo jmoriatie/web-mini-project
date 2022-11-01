@@ -41,9 +41,13 @@ public class Item {
     private String buyUrl;
 
     // 최종 업데이트 날짜
-    @Column(name = "LOCAL_DATE_TIME")
+    @Column(name = "LAST_UPDATE_DATE")
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
-    private LocalDateTime localDateTime;
+    private LocalDateTime lastUpdateDate;
+
+    @Column(name = "CREATED_AT")
+    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
+    private LocalDateTime createdAt;
 
     // TODO : 추후 Forign key 로 변경 필요
     // 유저아이디
@@ -57,7 +61,8 @@ public class Item {
         this.quantity = quantity;
         this.buyUrl = buyUrl;
         this.userId = userId; // 해당 유저 소유 아이템
-        this.localDateTime = LocalDateTime.now();
+        this.lastUpdateDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 
     public void setUserId(Long userId) {
@@ -69,7 +74,7 @@ public class Item {
         this.price = item.getPrice();
         this.quantity = item.getQuantity();
         this.buyUrl = item.getBuyUrl();
-        this.localDateTime = LocalDateTime.now();
+        this.lastUpdateDate = LocalDateTime.now();
     }
 
     // TODO 연관관계 메서드

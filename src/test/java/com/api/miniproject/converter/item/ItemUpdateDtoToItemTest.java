@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("ItemUpdateDtoToItem 관련 테스트")
 class ItemUpdateDtoToItemTest {
 
     DefaultConversionService conversionService = new DefaultConversionService();
