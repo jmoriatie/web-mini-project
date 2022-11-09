@@ -3,15 +3,19 @@ package com.api.miniproject.repository;
 import com.api.miniproject.domain.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // inMemory database를 연결하는 것이 아닌 사용중인 실제 DB 매칭하도록 변경
+@ExtendWith(SpringExtension.class)
 @DisplayName("UserRepositoryJPA 관련 테스트")
+@TestPropertySource("classpath:application-test.properties")
 public class AccountRepositoryJPATest {
 
     @Autowired
