@@ -35,6 +35,7 @@ public class ItemSaveDto{
     private String buyUrl;
     private Long userId;
 
+    //TODO: builder 패턴으로 변경
     public ItemSaveDto(String itemName, Integer price, Integer quantity, String buyUrl, Long userId) {
         this.itemName = itemName;
         this.price = price;
