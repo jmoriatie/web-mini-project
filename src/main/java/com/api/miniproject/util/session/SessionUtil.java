@@ -1,6 +1,6 @@
 package com.api.miniproject.util.session;
 
-import com.api.miniproject.domain.User;
+import com.api.miniproject.domain.Account;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -42,8 +42,8 @@ public class SessionUtil {
     }
 
     public static Long getUserIdFromSession() {
-        User user = (User) getSession().getAttribute(SessionConst.LOGIN_USER);
-        return user.getId();
+        Account account = (Account) getSession().getAttribute(SessionConst.LOGIN_USER);
+        return account.getId();
     }
 
 

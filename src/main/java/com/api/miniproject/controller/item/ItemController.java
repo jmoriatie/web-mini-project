@@ -1,7 +1,7 @@
 package com.api.miniproject.controller.item;
 
+import com.api.miniproject.domain.Account;
 import com.api.miniproject.domain.Item;
-import com.api.miniproject.domain.User;
 import com.api.miniproject.dto.item.ItemSaveDto;
 import com.api.miniproject.dto.item.ItemUpdateDto;
 import com.api.miniproject.service.item.ItemService;
@@ -9,7 +9,6 @@ import com.api.miniproject.util.page.PageResolver;
 import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,7 +49,7 @@ public class ItemController {
 
         Item saveItem = conversionService.convert(itemSaveDto, Item.class); // 정상 로직 start, 컨버팅
 
-        Long userId = ((User) request.getSession(false).getAttribute(SessionConst.LOGIN_USER)).getId(); // 유저아이디 꺼내서 저장
+        Long userId = ((Account) request.getSession(false).getAttribute(SessionConst.LOGIN_USER)).getId(); // 유저아이디 꺼내서 저장
         saveItem.setUserId(userId); // foreign key
 
         Item savedItem = service.saveItem(saveItem);// service 저장
@@ -74,7 +73,7 @@ public class ItemController {
                                HttpServletRequest request,
                                Model model) {
 
-        Long id = ((User) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
+        Long id = ((Account) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
 
         log.info("userId!!={}", id); // 검색했을 시 검색한 List 반환
         List<Item> items = searchListByItemName(keyword, service.findUserItems(id));
@@ -180,12 +179,12 @@ public class ItemController {
     public String deleteItem(@PathVariable Long itemId, Model model, HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);
-        User userSession = (User) session.getAttribute(SessionConst.LOGIN_USER);
+        Account accountSession = (Account) session.getAttribute(SessionConst.LOGIN_USER);
 
         Item findItem = service.findById(itemId);
 
         // 아이템 없거나 || 세션의 아이디와 아이템 주인이 다를 때
-        if (findItem == null || !Objects.equals(userSession.getId(), findItem.getUserId())) {
+        if (findItem == null || !Objects.equals(accountSession.getId(), findItem.getUserId())) {
             return "redirect:/item/items";
         }
 

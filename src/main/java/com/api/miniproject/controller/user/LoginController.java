@@ -1,6 +1,6 @@
 package com.api.miniproject.controller.user;
 
-import com.api.miniproject.domain.User;
+import com.api.miniproject.domain.Account;
 import com.api.miniproject.dto.login.LoginDto;
 import com.api.miniproject.service.login.LoginService;
 import com.api.miniproject.util.session.SessionConst;
@@ -43,22 +43,22 @@ public class LoginController {
             return "/login/loginForm";
         }
 
-        User findUser = service.findByUserId(loginDto.getUserId(), loginDto.getUserPw());
+        Account findAccount = service.findByAccountId(loginDto.getUserId(), loginDto.getUserPw());
 
-        if (findUser == null) { // 유저 없을 시 global error 반환
-            bindingResult.reject("notExistUser");
+        if (findAccount == null) { // 유저 없을 시 global error 반환
+            bindingResult.reject("notExistAccount");
             return "/login/loginForm";
         }
 
         // TODO session 에는 필요한 정보만 저장하도록 세팅
-        setSession(request, findUser); // 세션 셋팅
+        setSession(request, findAccount); // 세션 셋팅
 
         return "redirect:" + requestURI;
     }
 
-    private void setSession(HttpServletRequest request, User user) {
+    private void setSession(HttpServletRequest request, Account account) {
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_USER, user);
+        session.setAttribute(SessionConst.LOGIN_USER, account);
         log.info("save in session={}", session.getAttribute(SessionConst.LOGIN_USER));
     }
 

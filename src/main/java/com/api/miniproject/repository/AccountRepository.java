@@ -1,16 +1,17 @@
 package com.api.miniproject.repository;
 
-import com.api.miniproject.domain.User;
-import com.api.miniproject.repository.jpa.UserRepositoryJPA;
+import com.api.miniproject.domain.Account;
+import com.api.miniproject.repository.jpa.AccountRepositoryJPA;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+// TODO: JPA 상속 없애기
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryJPA {
+public interface AccountRepository extends JpaRepository<Account, Long>, AccountRepositoryJPA {
 
     @Query(value = "SELECT * FROM USER_TB", nativeQuery = true)
-    List<User> findAll();
+    List<Account> findAll();
 }

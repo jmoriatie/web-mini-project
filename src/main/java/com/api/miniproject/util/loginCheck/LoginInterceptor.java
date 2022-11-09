@@ -1,6 +1,5 @@
 package com.api.miniproject.util.loginCheck;
 
-import com.api.miniproject.domain.User;
 import com.api.miniproject.util.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;

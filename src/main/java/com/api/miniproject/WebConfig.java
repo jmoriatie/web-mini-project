@@ -1,8 +1,8 @@
 package com.api.miniproject;
 
 import com.api.miniproject.util.converter.item.*;
-import com.api.miniproject.util.converter.user.JoinDtoToUserConverter;
-import com.api.miniproject.util.converter.user.UserToJoinDtoConverter;
+import com.api.miniproject.util.converter.account.JoinDtoToAccountConverter;
+import com.api.miniproject.util.converter.account.AccountToJoinDtoConverter;
 import com.api.miniproject.util.log.LogInterceptor;
 import com.api.miniproject.util.loginCheck.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +19,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addConverter(new ItemUpdateDtoToItemConverter());
 
         registry.addConverter(new ItemUpdateAPIDtoToItemConverter());
-        registry.addConverter(new JoinDtoToUserConverter());
-        registry.addConverter(new UserToJoinDtoConverter());
+        registry.addConverter(new JoinDtoToAccountConverter());
+        registry.addConverter(new AccountToJoinDtoConverter());
 
         //registry.addConverter(new ItemToItemUpdateDtoConverter()); // 필요할 경우 주석 해제
         //registry.addConverter(new ItemToItemSaveDtoConverter()); // 필요할 경우 주석 해제

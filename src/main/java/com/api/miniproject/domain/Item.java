@@ -17,11 +17,9 @@ import java.time.LocalDateTime;
 public class Item {
 
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ITEM_NAME")
     @NotBlank
     private String itemName;
 
@@ -31,27 +29,22 @@ public class Item {
     @Max(value = 100000000)
     private Integer price;
 
-    @Column(name = "QUANTITY")
     @NumberFormat(pattern = "###,###")
     @Min(value = 0)
     private Integer quantity;
 
     // 구입한 URL
-    @Column(name = "BUY_URL")
     private String buyUrl;
 
     // 최종 업데이트 날짜
-    @Column(name = "LAST_UPDATE_DATE")
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime lastUpdateDate;
 
-    @Column(name = "CREATED_AT")
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime createdAt;
 
     // TODO : 추후 Forign key 로 변경 필요
     // 유저아이디
-    @Column(name = "USER_ID")
     private Long userId;
 
     @Builder

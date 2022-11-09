@@ -1,20 +1,18 @@
 package com.api.miniproject.util;
 
 import com.api.miniproject.domain.Item;
-import com.api.miniproject.domain.User;
 import com.api.miniproject.service.item.ItemService;
-import com.api.miniproject.service.user.UserService;
+import com.api.miniproject.service.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
 public class TestObjectInit {
 
-    private final UserService userService;
+    private final AccountService userService;
     private final ItemService itemService;
 
     private final String[] ITEM_TYPE = {"프린팅", "해골", "다이나믹", "골져스", "프리티","디스트로이", "빈티지", "다크", "오버핏", "트레이닝"};
@@ -23,12 +21,11 @@ public class TestObjectInit {
 //    @PostConstruct
     void testUserInit(){
         Random random = new Random();
-
-        User user1 = new User("test", "test", "나테스트");
-        User user2 = new User("a", "a", "김에이");
-
-        userService.saveUser(user1);
-        userService.saveUser(user2);
+//        User user1 = new User("test", "test", "나테스트");
+//        User user2 = new User("a", "a", "김에이");
+//
+//        userService.saveUser(user1);
+//        userService.saveUser(user2);
     }
 
 //    @PostConstruct

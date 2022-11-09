@@ -1,10 +1,10 @@
 package com.api.miniproject.service;
 
-import com.api.miniproject.domain.User;
-import com.api.miniproject.dto.user.JoinDto;
-import com.api.miniproject.repository.UserRepository;
-import com.api.miniproject.service.user.UserServiceImpl;
-import com.api.miniproject.util.converter.user.JoinDtoToUserConverter;
+import com.api.miniproject.domain.Account;
+import com.api.miniproject.dto.account.JoinDto;
+import com.api.miniproject.repository.AccountRepository;
+import com.api.miniproject.service.account.AccountServiceImpl;
+import com.api.miniproject.util.converter.account.JoinDtoToAccountConverter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,46 +22,39 @@ import static org.mockito.Mockito.*;
 public class UserServiceTest {
 
     @Mock
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
 
     @InjectMocks
-    private UserServiceImpl userService;
+    private AccountServiceImpl userService;
 
     @Test
     @DisplayName("joinDto -> User 컨버팅 테스트")
     void convertingTest() {
-        JoinDtoToUserConverter converter = new JoinDtoToUserConverter();
+        JoinDtoToAccountConverter converter = new JoinDtoToAccountConverter();
 
         JoinDto joinDto = JoinDto.builder()
-                .userId("test_id")
-                .userPw("qwerasdf1!")
-                .userName("test_name").build();
+                .accountId("test_id")
+                .accountPw("qwerasdf1!")
+                .accountName("test_name").build();
 
-        User convertingUser = converter.convert(joinDto);
+        Account convertingUser = converter.convert(joinDto);
 
-        assertThat(joinDto.getUserId()).isEqualTo(convertingUser.getUserId());
-        assertThat(joinDto.getUserPw()).isEqualTo(convertingUser.getUserPw());
+        assertThat(joinDto.getAccountId()).isEqualTo(convertingUser.getAccountId());
+        assertThat(joinDto.getAccountPw()).isEqualTo(convertingUser.getAccountPw());
     }
 
     @Test
-    @DisplayName("find user 테스트")
+    @DisplayName("find Account 테스트")
     void findByUserId() {
-        when(userRepository.findByUserId("TEST_USER")).thenReturn(
-                Optional.ofNullable(User.builder()
-                        .userId("TEST_USER")
-                        .userName("TEST_USER")
-                        .userPw("qwerasdf1!").build()));
+        when(accountRepository.findByAccountId("TEST_USER")).thenReturn(
+                Optional.ofNullable(Account.builder()
+                        .accountId("TEST_USER")
+                        .accountName("TEST_USER")
+                        .accountPw("qwerasdf1!").build()));
 
-        User test_user = userService.findByUserId("TEST_USER");
+        Account test_user = userService.findByAccountId("TEST_USER");
 
-        assertThat(test_user.getUserId()).isEqualTo("TEST_USER");
-        assertThat(test_user.getUserPw()).isEqualTo("qwerasdf1!");
+        assertThat(test_user.getAccountId()).isEqualTo("TEST_USER");
+        assertThat(test_user.getAccountPw()).isEqualTo("qwerasdf1!");
     }
-
-
-
-
-
-
-
 }

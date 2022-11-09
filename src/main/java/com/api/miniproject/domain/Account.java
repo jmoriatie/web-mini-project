@@ -11,54 +11,46 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(name = "USER_TB")
+@Table(name = "ACCOUNT_TB")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class Account {
 
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @NotBlank
-    @Column(name = "USER_ID", unique = true)
-    String userId;
+    @Column(unique = true)
+    String accountId;
 
     @NotBlank
-    @Column(name = "USER_PW")
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
-    String userPw;
+    String accountPw;
 
     @NotEmpty
-    @Column(name = "USER_NAME")
-    String userName;
+    String accountName;
 
-    @Column(name = "AUTH")
     String auth;
 
-    @Column(name = "LAST_ACCESS_DATE")
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime lastAccessDate;
 
-    @Column(name = "CREATE_TIME")
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     LocalDateTime createDate;
 
-    @Column(name = "LAST_UPDATE_TIME")
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     LocalDateTime lastUpdateDate;
 
     @Builder
-    public User(String userId, String userPw, String userName) {
-        this.userId = userId;
-        this.userPw = userPw;
-        this.userName = userName;
-        this.createDate = LocalDateTime.now();
-        this.lastUpdateDate = LocalDateTime.now();
+    public Account(String accountId, String accountPw, String accountName, String auth) {
+        this.accountId = accountId;
+        this.accountPw = accountPw;
+        this.accountName = accountName;
+        this.auth = auth;
     }
 
-    public void update(User user) {
-        this.userPw = userPw;
-        this.userName = userName;
+    public void update(Account Account) {
+        this.accountPw = accountPw;
+        this.accountName = accountName;
     }
 }

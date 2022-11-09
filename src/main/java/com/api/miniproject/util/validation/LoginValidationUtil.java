@@ -1,6 +1,6 @@
 package com.api.miniproject.util.validation;
 
-import com.api.miniproject.domain.User;
+import com.api.miniproject.domain.Account;
 import com.api.miniproject.dto.login.LoginDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -13,10 +13,10 @@ import org.springframework.validation.BindingResult;
 public class LoginValidationUtil {
     // 로그인 validation 해주는 유틸
     // 공백삭제 등등 여러가지 넣어봐야할듯
-    public static boolean validation(LoginDto loginDto, User user, BindingResult bindingResult){
+    public static boolean validation(LoginDto loginDto, Account account, BindingResult bindingResult){
         boolean masterCheck;
         masterCheck = emptyBoxCheck(loginDto, bindingResult);
-        masterCheck = userNotExist(user, bindingResult);
+        masterCheck = userNotExist(account, bindingResult);
 
         return masterCheck;
     }
@@ -36,9 +36,9 @@ public class LoginValidationUtil {
         return check;
     }
 
-    static boolean userNotExist(User user, BindingResult bindingResult){
+    static boolean userNotExist(Account account, BindingResult bindingResult){
         boolean check = true;
-        if(user == null){
+        if(account == null){
             bindingResult.reject("userNotExist",  "아이디 또는 비밀번호를 확인하세요");
             check = false;
         }

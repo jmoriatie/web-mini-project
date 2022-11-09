@@ -1,4 +1,4 @@
-package com.api.miniproject.dto.user;
+package com.api.miniproject.dto.account;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -14,19 +14,19 @@ import javax.validation.constraints.Pattern;
 public class JoinDto {
 
     @NotBlank
-    String userId;
+    String accountId;
 
     @NotBlank
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
-    String userPw;
+    String accountPw;
 
     @NotEmpty
-    String userName;
+    String accountName;
 
     @Builder
-    public JoinDto(String userId, String userPw, String userName) {
-        this.userId = userId;
-        this.userPw = userPw;
-        this.userName = userName;
+    public JoinDto(String accountId, String accountPw, String accountName) {
+        this.accountId = accountId;
+        this.accountPw = accountPw;
+        this.accountName = accountName;
     }
 }

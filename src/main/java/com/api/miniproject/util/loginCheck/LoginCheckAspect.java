@@ -1,24 +1,14 @@
 package com.api.miniproject.util.loginCheck;
 
-import com.api.miniproject.domain.User;
+import com.api.miniproject.domain.Account;
 import com.api.miniproject.util.session.SessionConst;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.http.HttpStatus;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -43,9 +33,9 @@ public class LoginCheckAspect {
 
 //        ServletWebRequest servletWebRequest = new ServletWebRequest();
         HttpSession session = att.getRequest().getSession();
-        User user = (User)session.getAttribute(SessionConst.LOGIN_USER);
+        Account account = (Account)session.getAttribute(SessionConst.LOGIN_USER);
 
-        if(user == null){
+        if(account == null){
             att.getResponse().sendRedirect(att.getRequest().getContextPath() + "/login");
 //            throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED, "로그인 실패"){};
         }

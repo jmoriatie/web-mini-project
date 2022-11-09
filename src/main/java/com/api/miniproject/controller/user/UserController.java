@@ -1,8 +1,8 @@
 package com.api.miniproject.controller.user;
 
-import com.api.miniproject.domain.User;
-import com.api.miniproject.dto.user.JoinDto;
-import com.api.miniproject.service.user.UserService;
+import com.api.miniproject.domain.Account;
+import com.api.miniproject.dto.account.JoinDto;
+import com.api.miniproject.service.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService service;
+    private final AccountService service;
     private final ConversionService conversionService;
 
     @GetMapping("/join")
@@ -37,15 +37,15 @@ public class UserController {
             return "login/joinForm";
         }
 
-        User findUser = service.findByUserId(joinDto.getUserId());
+        Account findUser = service.findByAccountId(joinDto.getAccountId());
         if (findUser != null) { // 있는 id check
             bindingResult.reject("existUser");
             return "login/joinForm";
         }
 
-        User joinUser = conversionService.convert(joinDto, User.class);
-        service.saveUser(joinUser);
-        log.info("User 저장={}", joinUser);
+        Account joinAccount = conversionService.convert(joinDto, Account.class);
+        service.saveAccount(joinAccount);
+        log.info("Account 저장={}", joinAccount);
 
         return "redirect:/";
     }
