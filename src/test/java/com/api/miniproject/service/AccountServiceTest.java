@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("User service 관련 테스트")
-public class UserServiceTest {
+public class AccountServiceTest {
 
     @Mock
     private AccountRepository accountRepository;

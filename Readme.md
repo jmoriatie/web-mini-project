@@ -19,7 +19,7 @@
 #### [개발 및 리팩토링 로그]
 :o: 유저, 아이템 CRUD Controller, domian 개발  
 :o: 로컬 Repository, Service 객체 개발  
-:o: Item Controller 검증로직 개발 :arrow_forward: Validator 객체 개발 및 사용  
+:o: Item Controller 검증로직 개발 :arrow_forward: Validator 객체 개발 및 사용    
 :o: Domain 및 Dto 에 Spring Validation 사용(고도화)를 위한 검증 어노테이션 추가  
 :o: Item Controller 검증로직 개발 :arrow_forward: @Validated 어노테이션 및 bindingResult 사용  
 :o: 세션 검증 추가  
@@ -42,4 +42,4 @@
 :x: 로그인 관련 API 개발  
 :x: 로그인 및 아이템 관련 jwt 적용  
 :x: Mokito framework를 활용한 Test case 작성  
-:x: Swagger or Restdocs 적용   
+:x: Swagger or Restdocs 적용
