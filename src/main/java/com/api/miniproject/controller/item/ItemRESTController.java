@@ -46,7 +46,10 @@ public class ItemRESTController {
     @GetMapping( "/items")
     ResponseEntity<Object> findAll(){
         List<Item> allItemList = service.findAll();
-        return new ResponseEntity<>(allItemList, HttpStatus.OK);
+        for (Item item : allItemList) {
+            System.out.println("item = " + item);
+        }
+        return ResponseEntity.ok(allItemList);
     }
 
     @GetMapping("/item")

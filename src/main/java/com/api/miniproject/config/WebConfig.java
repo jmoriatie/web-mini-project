@@ -1,4 +1,4 @@
-package com.api.miniproject;
+package com.api.miniproject.config;
 
 import com.api.miniproject.util.converter.item.*;
 import com.api.miniproject.util.converter.account.JoinDtoToAccountConverter;

@@ -49,8 +49,8 @@ public class ItemController {
 
         Item saveItem = conversionService.convert(itemSaveDto, Item.class); // 정상 로직 start, 컨버팅
 
-        Long userId = ((Account) request.getSession(false).getAttribute(SessionConst.LOGIN_USER)).getId(); // 유저아이디 꺼내서 저장
-        saveItem.setUserId(userId); // foreign key
+        Long accountId = ((Account) request.getSession(false).getAttribute(SessionConst.LOGIN_USER)).getId(); // 유저아이디 꺼내서 저장
+        saveItem.setAccountId(accountId); // foreign key
 
         Item savedItem = service.saveItem(saveItem);// service 저장
 
@@ -184,7 +184,7 @@ public class ItemController {
         Item findItem = service.findById(itemId);
 
         // 아이템 없거나 || 세션의 아이디와 아이템 주인이 다를 때
-        if (findItem == null || !Objects.equals(accountSession.getId(), findItem.getUserId())) {
+        if (findItem == null || !Objects.equals(accountSession.getId(), findItem.getAccountId())) {
             return "redirect:/item/items";
         }
 

@@ -1,4 +1,4 @@
-package com.api.miniproject.dto.login;
+package com.api.miniproject.dto.account;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.api.miniproject.controller.user;
+package com.api.miniproject.controller.account;
 
 import com.api.miniproject.domain.Account;
 import com.api.miniproject.dto.account.JoinDto;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class UserController {
+public class AccountController {
 
     private final AccountService service;
     private final ConversionService conversionService;

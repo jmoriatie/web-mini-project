@@ -2,7 +2,6 @@ package com.api.miniproject.repository.local;
 
 import com.api.miniproject.domain.Item;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +19,7 @@ public class ItemRepositoryImpl{
         storage.put(item.getId(), item);
         return Item.builder()
                 .itemName(item.getItemName())
-                .userId(item.getUserId())
+                .userId(item.getAccountId())
                 .price(item.getPrice())
                 .quantity(item.getQuantity())
                 .buyUrl(item.getBuyUrl())
@@ -35,7 +34,7 @@ public class ItemRepositoryImpl{
         List<Item> items = new ArrayList<>( storage.values() );
         List<Item> findUserItems = new ArrayList<>();
         for (Item item : items) {
-            if(item.getUserId().equals(userId)){
+            if(item.getAccountId().equals(userId)){
                 findUserItems.add(item);
             }
         }
@@ -63,7 +62,7 @@ public class ItemRepositoryImpl{
         storage.get(id).update(
                 Item.builder()
                         .itemName(item.getItemName())
-                        .userId(item.getUserId())
+                        .userId(item.getAccountId())
                         .price(item.getPrice())
                         .quantity(item.getQuantity())
                         .buyUrl(item.getBuyUrl())

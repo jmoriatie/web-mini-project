@@ -1,7 +1,7 @@
-package com.api.miniproject.controller.user;
+package com.api.miniproject.controller.account;
 
 import com.api.miniproject.domain.Account;
-import com.api.miniproject.dto.login.LoginDto;
+import com.api.miniproject.dto.account.LoginDto;
 import com.api.miniproject.service.login.LoginService;
 import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;

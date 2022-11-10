@@ -1,7 +1,7 @@
 package com.api.miniproject.util.validation;
 
 import com.api.miniproject.domain.Account;
-import com.api.miniproject.dto.login.LoginDto;
+import com.api.miniproject.dto.account.LoginDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;

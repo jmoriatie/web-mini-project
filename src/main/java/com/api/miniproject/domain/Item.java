@@ -3,6 +3,7 @@ package com.api.miniproject.domain;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -45,7 +46,7 @@ public class Item {
 
     // TODO : 추후 Forign key 로 변경 필요
     // 유저아이디
-    private Long userId;
+    private Long accountId;
 
     @Builder
     public Item(String itemName, int price, int quantity, String buyUrl, Long userId) {
@@ -53,15 +54,16 @@ public class Item {
         this.price = price;
         this.quantity = quantity;
         this.buyUrl = buyUrl;
-        this.userId = userId; // 해당 유저 소유 아이템
+        this.accountId = accountId; // 해당 유저 소유 아이템
         this.lastUpdateDate = LocalDateTime.now();
         this.createdAt = LocalDateTime.now();
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
+    @Transactional
     public void update(Item item){
         this.itemName = item.getItemName();
         this.price = item.getPrice();
