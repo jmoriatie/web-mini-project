@@ -29,6 +29,6 @@ public class AccountRepositoryJPAImpl implements AccountRepositoryJPA {
 
     public Optional<Account> findByAccountId(String accountId){
         return accountRepository.findAll().stream()
-                .filter(u -> u.getAccountId().equals(accountId)).findFirst();
+                .filter(account -> account.getAccountId().equals(accountId)).findFirst();
     }
 }

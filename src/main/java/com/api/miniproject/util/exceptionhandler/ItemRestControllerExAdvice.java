@@ -23,9 +23,9 @@ public class ItemRestControllerExAdvice {
         this.messageSource = messageSource;
     }
 
+    @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = ItemAPIBindException.class)
-    @ResponseBody
     public ItemAPIErrorDto itemApiErrorResolver(ItemAPIBindException ex){
         log.error("ItemAPIBindException 발생!",ex);
         List<FieldError> fieldErrors = ex.getFieldErrors();

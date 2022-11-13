@@ -1,10 +1,11 @@
-package com.api.miniproject.dto.account;
+package com.api.miniproject.dto.auth;
 
 import lombok.*;
 
 @Getter
 @NoArgsConstructor
 public class AuthorityDto {
+
     private String authorityName;
 
     @Builder

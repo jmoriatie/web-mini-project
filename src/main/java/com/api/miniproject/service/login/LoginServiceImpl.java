@@ -13,8 +13,8 @@ public class LoginServiceImpl implements LoginService{
     private final AccountRepository repo;
 
     @Override
-    public Account findByAccountId(String userId, String userPw){
-        return repo.findByAccountId(userId)
-                .filter(u -> u.getAccountId().equals(userPw)).orElseGet(() -> null);
+    public Account findByAccountId(String accountId, String accountPw){
+        return repo.findByAccountId(accountId)
+                .filter(u -> u.getAccountId().equals(accountPw)).orElseGet(() -> null);
     }
 }

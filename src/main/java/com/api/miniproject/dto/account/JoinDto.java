@@ -1,11 +1,10 @@
 package com.api.miniproject.dto.account;
 
 import com.api.miniproject.domain.Account;
-import com.api.miniproject.domain.Authority;
+import com.api.miniproject.dto.auth.AuthorityDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
@@ -15,7 +14,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class JoinDto {
 
@@ -24,7 +22,7 @@ public class JoinDto {
 
     @NotBlank
     @Column(length = 100)
-    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
+//    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
     private String accountPw;
 
     @NotEmpty

@@ -43,7 +43,7 @@ public class LoginController {
             return "/login/loginForm";
         }
 
-        Account findAccount = service.findByAccountId(loginDto.getUserId(), loginDto.getUserPw());
+        Account findAccount = service.findByAccountId(loginDto.getAccountId(), loginDto.getAccountPw());
 
         if (findAccount == null) { // 유저 없을 시 global error 반환
             bindingResult.reject("notExistAccount");

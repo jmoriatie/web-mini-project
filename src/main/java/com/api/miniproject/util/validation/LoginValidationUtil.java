@@ -23,12 +23,12 @@ public class LoginValidationUtil {
 
     static boolean emptyBoxCheck(LoginDto loginDto, BindingResult bindingResult){
         boolean check = false;
-        if(!StringUtils.hasText(loginDto.getUserId())){
+        if(!StringUtils.hasText(loginDto.getAccountId())){
             log.debug("id 문제");
             bindingResult.rejectValue("userId", "아이디를 입력해주세요");
             check = true;
         }
-        if(!StringUtils.hasText(loginDto.getUserPw())){
+        if(!StringUtils.hasText(loginDto.getAccountPw())){
             log.debug("pw 문제");
             bindingResult.rejectValue("userPw", "비밀번호를 입력해주세요");
             check = true;

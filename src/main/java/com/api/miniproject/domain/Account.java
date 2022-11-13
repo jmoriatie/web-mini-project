@@ -25,17 +25,18 @@ public class Account {
     private String accountId;
 
     @NotBlank
-    @Column(length = 100)
+    @Column(name = "account_pw",length = 100)
 //    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
     private String accountPw;
 
     @NotEmpty
+    @Column(name = "account_name")
     private String accountName;
 
     @ManyToMany
     @JoinTable(
             name = "account_authority_tb",
-            joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "account_id")},
+            joinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
 

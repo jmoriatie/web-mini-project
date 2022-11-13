@@ -5,6 +5,7 @@ import com.api.miniproject.repository.AccountRepository;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,20 +26,18 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(final String accountName) throws UsernameNotFoundException {
-        return accountRepository.findOneWithAuthoritiesByAccountName(accountName)
+    public UserDetails loadUserByUsername(final String accountId) {
+        return accountRepository.findOneWithAuthoritiesByAccountId(accountId)
                 .map(this::createUser)
-                .orElseThrow(() -> new AuthenticationServiceException("없는 유저입니다."));
+                .orElseThrow(() -> new UsernameNotFoundException(accountId + " 없는 유저입니다."));
     }
 
-    private org.springframework.security.core.userdetails.User createUser(Account account) {
+    private User createUser(Account account) {
 
         List<GrantedAuthority> grantedAuthorities = account.getAuthorities().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
                 .collect(Collectors.toList());
 
-        return new org.springframework.security.core.userdetails.User(account.getAccountId(),
-                account.getAccountPw(),
-                grantedAuthorities);
+        return new User(account.getAccountId(), account.getAccountPw(), grantedAuthorities);
     }
 }
