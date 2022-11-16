@@ -27,13 +27,13 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm(Model model) {
-        model.addAttribute("user", new LoginDto());
+        model.addAttribute("account", new LoginDto());
         return "login/loginForm";
     }
 
     @PostMapping("/login")
     public String login(
-            @Validated @ModelAttribute(name = "user") LoginDto loginDto, BindingResult bindingResult,
+            @Validated @ModelAttribute(name = "account") LoginDto loginDto, BindingResult bindingResult,
             @RequestParam(defaultValue = "/") String requestURI,
             HttpServletRequest request
     ) {
@@ -58,8 +58,8 @@ public class LoginController {
 
     private void setSession(HttpServletRequest request, Account account) {
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_USER, account);
-        log.info("save in session={}", session.getAttribute(SessionConst.LOGIN_USER));
+        session.setAttribute(SessionConst.LOGIN_ACCOUNT, account);
+        log.info("save in session={}", session.getAttribute(SessionConst.LOGIN_ACCOUNT));
     }
 
     @GetMapping("/logout")

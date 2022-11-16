@@ -19,10 +19,10 @@ public class ItemRepositoryImpl{
         storage.put(item.getId(), item);
         return Item.builder()
                 .itemName(item.getItemName())
-                .userId(item.getAccountId())
                 .price(item.getPrice())
                 .quantity(item.getQuantity())
                 .buyUrl(item.getBuyUrl())
+                .accountId(item.getAccountId())
                 .build();
     }
 
@@ -62,7 +62,7 @@ public class ItemRepositoryImpl{
         storage.get(id).update(
                 Item.builder()
                         .itemName(item.getItemName())
-                        .userId(item.getAccountId())
+                        .accountId(item.getAccountId())
                         .price(item.getPrice())
                         .quantity(item.getQuantity())
                         .buyUrl(item.getBuyUrl())

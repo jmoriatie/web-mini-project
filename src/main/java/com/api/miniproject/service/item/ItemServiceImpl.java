@@ -29,8 +29,8 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public List<Item> findUserItems(Long userId) {
-        return repo.findUserItems(userId);
+    public List<Item> findUserItems(Long accountId) {
+        return repo.findUserItems(accountId);
     }
 
     @Override

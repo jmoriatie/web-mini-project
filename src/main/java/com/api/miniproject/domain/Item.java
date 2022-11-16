@@ -45,11 +45,11 @@ public class Item {
     private LocalDateTime createdAt;
 
     // TODO : 추후 Forign key 로 변경 필요
-    // 유저아이디
+    // 계정아이디
     private Long accountId;
 
     @Builder
-    public Item(String itemName, int price, int quantity, String buyUrl, Long userId) {
+    public Item(String itemName, int price, int quantity, String buyUrl, Long accountId) {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;

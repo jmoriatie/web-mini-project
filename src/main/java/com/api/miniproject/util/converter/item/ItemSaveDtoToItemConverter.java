@@ -17,8 +17,8 @@ public class ItemSaveDtoToItemConverter implements Converter<ItemSaveDto, Item> 
                 .quantity(source.getQuantity())
                 .buyUrl(source.getBuyUrl()).build();
 
-        if (source.getUserId() != null) {
-            item.setAccountId(source.getUserId());
+        if (source.getAccountId() != null) {
+            item.setAccountId(source.getAccountId());
         }
 
         return item;

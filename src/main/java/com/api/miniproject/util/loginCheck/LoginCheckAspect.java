@@ -15,10 +15,9 @@ import java.io.IOException;
 
 @Slf4j
 @Aspect
-@Component
+//@Component // intercepor 로 대체
 public class LoginCheckAspect {
 
-    // intercepor 로 대체
     @Pointcut("@annotation(com.api.miniproject.util.loginCheck.LoginCheck)")
     public void LoginCheck(){
     }
@@ -33,7 +32,7 @@ public class LoginCheckAspect {
 
 //        ServletWebRequest servletWebRequest = new ServletWebRequest();
         HttpSession session = att.getRequest().getSession();
-        Account account = (Account)session.getAttribute(SessionConst.LOGIN_USER);
+        Account account = (Account)session.getAttribute(SessionConst.LOGIN_ACCOUNT);
 
         if(account == null){
             att.getResponse().sendRedirect(att.getRequest().getContextPath() + "/login");

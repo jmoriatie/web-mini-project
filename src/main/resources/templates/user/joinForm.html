@@ -23,27 +23,27 @@
 <div class="container">
     <div class="py-5 text-center">
         <h2>회원가입</h2>
-        <form action="joinForm.html" method="post" th:action="@{/join}" th:object="${user}">
+        <form action="joinForm.html" method="post" th:action="@{/join}" th:object="${account}">
             <div>
-                <label for="userId"></label>
-                <input type="text" id="userId" name="userId" th:field="*{userId}" th:errorclass="err-message"
+                <label for="accountId"></label>
+                <input type="text" id="accountId" name="accountId" th:field="*{accountId}" th:errorclass="err-message"
                        class="form-control"
                        placeholder="아이디">
-                <span class="err-message" th:errors="*{userId}">id Error!</span>
+                <span class="err-message" th:errors="*{accountId}">id Error!</span>
             </div>
             <div>
-                <label for="userPw"></label>
-                <input type="password" id="userPw" name="userPw" th:field="*{userPw}" th:errorclass="err-message"
+                <label for="accountPw"></label>
+                <input type="password" id="accountPw" name="accountPw" th:field="*{accountPw}" th:errorclass="err-message"
                        class="form-control"
                        placeholder="비밀번호">
-                <span class="err-message" th:errors="*{userPw}">pw Error!</span>
+                <span class="err-message" th:errors="*{accountPw}">pw Error!</span>
             </div>
             <div>
-                <label for="userPw"></label>
-                <input type="text" id="userName" name="userName" th:field="*{userName}" th:errorclass="err-message"
+                <label for="accountName"></label>
+                <input type="text" id="accountName" name="accountName" th:field="*{accountName}" th:errorclass="err-message"
                        class="form-control"
                        placeholder="이름">
-                <span class="err-message" th:errors="*{userName}">name Error!</span>
+                <span class="err-message" th:errors="*{accountName}">name Error!</span>
             </div>
 
 <!--            있는 아이디일 경우 체크하기-->

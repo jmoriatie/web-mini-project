@@ -34,7 +34,7 @@ public class ItemRESTController {
         }
 
         // TODO 뭘 검증할건지 명확하게 추가
-        if(itemSaveDto.getUserId() == null){
+        if(itemSaveDto.getAccountId() == null){
         }
 
         Item item = conversionService.convert(itemSaveDto, Item.class);

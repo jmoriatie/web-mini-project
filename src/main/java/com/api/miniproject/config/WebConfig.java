@@ -21,9 +21,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addConverter(new ItemUpdateAPIDtoToItemConverter());
         registry.addConverter(new JoinDtoToAccountConverter());
         registry.addConverter(new AccountToJoinDtoConverter());
-
-        //registry.addConverter(new ItemToItemUpdateDtoConverter()); // 필요할 경우 주석 해제
-        //registry.addConverter(new ItemToItemSaveDtoConverter()); // 필요할 경우 주석 해제
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -25,12 +26,12 @@ public class AccountController {
 
     @GetMapping("/join")
     public String joinFrom(Model model) {
-        model.addAttribute("user", new JoinDto());
+        model.addAttribute("account", new JoinDto());
         return "login/joinForm";
     }
 
     @PostMapping("/join")
-    public String join(@Validated @ModelAttribute("user") JoinDto joinDto, BindingResult bindingResult) {
+    public String join(@Validated @ModelAttribute("account") JoinDto joinDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);

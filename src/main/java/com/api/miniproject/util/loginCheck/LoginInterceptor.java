@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         HttpSession session = request.getSession(false);
-        if(session == null || session.getAttribute(SessionConst.LOGIN_USER) == null){
+        if(session == null || session.getAttribute(SessionConst.LOGIN_ACCOUNT) == null){
             log.info("=== SESSION 없음 ===");
 
             if(requestURI.equals("/item/item")){

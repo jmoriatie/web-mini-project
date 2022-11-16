@@ -1,8 +1,7 @@
-package com.api.miniproject.service.account;
+package com.api.miniproject.service.login;
 
 import com.api.miniproject.domain.Account;
 import com.api.miniproject.repository.AccountRepository;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

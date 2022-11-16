@@ -23,18 +23,18 @@
 <div class="container">
     <div class="py-5 text-center">
         <h2>로그인</h2>
-        <form action="loginForm.html" method="post" th:action th:object="${user}">
+        <form action="loginForm.html" method="post" th:action="@{/login}" th:object="${account}">
             <div>
-                <label for="userId"></label>
-                <input type="text" id="userId" name="userId" th:field="*{userId}" th:errorclass="err-message" class="form-control"
+                <label for="accountId"></label>
+                <input type="text" id="accountId" name="accountId" th:field="*{accountId}" th:errorclass="err-message" class="form-control"
                        placeholder="아이디">
-                <span class="err-message" th:errors="*{userId}">id Error!</span>
+                <span class="err-message" th:errors="*{accountId}">id Error!</span>
             </div>
             <div>
-                <label for="userPw"></label>
-                <input type="password" id="userPw" name="userPw" th:field="*{userPw}" th:errorclass="err-message"  class="form-control"
+                <label for="accountPw"></label>
+                <input type="password" id="accountPw" name="accountPw" th:field="*{accountPw}" th:errorclass="err-message"  class="form-control"
                        placeholder="비밀번호">
-                <span class="err-message" th:errors="*{userPw}">pw Error!</span>
+                <span class="err-message" th:errors="*{accountPw}">pw Error!</span>
             </div>
 
             <div th:if="${#fields.hasGlobalErrors()}" >

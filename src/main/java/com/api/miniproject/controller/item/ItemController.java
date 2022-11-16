@@ -49,7 +49,7 @@ public class ItemController {
 
         Item saveItem = conversionService.convert(itemSaveDto, Item.class); // 정상 로직 start, 컨버팅
 
-        Long accountId = ((Account) request.getSession(false).getAttribute(SessionConst.LOGIN_USER)).getId(); // 유저아이디 꺼내서 저장
+        Long accountId = ((Account) request.getSession(false).getAttribute(SessionConst.LOGIN_ACCOUNT)).getId(); // 유저아이디 꺼내서 저장
         saveItem.setAccountId(accountId); // foreign key
 
         Item savedItem = service.saveItem(saveItem);// service 저장
@@ -73,7 +73,7 @@ public class ItemController {
                                HttpServletRequest request,
                                Model model) {
 
-        Long id = ((Account) request.getSession().getAttribute(SessionConst.LOGIN_USER)).getId();
+        Long id = ((Account) request.getSession().getAttribute(SessionConst.LOGIN_ACCOUNT)).getId();
 
         log.info("userId!!={}", id); // 검색했을 시 검색한 List 반환
         List<Item> items = searchListByItemName(keyword, service.findUserItems(id));
@@ -179,7 +179,7 @@ public class ItemController {
     public String deleteItem(@PathVariable Long itemId, Model model, HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);
-        Account accountSession = (Account) session.getAttribute(SessionConst.LOGIN_USER);
+        Account accountSession = (Account) session.getAttribute(SessionConst.LOGIN_ACCOUNT);
 
         Item findItem = service.findById(itemId);
 

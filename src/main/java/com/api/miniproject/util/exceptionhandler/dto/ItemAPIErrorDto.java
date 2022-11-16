@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class ItemAPIErrorDto {
 
     private final int status;
-    private List<String> messages = new ArrayList<>();
+    private List<String> messages;
 
     public ItemAPIErrorDto(int status, List<FieldError> errors, MessageSource messageSource) {
         this.status = status;

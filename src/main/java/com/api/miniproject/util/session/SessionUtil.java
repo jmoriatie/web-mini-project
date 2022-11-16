@@ -42,7 +42,7 @@ public class SessionUtil {
     }
 
     public static Long getUserIdFromSession() {
-        Account account = (Account) getSession().getAttribute(SessionConst.LOGIN_USER);
+        Account account = (Account) getSession().getAttribute(SessionConst.LOGIN_ACCOUNT);
         return account.getId();
     }
 

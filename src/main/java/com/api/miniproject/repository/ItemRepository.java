@@ -16,6 +16,6 @@ public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositor
     @Query(value = "SELECT * FROM ITEM_TB", nativeQuery = true)
     List<Item> findAll();
 
-    @Query(value = "SELECT * FROM ITEM_TB WHERE USER_ID = :userId", nativeQuery = true)
-    List<Item> findUserItems(@Param("userId") Long userId);
+    @Query(value = "SELECT * FROM ITEM_TB WHERE ACCOUNT_ID = :accountId", nativeQuery = true)
+    List<Item> findUserItems(@Param("accountId") Long accountId);
 }

@@ -30,7 +30,7 @@ public class ItemRepositoryJPAImpl implements ItemRepositoryJPA {
                         .price(item.getPrice())
                         .quantity(item.getQuantity())
                         .buyUrl(item.getBuyUrl())
-                        .userId(item.getAccountId())
+                        .accountId(item.getAccountId())
                         .build()
                 );
     }
@@ -49,7 +49,7 @@ public class ItemRepositoryJPAImpl implements ItemRepositoryJPA {
         repo.findById(id).ifPresent(realItem -> realItem.update(
                 Item.builder()
                         .itemName(item.getItemName())
-                        .userId(item.getAccountId())
+                        .accountId(item.getAccountId())
                         .price(item.getPrice())
                         .quantity(item.getQuantity())
                         .buyUrl(item.getBuyUrl())
