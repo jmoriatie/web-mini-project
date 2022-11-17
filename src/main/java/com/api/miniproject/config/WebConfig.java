@@ -31,9 +31,9 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**", "/*.ico", "/error");
 
-        registry.addInterceptor(new LoginInterceptor())
-                .order(2)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/css/**", "/js/**","/error", "/*.ico",  "/join/**", "/v1/**"); // 제외시킬 경로
+//        registry.addInterceptor(new LoginInterceptor())
+//                .order(2)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/login", "/css/**", "/js/**","/error", "/*.ico",  "/join/**", "/v1/**"); // 제외시킬 경로
     }
 }

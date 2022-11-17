@@ -46,6 +46,6 @@ class ItemSaveDtoToItemTest {
         assertThat(itemA.getPrice()).isEqualTo(50000);
         assertThat(itemA.getQuantity()).isEqualTo(5);
         assertThat(itemA.getBuyUrl()).isEqualTo("test@test.com");
-        assertThat(itemA.getUserId()).isEqualTo(1L);
+        assertThat(itemA.getAccountId()).isEqualTo(1L);
     }
 }

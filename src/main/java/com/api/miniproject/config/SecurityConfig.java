@@ -49,7 +49,7 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests()// httpServletRequest 를 사용하는 요청들에 대한 접근 제한을 설정하겠다
-                .antMatchers("/**").permitAll()
+                .antMatchers("/login").permitAll()
 //                .antMatchers("/v1/item-api/items").permitAll()
 //                .antMatchers("/v1/account-api/join").permitAll()
 //                .antMatchers("/v1/auth/authenticate").permitAll()
@@ -59,7 +59,10 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/")
                 .usernameParameter("accountId")
+                .passwordParameter("accountPw")
                 .permitAll()
 
                 .and().logout().permitAll();

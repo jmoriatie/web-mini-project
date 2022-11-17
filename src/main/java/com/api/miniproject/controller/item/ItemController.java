@@ -115,7 +115,7 @@ public class ItemController {
      * id, itemName 별도의 find 메서드 호출
      */
     @GetMapping("/item")
-    public String selectFindItemMethod(@RequestParam(name = "search-item") String searchItem, Model model, @RequestHeader("host") String hostUrl) {
+    public String selectFindItemMethod(@RequestParam(name = "search-item") Long searchItem, Model model, @RequestHeader("host") String hostUrl) {
         Item findItem = getSearchItem(searchItem);
 
         if (findItem == null) {
@@ -127,14 +127,13 @@ public class ItemController {
         return "item/item";
     }
 
-    private Item getSearchItem(String searchItem) {
+    private Item getSearchItem(Long searchItem) {
         Item findItem;
         try {
-            Long itemId = Long.parseLong(searchItem);
-            log.debug("itemId={}", itemId);
-            findItem = service.findById(itemId);
+            log.debug("itemId={}", searchItem);
+            findItem = service.findById(searchItem);
         } catch (NumberFormatException e) {
-            findItem = findByName(searchItem);
+            throw new NumberFormatException("잘못된 아이템 아이디");
         }
         return findItem;
     }

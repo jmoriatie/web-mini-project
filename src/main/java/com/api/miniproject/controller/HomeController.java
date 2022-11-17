@@ -20,10 +20,10 @@ public class HomeController {
                        Model model) {
         // 오래 접속해 있던 페이지, 세션이 유지되지 않고 만료됐다면
         if(loginAccount == null){
-            return "/login/loginForm";
+            return "redirect:/login";
         }
-        log.info("loginUser id:{}, pw:{}, name:{}", loginAccount.getAccountId(), loginAccount.getAccountPw(), loginAccount.getAccountName());
-        model.addAttribute("userName", loginAccount.getAccountName());
+        log.info("loginAccount id:{}, pw:{}, name:{}", loginAccount.getAccountId(), loginAccount.getAccountPw(), loginAccount.getAccountName());
+        model.addAttribute("accountName", loginAccount.getAccountName());
 
         return "index";
     }

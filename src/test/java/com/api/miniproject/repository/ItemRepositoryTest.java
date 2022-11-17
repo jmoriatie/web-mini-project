@@ -39,7 +39,7 @@ class ItemRepositoryTest {
                 .price(9999)
                 .quantity(100)
                 .buyUrl("www.xxx.com")
-                .userId(99999L).build();
+                .accountId(99999L).build();
 
         Item testItem = repository.saveItem(itemA);
 
@@ -56,7 +56,7 @@ class ItemRepositoryTest {
                 .price(9999)
                 .quantity(100)
                 .buyUrl("www.xxx.com")
-                .userId(99999L).build();
+                .accountId(99999L).build();
 
         Item savedItem = repository.saveItem(itemA);
 
@@ -73,7 +73,7 @@ class ItemRepositoryTest {
                 .price(9999)
                 .quantity(100)
                 .buyUrl("www.xxx.com")
-                .userId(99999L).build();
+                .accountId(99999L).build();
 
         Item item = repository.saveItem(itemA);
 
@@ -96,7 +96,7 @@ class ItemRepositoryTest {
                 .price(9999)
                 .quantity(100)
                 .buyUrl("www.xxx.com")
-                .userId(99999L).build();
+                .accountId(99999L).build();
 
         Item item = repository.saveItem(itemA);
 

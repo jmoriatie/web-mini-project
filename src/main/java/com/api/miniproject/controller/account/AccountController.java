@@ -27,7 +27,7 @@ public class AccountController {
     @GetMapping("/join")
     public String joinFrom(Model model) {
         model.addAttribute("account", new JoinDto());
-        return "login/joinForm";
+        return "user/joinForm";
     }
 
     @PostMapping("/join")
@@ -35,13 +35,13 @@ public class AccountController {
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
-            return "login/joinForm";
+            return "user/joinForm";
         }
 
         Account findUser = service.findByAccountId(joinDto.getAccountId());
         if (findUser != null) { // 있는 id check
             bindingResult.reject("existUser");
-            return "login/joinForm";
+            return "user/joinForm";
         }
 
         Account joinAccount = conversionService.convert(joinDto, Account.class);
