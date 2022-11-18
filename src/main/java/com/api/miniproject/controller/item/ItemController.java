@@ -10,6 +10,8 @@ import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,8 +51,12 @@ public class ItemController {
 
         Item saveItem = conversionService.convert(itemSaveDto, Item.class); // 정상 로직 start, 컨버팅
 
-        Long accountId = ((Account) request.getSession(false).getAttribute(SessionConst.LOGIN_ACCOUNT)).getId(); // 유저아이디 꺼내서 저장
-        saveItem.setAccountId(accountId); // foreign key
+//        Long accountId = ((Account) request.getSession(false).getAttribute(SessionConst.LOGIN_ACCOUNT)).getId(); // 유저아이디 꺼내서 저장
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+
+        saveItem.setAccountId(userDetails.getUsername()); // foreign key
 
         Item savedItem = service.saveItem(saveItem);// service 저장
 
@@ -73,10 +79,16 @@ public class ItemController {
                                HttpServletRequest request,
                                Model model) {
 
-        Long id = ((Account) request.getSession().getAttribute(SessionConst.LOGIN_ACCOUNT)).getId();
+//        Long id = ((Account) request.getSession().getAttribute(SessionConst.LOGIN_ACCOUNT)).getId();
 
-        log.info("userId!!={}", id); // 검색했을 시 검색한 List 반환
-        List<Item> items = searchListByItemName(keyword, service.findUserItems(id));
+        //TODO: 중복코드 분리 필요
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String username = userDetails.getUsername();
+
+        // TODO: Controller 에서 진행할 일이 아닌 듯, 옮기는 게 좋을 것 같음
+        log.info("username!!={}", username); // 검색했을 시 검색한 List 반환
+        List<Item> items = searchListByItemName(keyword, service.findUserItems(username));
         items = searchListByItemName(keyword, items);
 
         int itemsCount = items.size(); // 전체 item size
@@ -177,13 +189,18 @@ public class ItemController {
     @GetMapping("/{itemId}/delete")
     public String deleteItem(@PathVariable Long itemId, Model model, HttpServletRequest request) {
 
-        HttpSession session = request.getSession(false);
-        Account accountSession = (Account) session.getAttribute(SessionConst.LOGIN_ACCOUNT);
+//        HttpSession session = request.getSession(false);
+//        Account accountSession = (Account) session.getAttribute(SessionConst.LOGIN_ACCOUNT);
+
+        //TODO: 중복코드 분리 필요
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String accountId = userDetails.getUsername();
 
         Item findItem = service.findById(itemId);
 
         // 아이템 없거나 || 세션의 아이디와 아이템 주인이 다를 때
-        if (findItem == null || !Objects.equals(accountSession.getId(), findItem.getAccountId())) {
+        if (findItem == null || !Objects.equals(accountId, findItem.getAccountId())) {
             return "redirect:/item/items";
         }
 

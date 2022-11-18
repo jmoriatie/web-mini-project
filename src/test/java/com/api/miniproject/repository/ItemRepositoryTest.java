@@ -26,7 +26,7 @@ class ItemRepositoryTest {
     @Test
     @DisplayName("saveItemTest 테스트")
     void saveItemTest() {
-        Item item = new Item("test", 9999, 100, "www.xxx.com", 8L);
+        Item item = new Item("test", 9999, 100, "www.xxx.com", "tester");
         Item savedItem = repository.saveItem(item);
         assertThat(savedItem.getItemName()).isEqualTo("test");
     }
@@ -39,11 +39,11 @@ class ItemRepositoryTest {
                 .price(9999)
                 .quantity(100)
                 .buyUrl("www.xxx.com")
-                .accountId(99999L).build();
+                .accountId("tester").build();
 
         Item testItem = repository.saveItem(itemA);
 
-        List<Item> userItems = repository.findUserItems(99999L);
+        List<Item> userItems = repository.findUserItems("tester");
 
         assertThat(userItems).contains(testItem);
     }
@@ -56,7 +56,7 @@ class ItemRepositoryTest {
                 .price(9999)
                 .quantity(100)
                 .buyUrl("www.xxx.com")
-                .accountId(99999L).build();
+                .accountId("tester").build();
 
         Item savedItem = repository.saveItem(itemA);
 
@@ -73,7 +73,7 @@ class ItemRepositoryTest {
                 .price(9999)
                 .quantity(100)
                 .buyUrl("www.xxx.com")
-                .accountId(99999L).build();
+                .accountId("tester").build();
 
         Item item = repository.saveItem(itemA);
 
@@ -96,7 +96,7 @@ class ItemRepositoryTest {
                 .price(9999)
                 .quantity(100)
                 .buyUrl("www.xxx.com")
-                .accountId(99999L).build();
+                .accountId("tester").build();
 
         Item item = repository.saveItem(itemA);
 

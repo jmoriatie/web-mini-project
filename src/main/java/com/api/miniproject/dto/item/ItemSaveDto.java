@@ -33,10 +33,10 @@ public class ItemSaveDto{
 
 //    @URL // 알아보기
     private String buyUrl;
-    private Long accountId;
+    private String accountId;
 
     //TODO: builder 패턴으로 변경
-    public ItemSaveDto(String itemName, Integer price, Integer quantity, String buyUrl, Long accountId) {
+    public ItemSaveDto(String itemName, Integer price, Integer quantity, String buyUrl, String accountId) {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
@@ -58,7 +58,7 @@ public class ItemSaveDto{
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", buyUrl='" + buyUrl + '\'' +
-                ", userId='" + accountId + '\'' +
+                ", accountId='" + accountId + '\'' +
                 '}';
     }
 }

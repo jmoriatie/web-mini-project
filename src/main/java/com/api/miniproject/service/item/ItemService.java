@@ -10,7 +10,7 @@ public interface ItemService {
 
     Item saveItem(Item item);
     List<Item> findAll();
-    List<Item> findUserItems(Long userId);
+    List<Item> findUserItems(String userId);
     Item findById(Long id);
     Item findByName(String itemName);
     void updateItem(Long id, Item item);

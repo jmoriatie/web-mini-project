@@ -46,10 +46,10 @@ public class Item {
 
     // TODO : 추후 Forign key 로 변경 필요
     // 계정아이디
-    private Long accountId;
+    private String accountId;
 
     @Builder
-    public Item(String itemName, int price, int quantity, String buyUrl, Long accountId) {
+    public Item(String itemName, int price, int quantity, String buyUrl, String accountId) {
         this.itemName = itemName;
         this.price = price;
         this.quantity = quantity;
@@ -59,7 +59,7 @@ public class Item {
         this.createdAt = LocalDateTime.now();
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
 

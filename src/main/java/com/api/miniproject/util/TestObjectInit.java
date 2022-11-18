@@ -40,10 +40,10 @@ public class TestObjectInit {
 
             Item item;
             if(i <= 60){
-                item = new Item(type+"-"+category, price, quantity, "www.test"+i+".com", 1L);
+                item = new Item(type+"-"+category, price, quantity, "www.test"+i+".com", "tester");
             }
             else{
-                item = new Item(type+"-"+category, price, quantity, "www.test"+i+".com", 2L);
+                item = new Item(type+"-"+category, price, quantity, "www.test"+i+".com", "tester");
             }
             itemService.saveItem(item);
         }

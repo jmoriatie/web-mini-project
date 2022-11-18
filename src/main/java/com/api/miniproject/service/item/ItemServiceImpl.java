@@ -29,7 +29,7 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public List<Item> findUserItems(Long accountId) {
+    public List<Item> findUserItems(String accountId) {
         return repo.findUserItems(accountId);
     }
 

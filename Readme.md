@@ -1,4 +1,4 @@
-
+''
 > # 개인 웹 미니 프로젝트
 > ### (최초) 매장 구입 목록 관리용
 
@@ -38,8 +38,5 @@
 * :o: Spring security 사용을 위해 도메인 객체 변경 (User :arrow_forward: Account)
 * :o: Test DB H2로 변경
 * :running: Spring security 적용
----
-* :x: 회원가입 및 로그인 관련 API 개발  
-* :x: 로그인 및 아이템 관련 jwt 적용  
-* :x: Mokito framework를 활용한 Test case 작성  
-* :x: Swagger or Restdocs 적용  
+--- 
+* :x: Mokito framework를 활용한 Test case 작성
