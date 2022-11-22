@@ -2,7 +2,9 @@ package com.api.miniproject.service.login;
 
 import com.api.miniproject.domain.Account;
 import com.api.miniproject.repository.AccountRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component("userDetailsService")
 public class CustomUserDetailService implements UserDetailsService {
 
@@ -36,7 +39,7 @@ public class CustomUserDetailService implements UserDetailsService {
         List<GrantedAuthority> grantedAuthorities = account.getAuthorities().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
                 .collect(Collectors.toList());
-
+        log.info("[CustomUserDetailService] createUser id={}, auth={}", account.getAccountId(), grantedAuthorities.toString());
         return new User(account.getAccountId(), account.getAccountPw(), grantedAuthorities);
     }
 }

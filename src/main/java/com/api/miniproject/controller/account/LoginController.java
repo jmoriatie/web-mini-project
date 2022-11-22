@@ -56,31 +56,6 @@ public class LoginController {
         return "redirect:" + requestURI;
     }
 
-//    @PostMapping("/login")
-//    public String login(
-//            @Validated @ModelAttribute(name = "account") LoginDto loginDto, BindingResult bindingResult,
-//            @RequestParam(defaultValue = "/") String requestURI,
-//            HttpServletRequest request
-//    ) {
-//
-//        if (bindingResult.hasErrors()) {
-//            log.info("errors = {}", bindingResult);
-//            return "/login/loginForm";
-//        }
-//
-//        Account findAccount = service.findByAccountId(loginDto.getAccountId(), loginDto.getAccountPw());
-//
-//        if (findAccount == null) { // 유저 없을 시 global error 반환
-//            bindingResult.reject("notExistAccount");
-//            return "/login/loginForm";
-//        }
-//
-//        // TODO session 에는 필요한 정보만 저장하도록 세팅
-//        setSession(request, findAccount); // 세션 셋팅
-//
-//        return "redirect:" + requestURI;
-//    }
-
     private void setSession(HttpServletRequest request, Account account) {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_ACCOUNT, account);
