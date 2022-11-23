@@ -1,5 +1,6 @@
 package com.api.miniproject.dto.account;
 
+import com.api.miniproject.domain.Account;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,11 @@ public class LoginDto {
     public LoginDto(String accountId, String accountPw) {
         this.accountId = accountId;
         this.accountPw = accountPw;
+    }
+
+    public static LoginDto from(Account account){
+        return LoginDto.builder()
+                .accountId(account.getAccountId())
+                .accountPw(account.getAccountPw()).build();
     }
 }

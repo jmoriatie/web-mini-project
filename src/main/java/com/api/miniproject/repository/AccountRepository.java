@@ -13,9 +13,6 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long>, AccountRepositoryJPA {
 
-//    @Query(value = "SELECT * FROM ACCOUNT_TB", nativeQuery = true)
-//    List<Account> findAll();
-
     @EntityGraph(attributePaths = "authorities")
     Optional<Account> findOneWithAuthoritiesByAccountId(String accountId);
 }

@@ -35,8 +35,8 @@
 * :o: Repository 변경 :arrow_forward: JPA(MySQL)  
 * :o: @Builder 어노테이션 활용한 Entity 및 Dto 패턴 수정  
 * :o: Service 레이어 Test case 작성  
-* :o: Spring security 사용을 위해 도메인 객체 변경 (User :arrow_forward: Account)
-* :o: Test DB H2로 변경
-* :running: Spring security 적용
+* :o: Spring security 사용을 위해 도메인 객체 변경 (User :arrow_forward: Account)  
+* :o: Test DB H2로 변경  
+* :o: Spring security 적용  
+* :running: Test case 작성 
 --- 
-* :x: Mokito framework를 활용한 Test case 작성
