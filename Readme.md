@@ -37,6 +37,6 @@
 * :o: Service 레이어 Test case 작성  
 * :o: Spring security 사용을 위해 도메인 객체 변경 (User :arrow_forward: Account)  
 * :o: Test DB H2로 변경  
-* :o: Spring security 적용  
+* :running: Spring security 적용  
 * :running: Test case 작성 
 --- 

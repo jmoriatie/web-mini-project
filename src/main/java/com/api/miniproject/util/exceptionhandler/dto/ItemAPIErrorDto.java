@@ -1,5 +1,6 @@
 package com.api.miniproject.util.exceptionhandler.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.apache.tomcat.jni.Local;
 import org.springframework.context.MessageSource;
@@ -16,6 +17,7 @@ public class ItemAPIErrorDto {
     private final int status;
     private List<String> messages;
 
+    @Builder
     public ItemAPIErrorDto(int status, List<FieldError> errors, MessageSource messageSource) {
         this.status = status;
         this.messages = errors.stream()

@@ -1,6 +1,8 @@
 package com.api.miniproject.util.exceptionhandler;
 
+import com.api.miniproject.util.exceptionhandler.dto.AccountAPIErrorDto;
 import com.api.miniproject.util.exceptionhandler.dto.ItemAPIErrorDto;
+import com.api.miniproject.util.exceptionhandler.exception.AccountAPIException;
 import com.api.miniproject.util.exceptionhandler.exception.ItemAPIBindException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -29,6 +31,21 @@ public class ItemRestControllerExAdvice {
     public ItemAPIErrorDto itemApiErrorResolver(ItemAPIBindException ex){
         log.error("ItemAPIBindException 발생!",ex);
         List<FieldError> fieldErrors = ex.getFieldErrors();
-        return new ItemAPIErrorDto(HttpStatus.BAD_REQUEST.value(), fieldErrors, messageSource);
+        return ItemAPIErrorDto.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .errors(fieldErrors)
+                .messageSource(messageSource).build();
     }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = AccountAPIException.class)
+    public AccountAPIErrorDto accountAPIException(AccountAPIException ex){
+        log.error("AccountAPIException 발생!", ex);
+        return AccountAPIErrorDto.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(ex.getMessage()).build();
+    }
+
+
 }
