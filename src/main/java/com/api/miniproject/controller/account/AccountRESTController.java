@@ -24,7 +24,10 @@ public class AccountRESTController {
     @PostMapping("/join")
     public ResponseEntity<JoinDto> join(
             @Validated @RequestBody JoinDto joinDto, BindingResult bindingResult){
-
+        if(bindingResult.hasErrors()) {
+            log.error("bindingResult error={}", bindingResult);
+            // TODO: new Exception 추가
+        }
         return ResponseEntity.ok(accountService.join(joinDto));
     }
 
@@ -34,13 +37,11 @@ public class AccountRESTController {
 
         if(bindingResult.hasErrors()){
             log.error("bindingResult error={}", bindingResult);
-//            throw new ItemAPIBindException(bindingResult);
+            // TODO: new Exception 추가
         }
-
         if(foundAccount == null){
             throw new AccountAPIException();
         }
-
         return ResponseEntity.ok(LoginDto.from(foundAccount));
     }
 }
