@@ -1,12 +1,10 @@
-package com.api.miniproject.util.exceptionhandler.dto;
+package com.api.miniproject.exception.exceptionDto;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.apache.tomcat.jni.Local;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.FieldError;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;

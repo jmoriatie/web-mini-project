@@ -4,7 +4,7 @@ import com.api.miniproject.domain.Item;
 import com.api.miniproject.dto.item.ItemSaveDto;
 import com.api.miniproject.dto.item.ItemUpdateAPIDto;
 import com.api.miniproject.service.item.ItemService;
-import com.api.miniproject.util.exceptionhandler.exception.ItemAPIBindException;
+import com.api.miniproject.exception.exceptions.ItemAPIBindException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;

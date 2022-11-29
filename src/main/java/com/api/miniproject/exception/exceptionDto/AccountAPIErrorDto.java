@@ -1,4 +1,4 @@
-package com.api.miniproject.util.exceptionhandler.dto;
+package com.api.miniproject.exception.exceptionDto;
 
 import lombok.Builder;
 import lombok.Getter;

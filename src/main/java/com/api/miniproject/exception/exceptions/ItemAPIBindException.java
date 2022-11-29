@@ -1,4 +1,4 @@
-package com.api.miniproject.util.exceptionhandler.exception;
+package com.api.miniproject.exception.exceptions;
 
 import org.springframework.validation.*;
 
