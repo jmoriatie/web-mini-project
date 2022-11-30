@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <html>
 <head>
@@ -20,6 +20,9 @@
     </style>
 </head>
 <body>
+<div th:replace="/common/header" th:remove="tag"></div>
+
+<section>
 <div class="container">
     <div class="py-5 text-center">
         <h2>상품 수정 폼</h2></div>
@@ -67,5 +70,7 @@
         </div>
     </form>
 </div>
+</section>
+<div th:replace="/common/footer" th:remove="tag"></div>
 </body>
 </html>

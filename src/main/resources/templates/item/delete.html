@@ -13,6 +13,8 @@
         } </style>
 </head>
 <body>
+<div th:replace="/common/header" th:remove="tag"></div>
+<section>
 <div class="container">
     <div class="py-5 text-center">
         <h2>삭제</h2>
@@ -31,6 +33,8 @@
         </div>
     </div>
 </div>
-<!-- /container -->
+</section>
+
+<div th:replace="/common/footer" th:remove="tag"></div>
 </body>
 </html>

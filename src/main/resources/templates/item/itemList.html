@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <div id="itemList">
     <h2 th:if="${nullStatus}" th:text="#{nullStatus}"></h2>
     <h2 th:if="${normalStatus}" th:text="#{normalStatus( ${itemsLength} )}"></h2>
@@ -48,5 +48,4 @@
         </div>
     </div>
 </div>
-
 </html>

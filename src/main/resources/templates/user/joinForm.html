@@ -20,6 +20,8 @@
     <title>회원가입</title>
 </head>
 <body>
+<div th:replace="/common/header" th:remove="tag"></div>
+
 <div class="container">
     <div class="py-5 text-center">
         <h2>회원가입</h2>
@@ -45,7 +47,13 @@
                        placeholder="이름">
                 <span class="err-message" th:errors="*{accountName}">name Error!</span>
             </div>
-
+            <div>
+                <label for="accountName"></label>
+                <input type="text" id="authority" name="authority" th:field="*{authority}" th:errorclass="err-message"
+                       class="form-control"
+                       placeholder="?????!?!?!?!?!?!?!?!?!">
+                <span class="err-message" th:errors="*{authority}">name Error!</span>
+            </div>
 <!--            있는 아이디일 경우 체크하기-->
             <div th:if="${#fields.hasGlobalErrors()}">
                 <p class="err-message" th:each="err : ${#fields.globalErrors()}" th:text="${err}">user is already
@@ -63,5 +71,7 @@
         </form>
     </div>
 </div>
+
+<div th:replace="/common/footer" th:remove="tag"></div>
 </body>
 </html>
