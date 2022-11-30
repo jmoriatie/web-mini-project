@@ -28,44 +28,44 @@ public class LoginController {
     private final LoginService service;
 
     @GetMapping("/login")
-    public String loginForm(Model model) {
+    public String loginForm(@AuthenticationPrincipal UserDetails authenticatedAccount, Model model) {
+        if(authenticatedAccount != null){
+            log.info("authenticatedAccount={} ",authenticatedAccount);
+            return "redirect:/";
+        }
         model.addAttribute("account", new LoginDto());
         return "login/loginForm";
     }
 
     @PostMapping("/login")
     public String login(
-            @AuthenticationPrincipal UserDetails authenticatedAccount,
             @Validated @ModelAttribute(name = "account") LoginDto loginDto, BindingResult bindingResult,
             @RequestParam(defaultValue = "/") String requestURI,
             HttpServletRequest request
     ) {
-
-        if(authenticatedAccount != null){
-            return "redirect:/";
-        }
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
             return "login/loginForm";
         }
 
+        log.info("??={}","???");
         Account findAccount = service.findByAccountId(loginDto.getAccountId(), loginDto.getAccountPw());
 
         if (findAccount == null) { // 유저 없을 시 global error 반환
             bindingResult.reject("notExistAccount");
             return "login/loginForm";
         }
-        setSession(request, findAccount); // 세션 셋팅
+//        setSession(request, findAccount); // 세션 셋팅
 
         return "redirect:" + requestURI;
     }
 
-    private void setSession(HttpServletRequest request, Account account) {
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_ACCOUNT, account);
-        log.info("save in session={}", session.getAttribute(SessionConst.LOGIN_ACCOUNT));
-    }
+//    private void setSession(HttpServletRequest request, Account account) {
+//        HttpSession session = request.getSession();
+//        session.setAttribute(SessionConst.LOGIN_ACCOUNT, account);
+//        log.info("save in session={}", session.getAttribute(SessionConst.LOGIN_ACCOUNT));
+//    }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {

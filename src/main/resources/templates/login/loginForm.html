@@ -29,7 +29,9 @@
         <form action="loginForm.html" method="post" th:action="@{/login}" th:object="${account}">
             <div>
                 <label for="accountId"></label>
-                <input type="text" id="accountId" name="accountId" th:field="*{accountId}" th:errorclass="err-message" class="form-control"
+                <input type="text" id="accountId" name="accountId" th:field="*{accountId}"
+                       th:errorclass="err-message"
+                       class="form-control"
                        placeholder="아이디">
                 <span class="err-message" th:errors="*{accountId}">id Error!</span>
             </div>

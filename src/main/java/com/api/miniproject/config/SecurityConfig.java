@@ -60,6 +60,7 @@ public class SecurityConfig {
                     .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/")
+                        .failureForwardUrl("/login")
                         .usernameParameter("accountId")
                         .passwordParameter("accountPw")
                         .permitAll()
@@ -67,7 +68,8 @@ public class SecurityConfig {
                 .and()
                 .logout().permitAll()
                     .logoutSuccessUrl("/login")
-                    .invalidateHttpSession(true);
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID");
 
         return httpSecurity.build();
     }

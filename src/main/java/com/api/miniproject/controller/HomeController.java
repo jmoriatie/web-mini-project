@@ -26,7 +26,7 @@ public class HomeController {
             return "redirect:/login";
         }
         log.info("loginAccount id:{}, auth:{}", authenticatedAccount.getUsername(), authenticatedAccount.getAuthorities().toString());
-        model.addAttribute("accountName", authenticatedAccount.getUsername());
+        model.addAttribute("accountId", authenticatedAccount.getUsername());
 
         return "index";
     }
