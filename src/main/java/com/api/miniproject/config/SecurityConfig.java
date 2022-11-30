@@ -42,7 +42,6 @@ public class SecurityConfig {
                 .csrf().disable()
 
                 // enable h2-console
-                //TODO: 동일도메인에서는 접근이 가능하도록하는 설정 필수인지 확인 필요
                 .headers()
                 .frameOptions()
                 .sameOrigin()

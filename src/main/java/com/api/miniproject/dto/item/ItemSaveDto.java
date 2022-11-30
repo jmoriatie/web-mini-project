@@ -33,6 +33,7 @@ public class ItemSaveDto{
 
 //    @URL // 알아보기
     private String buyUrl;
+
     private String accountId;
 
     //TODO: builder 패턴으로 변경

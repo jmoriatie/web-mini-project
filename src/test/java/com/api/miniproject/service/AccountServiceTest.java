@@ -69,7 +69,6 @@ public class AccountServiceTest {
         assertThat(test_user.getAccountPw()).isEqualTo("qwerasdf1!");
     }
 
-    //TODO: Encrypt password 어떻게 Test하는지
     @Test
     @DisplayName("password Encrypt Test")
     void encryptTest() {

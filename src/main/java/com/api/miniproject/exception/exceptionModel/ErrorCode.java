@@ -7,13 +7,12 @@ import lombok.Getter;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode implements EnumModel{
 
-    ALREADY_IN_ACCOUNT(  400,"A001","ALREADY IN ACCOUNT"),
-    TEMPORARY_SERVER_ERROR(500, "A000", "TEMPORARY SERVER ERROR");
+    //server
+    TEMPORARY_SERVER_ERROR(500, "A000", "TEMPORARY SERVER ERROR"),
 
-    //    SERVER_ERROR(500, "SERVER ERROR"),
-    //    SERVER_ERROR(500, "SERVER ERROR"),
-    //    SERVER_ERROR(500, "SERVER ERROR"),
-    //    SERVER_ERROR(500, "SERVER ERROR");
+    //account
+    ALREADY_IN_ACCOUNT(400,"A001","ALREADY IN ACCOUNT"),
+    NOT_EXIST_ACCOUNT(400, "A002", "NOT_EXIST_ACCOUNT");
 
     private final int status;
     private final String code;

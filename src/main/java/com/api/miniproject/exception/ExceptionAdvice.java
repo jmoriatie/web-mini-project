@@ -21,7 +21,6 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
@@ -32,11 +31,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestControllerAdvice
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
-public class ItemRestControllerExAdvice implements ResponseBodyAdvice<Object> {
+public class ExceptionAdvice implements ResponseBodyAdvice<Object> {
 
     private final MessageSource messageSource;
 
-    public ItemRestControllerExAdvice(MessageSource messageSource) {
+    public ExceptionAdvice(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
@@ -64,7 +63,8 @@ public class ItemRestControllerExAdvice implements ResponseBodyAdvice<Object> {
 
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    protected ResponseEntity<ErrorResponse> handleException(Exception e) {
+    protected ResponseEntity<ErrorResponse> handleException(Exception ex) {
+        log.error("handleException 발생!", ex);
         ErrorResponse response = ErrorResponse.of(ErrorCode.TEMPORARY_SERVER_ERROR);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
@@ -73,11 +73,10 @@ public class ItemRestControllerExAdvice implements ResponseBodyAdvice<Object> {
     @ExceptionHandler(value = ItemAPIBindException.class)
     public ResponseEntity itemApiErrorResolver(ItemAPIBindException ex) {
         log.error("ItemAPIBindException 발생!", ex);
-        List<FieldError> fieldErrors = ex.getFieldErrors();
         return ResponseEntity.badRequest().body(
                 ItemAPIErrorDto.builder()
                         .status(HttpStatus.BAD_REQUEST.value())
-                        .errors(fieldErrors)
+                        .errors(ex.getFieldErrors())
                         .messageSource(messageSource).build()
         );
     }

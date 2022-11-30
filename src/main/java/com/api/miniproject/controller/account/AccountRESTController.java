@@ -28,50 +28,29 @@ public class AccountRESTController {
 
     @PostMapping("/join")
     public ResponseEntity<JoinDto> join(
-            @Validated @RequestBody JoinDto joinDto, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) {
-            log.error("bindingResult error={}", bindingResult);
-            // TODO: new Exception 추가
-        }
+            @Validated @RequestBody JoinDto joinDto){
 
         JoinDto joinedAccount = accountService.join(joinDto);
-
-        // TODO: Runtime Exception 돌려주도록 변경
         return ResponseEntity.ok(joinedAccount);
     }
 
-    //TODO: 인가조건에 따라 들어갈 수 있는 페이지와 없는 페이지 만들기 + 나누기
-    //TODO: restapi 관련 회원가입 및 로그인페이지도 구현
-    //TODO: 더미데이터 추가
-    //TODO: 이거 추가하고 Readme 수정 후 종료
-
     @PostMapping("/login")
-    public ResponseEntity<LoginDto> login(@Validated @RequestBody LoginDto loginDto, BindingResult bindingResult){
+    public ResponseEntity<LoginDto> login(@Validated @RequestBody LoginDto loginDto){
         Account foundAccount = accountService.findByAccountId(loginDto.getAccountId());
 
-        if(bindingResult.hasErrors()){
-            log.error("bindingResult error={}", bindingResult);
-            // TODO: new Exception 추가
-        }
-        if(foundAccount == null){
-            throw new AccountAPIException();
-        }
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getAccountId(), loginDto.getAccountPw());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
+        SecurityContextHolder.getContext().setAuthentication(this.getAuthentication(loginDto));
         return ResponseEntity.ok(LoginDto.from(foundAccount));
     }
 
-    @PostMapping("/createAccount")
-    public ResponseEntity createUserForAdmin(@Validated @RequestBody JoinDto joinDto){
+    private Authentication getAuthentication(LoginDto loginDto) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getAccountId(), loginDto.getAccountPw());
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        return authentication;
+    }
 
-//        if(bindingResult.hasErrors()){
-//            throw new ErrorResponse(ErrorCode.SERVER_ERROR);
-//            throw new AccountAPIException(bindingResult.hasErrors());
-//            throw new MethodArgumentNotValidException(bindingResult);
-//        }
+    @PostMapping("/createAccount")
+    public ResponseEntity<JoinDto> createUserForAdmin(@Validated @RequestBody JoinDto joinDto){
+
         JoinDto createdAccount = accountService.createUserForAdmin(joinDto);
         return ResponseEntity.ok(createdAccount);
     }

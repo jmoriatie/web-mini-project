@@ -1,6 +1,8 @@
 package com.api.miniproject.repository.jpa;
 
 import com.api.miniproject.domain.Account;
+import com.api.miniproject.exception.exceptionModel.ErrorCode;
+import com.api.miniproject.exception.exceptions.CustomException;
 import com.api.miniproject.repository.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,8 @@ public class AccountRepositoryJPAImpl implements AccountRepositoryJPA {
     }
 
     public Optional<Account> findByAccountId(String accountId){
-        return accountRepository.findAll().stream()
-                .filter(account -> account.getAccountId().equals(accountId)).findFirst();
+        return Optional.ofNullable(accountRepository.findAll().stream()
+                .filter(account -> account.getAccountId().equals(accountId)).findFirst()
+                .orElseThrow(() -> new CustomException("없는 유저 입니다", ErrorCode.NOT_EXIST_ACCOUNT)));
     }
 }

@@ -49,8 +49,6 @@ public class LoginController {
             bindingResult.reject("notExistAccount");
             return "login/loginForm";
         }
-
-        // TODO session 에는 필요한 정보만 저장하도록 세팅
         setSession(request, findAccount); // 세션 셋팅
 
         return "redirect:" + requestURI;

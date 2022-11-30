@@ -53,8 +53,7 @@ public class ItemController {
 
 //        Long accountId = ((Account) request.getSession(false).getAttribute(SessionConst.LOGIN_ACCOUNT)).getId(); // 유저아이디 꺼내서 저장
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
+        UserDetails userDetails = getUserDetails();
 
         saveItem.setAccountId(userDetails.getUsername()); // foreign key
 
@@ -79,11 +78,7 @@ public class ItemController {
                                HttpServletRequest request,
                                Model model) {
 
-//        Long id = ((Account) request.getSession().getAttribute(SessionConst.LOGIN_ACCOUNT)).getId();
-
-        //TODO: 중복코드 분리 필요
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
+        UserDetails userDetails = getUserDetails();
         String username = userDetails.getUsername();
 
         // TODO: Controller 에서 진행할 일이 아닌 듯, 옮기는 게 좋을 것 같음
@@ -104,6 +99,12 @@ public class ItemController {
         model.addAttribute("itemsLength", itemsCount);
 
         return "/item/itemList";
+    }
+
+    private UserDetails getUserDetails() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        return userDetails;
     }
 
     // 검색기능
@@ -192,9 +193,7 @@ public class ItemController {
 //        HttpSession session = request.getSession(false);
 //        Account accountSession = (Account) session.getAttribute(SessionConst.LOGIN_ACCOUNT);
 
-        //TODO: 중복코드 분리 필요
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails) principal;
+        UserDetails userDetails = getUserDetails();
         String accountId = userDetails.getUsername();
 
         Item findItem = service.findById(itemId);
@@ -207,7 +206,6 @@ public class ItemController {
         service.deleteItem(itemId);
         log.info("delete item={}", findItem);
 
-        // TODO : 삭제하시겠습니까? 확인 화면 출력
         model.addAttribute("deleteId", itemId);
 
         return "item/delete";

@@ -1,6 +1,8 @@
 package com.api.miniproject.service.item;
 
 import com.api.miniproject.domain.Item;
+import com.api.miniproject.exception.exceptionModel.ErrorCode;
+import com.api.miniproject.exception.exceptions.CustomException;
 import com.api.miniproject.repository.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,8 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public Item findById(Long id) {
-        return repo.findById(id).orElse(null);
+        return repo.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_EXIST_ACCOUNT));
     }
 
     @Override

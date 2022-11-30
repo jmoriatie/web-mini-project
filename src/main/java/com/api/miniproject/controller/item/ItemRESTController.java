@@ -26,16 +26,7 @@ public class ItemRESTController {
     private final ConversionService conversionService;
 
     @PostMapping(value = "/save")
-    ResponseEntity<Object> saveItem(@Validated @RequestBody ItemSaveDto itemSaveDto, BindingResult bindingResult) throws ItemAPIBindException {
-
-        if(bindingResult.hasErrors()){
-            log.error("bindingResult error={}", bindingResult);
-            throw new ItemAPIBindException(bindingResult);
-        }
-
-        // TODO 뭘 검증할건지 명확하게 추가
-        if(itemSaveDto.getAccountId() == null){
-        }
+    ResponseEntity<Object> saveItem(@Validated @RequestBody ItemSaveDto itemSaveDto) {
 
         Item item = conversionService.convert(itemSaveDto, Item.class);
         Item saveItem = service.saveItem(item);
@@ -62,8 +53,7 @@ public class ItemRESTController {
     ResponseEntity<Object> updateItem(@RequestParam Long id,
                                       @Validated @RequestBody ItemUpdateAPIDto itemUpdateAPIDto, BindingResult bindingResult) throws ItemAPIBindException {
 
-        if(bindingResult.hasErrors()){
-            log.error("bindingResult error={}", bindingResult);
+        if(bindingResult.hasErrors()){ // bindingException 에러들 받아서 message source 에서 설정해놓은 메세지 출력
             throw new ItemAPIBindException(bindingResult);
         }
 
@@ -79,11 +69,8 @@ public class ItemRESTController {
     ResponseEntity<Object> deleteItem(Long id){
         Item findItem = service.findById(id);
         log.debug("삭제할 아이템={}", findItem);
-        if(findItem != null){
-            service.deleteItem(id);
-            return new ResponseEntity<>(findItem, HttpStatus.OK);
-        }else{
-           throw new IllegalArgumentException("잘못된 요청");
-        }
+
+        service.deleteItem(id);
+        return new ResponseEntity<>(findItem, HttpStatus.OK);
     }
 }

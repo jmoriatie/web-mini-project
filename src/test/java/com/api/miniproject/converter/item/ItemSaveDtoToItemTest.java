@@ -36,7 +36,7 @@ class ItemSaveDtoToItemTest {
     void convertInUserId() {
         conversionService.addConverter(new ItemSaveDtoToItemConverter());
 
-        ItemSaveDto itemSaveDto = new ItemSaveDto("itemA", 50000, 5, "test@test.com", 1L);
+        ItemSaveDto itemSaveDto = new ItemSaveDto("itemA", 50000, 5, "test@test.com", "testId");
 
         Item itemA = conversionService.convert(itemSaveDto, Item.class);
 
@@ -46,6 +46,6 @@ class ItemSaveDtoToItemTest {
         assertThat(itemA.getPrice()).isEqualTo(50000);
         assertThat(itemA.getQuantity()).isEqualTo(5);
         assertThat(itemA.getBuyUrl()).isEqualTo("test@test.com");
-        assertThat(itemA.getAccountId()).isEqualTo(1L);
+        assertThat(itemA.getAccountId()).isEqualTo("testId");
     }
 }
