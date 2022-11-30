@@ -5,6 +5,7 @@ import com.api.miniproject.dto.auth.AuthorityDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.validation.constraints.*;
@@ -28,6 +29,7 @@ public class JoinDto {
 
     @NotNull
     private Set<AuthorityDto> authorities;
+
 
     @Builder
     public JoinDto(String accountId, String accountPw, String accountName, Set<AuthorityDto> authorities) {

@@ -56,7 +56,7 @@ public class ExceptionAdvice implements ResponseBodyAdvice<Object> {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ErrorResponse> customException(CustomException ex){
-        log.error("CustomException 발생! ", ex.getMessage());
+        log.error("CustomException 발생! ={}", ex.getMessage());
         ErrorResponse errorResponse = ErrorResponse.of(ex.getErrorCode());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }

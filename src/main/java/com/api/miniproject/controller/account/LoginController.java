@@ -6,6 +6,8 @@ import com.api.miniproject.service.login.LoginService;
 import com.api.miniproject.util.session.SessionConst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,10 +35,15 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(
+            @AuthenticationPrincipal UserDetails authenticatedAccount,
             @Validated @ModelAttribute(name = "account") LoginDto loginDto, BindingResult bindingResult,
             @RequestParam(defaultValue = "/") String requestURI,
             HttpServletRequest request
     ) {
+
+        if(authenticatedAccount != null){
+            return "redirect:/";
+        }
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);

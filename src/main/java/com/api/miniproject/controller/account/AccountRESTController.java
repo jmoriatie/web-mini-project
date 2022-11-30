@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,8 +43,7 @@ public class AccountRESTController {
 
     private Authentication getAuthentication(LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getAccountId(), loginDto.getAccountPw());
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        return authentication;
+        return authenticationManager.authenticate(authenticationToken);
     }
 
     @PostMapping("/createAccount")

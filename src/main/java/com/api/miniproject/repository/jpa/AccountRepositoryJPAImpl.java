@@ -30,8 +30,7 @@ public class AccountRepositoryJPAImpl implements AccountRepositoryJPA {
     }
 
     public Optional<Account> findByAccountId(String accountId){
-        return Optional.ofNullable(accountRepository.findAll().stream()
-                .filter(account -> account.getAccountId().equals(accountId)).findFirst()
-                .orElseThrow(() -> new CustomException("없는 유저 입니다", ErrorCode.NOT_EXIST_ACCOUNT)));
+        return accountRepository.findAll().stream()
+                .filter(account -> account.getAccountId().equals(accountId)).findFirst();
     }
 }
