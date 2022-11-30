@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositoryJPA {
 
-    // TODO: 내장된 findAll 왜 안되는 걸까
+    // item: 내장된 findAll 왜 안되는 걸까
     @Query(value = "SELECT * FROM ITEM_TB", nativeQuery = true)
     List<Item> findAll();
 

@@ -81,7 +81,6 @@ public class ItemController {
         UserDetails userDetails = getUserDetails();
         String username = userDetails.getUsername();
 
-        // TODO: Controller 에서 진행할 일이 아닌 듯, 옮기는 게 좋을 것 같음
         log.info("username!!={}", username); // 검색했을 시 검색한 List 반환
         List<Item> items = searchListByItemName(keyword, service.findUserItems(username));
         items = searchListByItemName(keyword, items);

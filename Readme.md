@@ -1,3 +1,4 @@
+
 ''
 > # 개인 웹 미니 프로젝트
 > ### (최초) 매장 구입 목록 관리용
@@ -9,8 +10,6 @@
 * MySQL
 * H2
 * Gradle
-* spring security (+jwt) 적용 예정
-* Swagger or Restdocs 적용 예정
 ---
 
 #### [프로젝트 설명]
@@ -37,6 +36,6 @@
 * :o: Service 레이어 Test case 작성  
 * :o: Spring security 사용을 위해 도메인 객체 변경 (User :arrow_forward: Account)  
 * :o: Test DB H2로 변경  
-* :running: Spring security 적용  
+* :o: Spring security 적용  
 * :running: Test case 작성 
 --- 

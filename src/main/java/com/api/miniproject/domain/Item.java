@@ -44,7 +44,6 @@ public class Item {
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
     private LocalDateTime createdAt;
 
-    // TODO : 추후 Forign key 로 변경 필요
     // 계정아이디
     private String accountId;
 
@@ -71,6 +70,4 @@ public class Item {
         this.buyUrl = item.getBuyUrl();
         this.lastUpdateDate = LocalDateTime.now();
     }
-
-    // TODO 연관관계 메서드
 }
