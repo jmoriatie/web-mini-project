@@ -79,6 +79,7 @@ public class AccountServiceTest {
                         .accountPw(passwordEncoder.encode("test")).build()));
 
 
+
         Account test_user = userService.findByAccountId("TEST_USER");
         System.out.println(test_user.getAccountPw());
 
