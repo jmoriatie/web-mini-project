@@ -49,23 +49,14 @@ public class LoginController {
             return "login/loginForm";
         }
 
-        log.info("??={}","???");
         Account findAccount = service.findByAccountId(loginDto.getAccountId(), loginDto.getAccountPw());
-
         if (findAccount == null) { // 유저 없을 시 global error 반환
             bindingResult.reject("notExistAccount");
             return "login/loginForm";
         }
-//        setSession(request, findAccount); // 세션 셋팅
 
         return "redirect:" + requestURI;
     }
-
-//    private void setSession(HttpServletRequest request, Account account) {
-//        HttpSession session = request.getSession();
-//        session.setAttribute(SessionConst.LOGIN_ACCOUNT, account);
-//        log.info("save in session={}", session.getAttribute(SessionConst.LOGIN_ACCOUNT));
-//    }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {

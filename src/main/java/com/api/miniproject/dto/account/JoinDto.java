@@ -7,12 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class JoinDto {
 
@@ -20,16 +22,13 @@ public class JoinDto {
     private String accountId;
 
     @NotBlank
-    @Column(length = 100)
 //    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}")
     private String accountPw;
 
     @NotEmpty
     private String accountName;
 
-    @NotNull
     private Set<AuthorityDto> authorities;
-
 
     @Builder
     public JoinDto(String accountId, String accountPw, String accountName, Set<AuthorityDto> authorities) {
@@ -45,7 +44,8 @@ public class JoinDto {
                 .accountPw(account.getAccountPw())
                 .accountName(account.getAccountName())
                 .authorities(account.getAuthorities().stream()
-                        .map( authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
+                        .map(auth -> AuthorityDto.builder()
+                                .authorityName(auth.getAuthorityName()).build())
                         .collect(Collectors.toSet()) )
                 .build();
     }

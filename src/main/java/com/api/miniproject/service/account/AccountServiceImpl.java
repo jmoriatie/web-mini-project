@@ -26,8 +26,9 @@ public class AccountServiceImpl implements AccountService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Account saveAccount(Account account) {
-        return repo.saveAccount(account);
+    public Account saveAccount(JoinDto joinDto) {
+        JoinDto accountDto = this.createAccount(joinDto, null);
+        return Account.from(accountDto);
     }
 
     public Account findByAccountId(String accountId){
@@ -37,10 +38,6 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public JoinDto join(JoinDto joinDto){
         this.accountCheck(joinDto);
-
-        Authority role = Authority.builder()
-                .authorityName("ROLE_USER")
-                .build();
 
         JoinDto joinDtoFromAccount = this.createAccount(joinDto, null);
         log.info("가입 성공 {}", joinDtoFromAccount.getAccountId());
@@ -52,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
         this.accountCheck(joinDto);
 
         Set<Authority> authorities = joinDto.getAuthorities().stream()
-                .map(role -> Authority.builder().authorityName("ROLE_"+role.getAuthorityName()).build())
+                .map(role -> Authority.builder().authorityName("ROLE_"+role).build())
                 .collect(Collectors.toSet());
 
         JoinDto createdAccount = this.createAccount(joinDto, authorities);
@@ -62,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
 
     private JoinDto createAccount(JoinDto joinDto, @Nullable Set<Authority> authorities) {
 
-        if(authorities == null){ // 넘어온 role이 있을 경우
+        if(authorities == null){ // 넘어온 role이 없을 경우
             authorities = new HashSet<>();
             authorities.add(Authority.builder()
                     .authorityName("ROLE_USER").build());

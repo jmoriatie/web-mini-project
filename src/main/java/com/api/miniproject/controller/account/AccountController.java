@@ -1,7 +1,9 @@
 package com.api.miniproject.controller.account;
 
 import com.api.miniproject.domain.Account;
+import com.api.miniproject.domain.Authority;
 import com.api.miniproject.dto.account.JoinDto;
+import com.api.miniproject.dto.auth.AuthorityDto;
 import com.api.miniproject.service.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Slf4j
 @Controller
@@ -31,7 +36,7 @@ public class AccountController {
     }
 
     @PostMapping("/join")
-    public String join(@Validated @ModelAttribute("account") JoinDto joinDto, BindingResult bindingResult) {
+    public String join(@Validated @ModelAttribute(name = "account") JoinDto joinDto, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {}", bindingResult);
@@ -40,13 +45,12 @@ public class AccountController {
 
         Account findUser = service.findByAccountId(joinDto.getAccountId());
         if (findUser != null) { // 있는 id check
-            bindingResult.reject("existUser");
+            bindingResult.reject("existAccount");
             return "user/joinForm";
         }
 
-        Account joinAccount = conversionService.convert(joinDto, Account.class);
-        service.saveAccount(joinAccount);
-        log.info("Account 저장={}", joinAccount);
+        service.saveAccount(joinDto);
+        log.info("Account 저장={}", joinDto);
 
         return "redirect:/";
     }

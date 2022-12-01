@@ -1,5 +1,6 @@
 package com.api.miniproject.domain;
 
+import com.api.miniproject.dto.account.JoinDto;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -63,6 +65,17 @@ public class Account {
         this.createDate = LocalDateTime.now();
         this.lastAccessDate = LocalDateTime.now();
         this.lastUpdateDate = LocalDateTime.now();
+    }
+
+    public static Account from(JoinDto dto){
+        return Account.builder()
+                .accountId(dto.getAccountId())
+                .accountPw(dto.getAccountPw())
+                .accountName(dto.getAccountName())
+                .authorities(dto.getAuthorities().stream()
+                        .map(auth -> Authority.builder().authorityName(auth.getAuthorityName()).build())
+                        .collect(Collectors.toSet()))
+                .build();
     }
 
     @Transactional

@@ -1,5 +1,7 @@
 package com.api.miniproject.exception;
 
+import com.api.miniproject.controller.account.AccountRESTController;
+import com.api.miniproject.controller.item.ItemRESTController;
 import com.api.miniproject.exception.exceptionModel.ErrorCode;
 import com.api.miniproject.exception.exceptionModel.ErrorResponse;
 import com.api.miniproject.exception.exceptions.AccountAPIException;
@@ -29,8 +31,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@RestControllerAdvice
-@Order(value = Ordered.HIGHEST_PRECEDENCE)
+@RestControllerAdvice(assignableTypes = {AccountRESTController.class, ItemRESTController.class})
 public class ExceptionAdvice implements ResponseBodyAdvice<Object> {
 
     private final MessageSource messageSource;

@@ -4,7 +4,6 @@ import com.api.miniproject.domain.Account;
 import com.api.miniproject.dto.account.JoinDto;
 import com.api.miniproject.dto.account.LoginDto;
 import com.api.miniproject.service.account.AccountService;
-import com.api.miniproject.exception.exceptions.AccountAPIException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
