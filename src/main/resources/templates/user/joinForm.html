@@ -28,33 +28,29 @@
         <form action="joinForm.html" method="post" th:action="@{/join}" th:object="${account}">
             <div>
                 <label for="accountId"></label>
-                <input type="text" id="accountId" name="accountId" th:field="*{accountId}" th:errorclass="err-message"
-                       class="form-control"
-                       placeholder="아이디">
+                <input type="text" id="accountId" name="accountId" th:field="*{accountId}"
+                       th:errorclass="err-message"
+                       class="form-control" placeholder="아이디">
                 <span class="err-message" th:errors="*{accountId}">id Error!</span>
             </div>
             <div>
                 <label for="accountPw"></label>
-                <input type="password" id="accountPw" name="accountPw" th:field="*{accountPw}" th:errorclass="err-message"
+                <input type="password" id="accountPw" name="accountPw" th:field="*{accountPw}"
+                       th:errorclass="err-message"
                        class="form-control"
                        placeholder="비밀번호">
                 <span class="err-message" th:errors="*{accountPw}">pw Error!</span>
             </div>
             <div>
                 <label for="accountName"></label>
-                <input type="text" id="accountName" name="accountName" th:field="*{accountName}" th:errorclass="err-message"
+                <input type="text" id="accountName" name="accountName" th:field="*{accountName}"
+                       th:errorclass="err-message"
                        class="form-control"
                        placeholder="이름">
                 <span class="err-message" th:errors="*{accountName}">name Error!</span>
             </div>
-            <div>
-                <label for="accountName"></label>
-                <input type="text" id="authority" name="authority" th:field="*{authority}" th:errorclass="err-message"
-                       class="form-control"
-                       placeholder="?????!?!?!?!?!?!?!?!?!">
-                <span class="err-message" th:errors="*{authority}">name Error!</span>
-            </div>
-<!--            있는 아이디일 경우 체크하기-->
+
+            <!--            있는 아이디일 경우 체크하기-->
             <div th:if="${#fields.hasGlobalErrors()}">
                 <p class="err-message" th:each="err : ${#fields.globalErrors()}" th:text="${err}">user is already
                     Exist!</p>
