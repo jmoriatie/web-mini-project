@@ -14,9 +14,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
-public class ItemUpdateDto{
+public class ItemUpdateDto {
 
     @NotNull
     private Long id;
@@ -37,11 +38,8 @@ public class ItemUpdateDto{
 
     private String buyUrl;
 
-    @Column(name = "LOCAL_DATE_TIME")
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm")
-    private LocalDateTime localDateTime;
-
-    // typeMismatch 일 때는 spring 에서 오류 메세지를 넣어주는데 그 떄, 빈객체를 가지고 뭔가를 만드나봐!!!
+    private LocalDateTime lastUpdateDate;
 
     public ItemUpdateDto(Long id, String itemName, Integer price, Integer quantity, String buyUrl, LocalDateTime localDateTime) {
         this.id = id;
